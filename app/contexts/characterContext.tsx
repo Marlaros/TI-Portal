@@ -48,9 +48,9 @@ export const emptyCharacter : Character = {
     step: 1,
 }
 
-export const CharacterContext = createContext<{character: Character, setCharacter: Dispatch<SetStateAction<Character>>} | null>(null);
+export const CharacterContext = createContext<{character: Character, setCharacter: Dispatch<SetStateAction<Character>>}>(undefined as any);
 
-/*
+
 export default function CharacterProvider({children}: {children: React.ReactNode}) {
     const [character, setCharacter] : [Character, Dispatch<SetStateAction<Character>>] = useState(emptyCharacter);
 
@@ -59,4 +59,4 @@ export default function CharacterProvider({children}: {children: React.ReactNode
             {children}
         </CharacterContext.Provider>
     )
-}*/
+}

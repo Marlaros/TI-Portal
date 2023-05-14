@@ -5,9 +5,7 @@ import { IRace } from './RaceCard.types'
 import './RaceCard.css'
 
 export const RaceCard = ({race}: {race: IRace}) => {
-    const characterCTX = useContext(CharacterContext);
-    const character = characterCTX?.character;
-    const setCharacter = characterCTX?.setCharacter;
+    const {character, setCharacter} = useContext(CharacterContext);
 
     return(
         <>

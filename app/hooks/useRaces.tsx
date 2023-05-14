@@ -14,14 +14,14 @@ const getRaces = async () : Promise<IRace[]> => {
         const raceDetails : IRace = {
             'name': race.name,
             'shortDesc': race.short_desc,
-            'description': race.description,
+            'description': race.details,
             'images': race.images
         }
         return raceDetails
     })
 }
 
-export const useRaces = () => {
+export const useRaces = () : {races: IRace[]} => {
     const [races, setRaces] = useState([]);
     useEffect(() => {
         getRaces().then((races: any) => {
@@ -31,5 +31,5 @@ export const useRaces = () => {
             setRaces([]);
         })
     }, [])
-    return {races};
+    return { races : (races as IRace[])};
 }

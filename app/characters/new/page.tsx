@@ -1,33 +1,17 @@
 "use client"
-import React, { Dispatch, SetStateAction, useState, createContext, useContext } from 'react';
-import { useRouter } from "next/router"
-import { RaceList } from '@/app/components/raceList/RaceList';
-import { CharacterContext, emptyCharacter } from '@/app/contexts/characterContext';
+import React from 'react';
+import CharacterProvider from '@/app/contexts/characterContext';
+import NewCharacterStepper from '@/app/components/NewCharacterStepper/NewCharacterStepper';
 
-import { Character } from './character.type';
 
 export default function NewCharacter() {
-    const [character, setCharacter] : [Character, Dispatch<SetStateAction<Character>>] = useState(emptyCharacter);
-
-    const renderStep = () => {
-        if(character){
-            switch(character.step){
-                case 1:
-                    return <RaceList />;
-                case 2:
-                    return <div>This is step 2: Race: {character.race}</div>;
-                default:
-                    return <div>This is the default step</div>    
-            }
-        }
-    }
-    //const router = useRouter();
+    //const [character, setCharacter] : [Character, Dispatch<SetStateAction<Character>>] = useState(emptyCharacter);
 
     return(
-        <CharacterContext.Provider value={{character,setCharacter}}>
+        <CharacterProvider>
             <div style={{maxWidth:'95%', display: 'flex', justifyContent: 'center', overflow: 'hidden'}}>
-                {renderStep()}
+                <NewCharacterStepper />
             </div>
-        </CharacterContext.Provider>
+        </CharacterProvider>
     )
 }
