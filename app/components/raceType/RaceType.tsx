@@ -13,49 +13,69 @@ const RaceType = () => {
     const {character, setCharacter} = useContext(CharacterContext);
     const {races} : {races: IRace[]} = useRaces();
     const [selectedRace, setSelectedRace] : [IRace, Dispatch<SetStateAction<IRace>>]= useState(undefined as any);
-    //const {raceTypes} = useRaceTypes(character.race);
+    const {raceTypes} = useRaceTypes(character.race);
 
     useEffect(() => {
-        console.log("Races: ", races);
+        console.log("RaceTypes: ", raceTypes);
         const race : IRace = (races.filter((race: IRace) => race.name === character.race)[0] as IRace);
-        console.log(race);
         setSelectedRace(race);
     }, [races.length])
 
+    const renderSelectTypeHeader = (raza: string) => {
+        if(raza === "Humanos"){
+            return "Selecciona el Pais de Origen";
+        }
+        else{
+            return `Selecciona el tipo de ${raza}`
+        }
+    }
+
     return(
         <>
-            { selectedRace && selectedRace.name ? 
+            { selectedRace && selectedRace.name  ? 
                 (<div className="racetype-container">
                     <div className="race-section">
                         <div className="race-header">
                                 {character.race}
                         </div>
-                        <Image
-                            className="race-image"
-                            src={selectedRace.images[0]}
-                            alt={"Image for " + character.race}
-                            width={450}
-                            height={450}
-                        />
-                        <p className="race-description">
-                            {selectedRace.description}
-                        </p>
+                        <div>
+                            <Image
+                                className="race-image"
+                                src={selectedRace.images[0]}
+                                alt={"Image for " + character.race}
+                                width={450}
+                                height={450}
+                            />
+                        </div>
+                        <div>
+                            <p className="race-description">
+                                {selectedRace.description}
+                            </p>
+                        </div>
                     </div>
                     <div className="racetype-section">
-                        <h3 className="racetype-header">Selecciona el tipo de {selectedRace.name}</h3>
+                        <div className="racetype-header">{renderSelectTypeHeader(selectedRace.name)}</div>
                         <div className="racetype-select-grid">
-                            <div className="racetype-item">
-                                <button onClick={() => setCharacter({...character,raceType: 'Almoon',step: 3})}>{character.race} de Almoon</button>
-                            </div>
-                            <div className="racetype-item">
-                                <button>{character.race} de Amara</button>
-                            </div>
-                            <div className="racetype-item">
-                                <button>{character.race} de Northland</button>
-                            </div>
-                            <div className="racetype-item">
-                                <button>{character.race} de Draconia</button>
-                            </div>
+                            { raceTypes.length > 0 ? 
+                            (
+                                <>
+                                {raceTypes.map((raceType: any) => (
+                                    <div className="racetype-item">
+                                        <button onClick={() => setCharacter({...character,raceType: raceType.name,step: 3})}>
+                                            <p className="racetype-item-title">{raceType.name}</p>
+                                            <Image
+                                                className="racetype-item-image"
+                                                src={raceType.image}
+                                                alt={"Image for " + raceType.name}
+                                                width={175}
+                                                height={150}
+                                            />
+                                            <p className="racetype-item-desc">{raceType.shortDesc}</p>
+                                        </button>
+                                    </div>
+                                ))}
+                                </>
+                            ) : <div>No se encontraron tipos para esta raza</div>}
                         </div>
                     </div>
                 </div>) : <div>Cargando...</div>

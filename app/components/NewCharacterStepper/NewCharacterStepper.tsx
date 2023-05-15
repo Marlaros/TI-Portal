@@ -6,7 +6,7 @@ import RaceType from '../raceType/RaceType';
 
 const NewCharacterStepper = () => {
 
-    const {character} = useContext(CharacterContext);
+    const {character, setCharacter} = useContext(CharacterContext);
 
     const renderStep = () => {
         if(character){
@@ -36,7 +36,21 @@ const NewCharacterStepper = () => {
 
     return(
         <div>
-            <h4 style={{marginLeft: '2%'}}>Paso {character.step}: {renderStepName()}</h4>
+            <div style={{marginLeft: '3%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '35%'}}>
+                {character.step > 1 ? 
+                    <div style={{flex: 1}}>
+                        <button 
+                            style={{cursor: 'pointer', color: 'rgba(0,0,0,0.88)', backgroundColor: 'rgba(231, 193, 119, 0.497)', borderStyle: 'none', fontWeight: '600', fontSize: '14px', padding: '2%', borderRadius: '8%'}}
+                            onClick={() => setCharacter({...character,step: character.step - 1})}>
+                            {'< Atrás'}
+                        </button>
+                    </div>
+                    : <></>
+                }
+                <div style={{flex: 5, fontSize: '18px', fontWeight: 'bold'}}>
+                    Paso {character.step}: {renderStepName()}
+                </div>
+            </div>
             <div>
                 {renderStep()}
             </div>

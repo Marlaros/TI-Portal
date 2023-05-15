@@ -14,6 +14,7 @@ export default function Home() {
           width={900}
           height={450}
           priority
+          style={{objectFit: 'contain', borderRadius: '4%'}}
         />
     </main>
   )

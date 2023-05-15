@@ -32,6 +32,12 @@ const nextConfig = {
                 hostname: 'wallpapers.com',
                 port: '',
                 pathname: '/**',
+            },
+            {
+                protocol: 'http',
+                hostname: '127.0.0.1',
+                port: '8090',
+                pathname: '/api/**'
             }
         ]
     }

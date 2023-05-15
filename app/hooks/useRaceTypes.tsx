@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from "react";
 
 const getRaceTypes = async () : Promise<any[]> => {
@@ -14,11 +15,15 @@ const getRaceTypes = async () : Promise<any[]> => {
             'name': tipo.name,
             'parent': tipo.parent,
             'shortDesc': tipo.short_desc,
-            'description': tipo.description,
-            'images': tipo.images
+            'description': tipo.details,
+            'image': getRaceTypeImage(tipo.id, tipo.image)
         }
         return tipoRaza
     });
+}
+
+const getRaceTypeImage = (recordId: string, fileName: string) : string => {
+    return `http://127.0.0.1:8090/api/files/tiporazas/${recordId}/${fileName}`
 }
 
 export const useRaceTypes = (selectedRaceName : string)  => {
