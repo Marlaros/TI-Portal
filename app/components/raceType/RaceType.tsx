@@ -6,9 +6,10 @@ import { useRaces } from '@/app/hooks/useRaces';
 import { CharacterContext } from '@/app/contexts/characterContext';
 import { IRace } from '../raceCard/RaceCard.types';
 
-import './RaceType.css';
 import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { IRaceType } from './RaceType.types';
+
+import './RaceType.css';
 
 const RaceType = () => {
     const {character, setCharacter} = useContext(CharacterContext);
