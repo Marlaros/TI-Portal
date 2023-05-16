@@ -104,7 +104,7 @@
 
 .racetype-item-image{
     flex: 3;
-    object-fit: fill;
+    object-fit: cover;
     border-radius: 5%;
     aspect-ratio: 3/2;
 }
