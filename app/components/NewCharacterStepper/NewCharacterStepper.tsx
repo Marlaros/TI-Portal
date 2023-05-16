@@ -56,7 +56,7 @@ const NewCharacterStepper = () => {
                     Paso {character.step}: {renderStepName()}
                 </div>
             </div>
-            <div style={{width: '100%', minWidth: '95vw'}}>
+            <div style={{}}>
                 {renderStep()}
             </div>
         </div>

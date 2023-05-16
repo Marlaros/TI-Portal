@@ -73,8 +73,10 @@
 }
 
 .categories-item > button {
-    min-width: 275px;
-    min-height: 220px;
+    max-width: 50%;
+    max-height: 45%;
+    min-width: 300px;
+    min-height: 250px;
     border-style: solid;
     border-color: rgba(0,0,0,0.32);
     border-radius: 4%;
@@ -87,7 +89,6 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    transform: scale(0.95);
 }
 
 .categories-item :hover{
@@ -103,7 +104,7 @@
 
 .categories-item-image{
     flex: 3;
-    object-fit: fill;
+    object-fit: cover;
     border-radius: 5%;
     aspect-ratio: 3/2;
 }
