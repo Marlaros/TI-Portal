@@ -42,7 +42,7 @@ const RaceType = () => {
                         <div>
                             <Image
                                 className="race-image"
-                                src={selectedRace.images[0]}
+                                src={selectedRace.image}
                                 alt={"Image for " + character.race}
                                 width={450}
                                 height={450}

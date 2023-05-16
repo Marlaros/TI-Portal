@@ -14,7 +14,7 @@ export const RaceCard = ({race}: {race: IRace}) => {
                     <h3 className="racecard-title">{race.name}</h3>
                     <Image
                         className="race-card-image"
-                        src={race.images[0]}
+                        src={race.image}
                         alt={"Image for " + race.name}
                         width={220}
                         height={220}/>

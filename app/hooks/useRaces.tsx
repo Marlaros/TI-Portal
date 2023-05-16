@@ -14,10 +14,14 @@ const getRaces = async () : Promise<IRace[]> => {
             'name': race.name,
             'shortDesc': race.short_desc,
             'description': race.details,
-            'images': race.images
+            'image': getRaceImage(race.id,race.image)
         }
         return raceDetails
     })
+}
+
+const getRaceImage = (recordId: string, fileName: string) : string => {
+    return `http://127.0.0.1:8090/api/files/razas/${recordId}/${fileName}`
 }
 
 export const useRaces = () : {races: IRace[]} => {
