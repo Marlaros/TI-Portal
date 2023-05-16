@@ -9,7 +9,6 @@ const getRaces = async () : Promise<IRace[]> => {
       }
     });
     const data : any = await res.json();
-    console.log(data.items);
     return data.items.map((race:any) => {
         const raceDetails : IRace = {
             'name': race.name,

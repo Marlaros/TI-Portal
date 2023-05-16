@@ -8,6 +8,7 @@ import { IRace } from '../raceCard/RaceCard.types';
 
 import './RaceType.css';
 import { useRaceTypes } from '@/app/hooks/useRaceTypes';
+import { IRaceType } from './RaceType.types';
 
 const RaceType = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -16,7 +17,6 @@ const RaceType = () => {
     const {raceTypes} = useRaceTypes(character.race);
 
     useEffect(() => {
-        console.log("RaceTypes: ", raceTypes);
         const race : IRace = (races.filter((race: IRace) => race.name === character.race)[0] as IRace);
         setSelectedRace(race);
     }, [races.length])
@@ -59,7 +59,7 @@ const RaceType = () => {
                             { raceTypes.length > 0 ? 
                             (
                                 <>
-                                {raceTypes.map((raceType: any) => (
+                                {raceTypes.map((raceType: IRaceType) => (
                                     <div className="racetype-item">
                                         <button onClick={() => setCharacter({...character,raceType: raceType.name,step: 3})}>
                                             <p className="racetype-item-title">{raceType.name}</p>

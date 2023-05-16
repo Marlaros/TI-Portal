@@ -1,7 +1,8 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import { IRaceType } from "../components/raceType/RaceType.types";
 
-const getRaceTypes = async () : Promise<any[]> => {
+const getRaceTypes = async () : Promise<IRaceType[]> => {
     const res = await fetch('http://127.0.0.1:8090/api/collections/tiporazas/records', {
       method: 'GET',
       headers: {
@@ -9,7 +10,6 @@ const getRaceTypes = async () : Promise<any[]> => {
       }
     });
     const data : any = await res.json();
-    console.log(data.items);
     return data.items.map((tipo:any) => {
         const tipoRaza = {
             'name': tipo.name,
@@ -26,7 +26,7 @@ const getRaceTypeImage = (recordId: string, fileName: string) : string => {
     return `http://127.0.0.1:8090/api/files/tiporazas/${recordId}/${fileName}`
 }
 
-export const useRaceTypes = (selectedRaceName : string)  => {
+export const useRaceTypes = (selectedRaceName : string) : {raceTypes: IRaceType[]}=> {
     const [raceTypes, setRaceTypes] = useState([]);
     useEffect(() => {
         getRaceTypes().then((raceTypes: any) => {

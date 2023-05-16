@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 
 import { RaceList } from '@/app/components/raceList/RaceList';
 import RaceType from '../raceType/RaceType';
+import Categories from '../categories/Categories';
 
 const NewCharacterStepper = () => {
 
@@ -16,7 +17,9 @@ const NewCharacterStepper = () => {
                 case 2:
                     return <RaceType />
                 case 3:
-                    return <div>This is step 3: Race: {character.race}</div>;
+                    return <Categories />
+                case 4:
+                    return <div>This is step 4: Race: {character.race}</div>;
                 default:
                     return <div>This is the default step</div>    
             }
@@ -29,6 +32,8 @@ const NewCharacterStepper = () => {
                 return "Seleccionar Raza";
             case 2:
                 return `Seleccionar Tipo de ${character.race}`;
+            case 3:
+                return `Seleccionr Categoria Principal`
             default:
                 return "Continuar"
         }
@@ -51,7 +56,7 @@ const NewCharacterStepper = () => {
                     Paso {character.step}: {renderStepName()}
                 </div>
             </div>
-            <div>
+            <div style={{width: '100%', minWidth: '95vw'}}>
                 {renderStep()}
             </div>
         </div>
