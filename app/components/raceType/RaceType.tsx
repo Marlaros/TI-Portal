@@ -31,6 +31,27 @@ const RaceType = () => {
         }
     }
 
+    const renderAlternative = (race: string) => {
+        return(
+            <>
+                {["Duendes","Ogros"].includes(race) ?
+                    <div className="alternative-section">
+                        <p className="alternative-comment">Los {race} no poseen subtipos inherentes a su raza</p>
+                        <button
+                            className="alternative-button"
+                            onClick={() => setCharacter({...character,raceType: selectedRace.name,step: 3})}>
+                            Continuar
+                        </button>
+                    </div> 
+                    : 
+                    <div className="alternative-section">
+                        No se encontraron tipos para esta raza
+                    </div>
+                }
+            </>
+        )
+    }
+
     return(
         <>
             { selectedRace && selectedRace.name  ? 
@@ -58,25 +79,29 @@ const RaceType = () => {
                         <div className="racetype-header">{renderSelectTypeHeader(selectedRace.name)}</div>
                         <div className="racetype-select-grid">
                             { raceTypes.length > 0 ? 
-                            (
+                                (
+                                    <>
+                                    {raceTypes.map((raceType: IRaceType) => (
+                                        <div className="racetype-item">
+                                            <button onClick={() => setCharacter({...character,raceType: raceType.name,step: 3})}>
+                                                <p className="racetype-item-title">{raceType.name}</p>
+                                                <Image
+                                                    className="racetype-item-image"
+                                                    src={raceType.image}
+                                                    alt={"Image for " + raceType.name}
+                                                    width={175}
+                                                    height={150}
+                                                />
+                                                <p className="racetype-item-desc">{raceType.shortDesc}</p>
+                                            </button>
+                                        </div>
+                                    ))}
+                                    </>
+                                ) : 
                                 <>
-                                {raceTypes.map((raceType: IRaceType) => (
-                                    <div className="racetype-item">
-                                        <button onClick={() => setCharacter({...character,raceType: raceType.name,step: 3})}>
-                                            <p className="racetype-item-title">{raceType.name}</p>
-                                            <Image
-                                                className="racetype-item-image"
-                                                src={raceType.image}
-                                                alt={"Image for " + raceType.name}
-                                                width={175}
-                                                height={150}
-                                            />
-                                            <p className="racetype-item-desc">{raceType.shortDesc}</p>
-                                        </button>
-                                    </div>
-                                ))}
+                                    {renderAlternative(character.race)}
                                 </>
-                            ) : <div>No se encontraron tipos para esta raza</div>}
+                            }
                         </div>
                     </div>
                 </div>) : <div>Cargando...</div>

@@ -4,18 +4,26 @@ import { CharacterContext } from '@/app/contexts/characterContext';
 import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { usePrimaryCategories } from '@/app/hooks/useCategories';
 import './Categories.css';
+import { useRaces } from '@/app/hooks/useRaces';
+import { IRace } from '../raceCard/RaceCard.types';
 
 const Categories = () => {
     const {character, setCharacter} = useContext(CharacterContext);
     const [selectedRaceType, setSelectedRaceType] = useState(undefined as any);
     const {raceTypes} = useRaceTypes(character.race);
+    const {races} = useRaces(); 
     const {primaryCategories} = usePrimaryCategories(character.race);
 
     useEffect(() => {
-        console.log("Categorias  Primarias: ", primaryCategories);
-        const raceType = (raceTypes.filter((raceType: any) => raceType.name === character.raceType)[0]);
-        setSelectedRaceType(raceType);
-    }, [raceTypes.length])
+        if(character.race === character.raceType){
+            const race = races.filter((race: IRace) => race.name === character.race)[0];
+            setSelectedRaceType(race);
+        }
+        else{
+            const raceType = (raceTypes.filter((raceType: any) => raceType.name === character.raceType)[0]);
+            setSelectedRaceType(raceType);
+        }
+    }, [races.length,raceTypes.length])
 
     return(
         <>

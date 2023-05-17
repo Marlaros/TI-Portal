@@ -36,7 +36,7 @@
 
 .race-description{
     flex: 3;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     margin-top: 2%;
 }
@@ -73,10 +73,10 @@
 }
 
 .racetype-item > button {
-    min-width: 275px;
-    min-height: 225px;
-    max-width: 300px;
-    max-height: 250px;
+    min-width: 300px;
+    min-height: 400px;
+    max-width: 30%;
+    max-height: 80%;
     border-style: solid;
     border-color: rgba(0,0,0,0.32);
     border-radius: 4%;
@@ -87,7 +87,7 @@
     padding: 1%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
@@ -98,20 +98,64 @@
 
 .racetype-item-title{
     flex: 1;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
 }
 
 .racetype-item-image{
-    flex: 3;
+    flex: 6;
     object-fit: cover;
     border-radius: 5%;
     aspect-ratio: 3/2;
+    width: 70%;
 }
 
 .racetype-item-desc{
-    flex: 2;
-    font-size: 10px;
+    flex: 1;
+    font-size: 14px;
     font-weight: 500;
-    margin-top: 3%;
+    margin-top: 5%;
+    width: 80%;
 }
+
+.alternative-section{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1%;
+    min-width: 45vw;
+    min-height: 20vh;
+}
+
+.alternative-section > button{
+    transition: transform 0.4s ease-out;
+}
+
+.alternative-button > button :hover{
+    transform: scale(1.05);
+}
+
+.alternative-comment{
+    margin-top: 2%;
+    flex: 1;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.alternative-button{
+    flex: 1;
+    border-radius: 4%;
+    width: 180px;
+    max-height: 80px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: rgba(231, 193, 119, 0.497);
+    color: rgba(0,0,0,0.88);
+    border: none;
+    box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.22);
+    cursor: pointer;
+}
+
+

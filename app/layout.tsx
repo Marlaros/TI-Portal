@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main>
+        <main style={{height: '100%'}}>
           <header className="main-header">
             <div className="main-title">
               <h1>Tierras Inmortales</h1>
