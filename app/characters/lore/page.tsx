@@ -1,8 +1,8 @@
 "use client"
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styles from './page.module.css';
 
-const requestOpenAI = async (prompt: string) => {
+const requestOpenAI = async (prompt: string, setState: Dispatch<SetStateAction<string>>) => {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -20,7 +20,8 @@ const requestOpenAI = async (prompt: string) => {
             temperature: 0.9,
         })
     });
-    return await response.json();
+    const parsed = await response.json();
+    setState(parsed["choices"].pop()?.message.content || "");
 }
 
 export default function NewLore() {
@@ -34,7 +35,7 @@ export default function NewLore() {
                 <textarea value={prompt} onChange={e => setPrompt(e.target.value)}/>
                 <button className={styles.send} onClick={() => {
                     setResult("Generando...")
-                    requestOpenAI(prompt).then(response => setResult(response["choices"].pop()?.message.content || ""))
+                    requestOpenAI(prompt, setResult)
                 }}>Generar</button>
 
             </div>
@@ -44,7 +45,6 @@ export default function NewLore() {
                     <span>{result}</span>
                 </div>
             }
-
 
         </div>
 
