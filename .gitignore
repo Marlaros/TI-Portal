@@ -1,4 +1,6 @@
 pocketbase.exe
+pocketbase
 node_modules
 .next
 .env*
+.DS_Store
