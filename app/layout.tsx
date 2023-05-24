@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Router } from 'next/router'
 import './globals.css'
 import './layout.css'
 
@@ -24,7 +23,7 @@ export default function RootLayout({
             <Link href="/characters/new" className="main-nav-link">
               <p>Nuevo Personaje</p>
             </Link>
-            <Link href="/" /*href="/characters"*/ className="main-nav-link">
+            <Link href="/characters/RandomUser" className="main-nav-link">
               <p>Mis Personajes</p>
             </Link>
           </nav>
