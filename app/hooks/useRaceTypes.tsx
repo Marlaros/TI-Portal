@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import { IRaceType } from "../components/raceType/RaceType.types";
+import { IRaceType } from "../components/newCharacterSteps/raceType/RaceType.types";
 
 const getRaceTypes = async () : Promise<IRaceType[]> => {
     const res = await fetch('http://127.0.0.1:8090/api/collections/tiporazas/records', {

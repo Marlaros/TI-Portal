@@ -4,12 +4,13 @@ import Image from 'next/image'
 
 import { useRaces } from '@/app/hooks/useRaces';
 import { CharacterContext } from '@/app/contexts/characterContext';
-import { IRace } from '../raceCard/RaceCard.types';
+import { IRace } from '../raceList/RaceList.types';
 
 import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { IRaceType } from './RaceType.types';
 
 import './RaceType.css';
+import ElementCard from '../../ElementCard/ElementCard';
 
 const RaceType = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -29,6 +30,10 @@ const RaceType = () => {
         else{
             return `Selecciona el tipo de ${raza}`
         }
+    }
+
+    const setCharacterRaceType = (value: string) => {
+        setCharacter({...character, raceType: value, step: 3})
     }
 
     const renderAlternative = (race: string) => {
@@ -82,19 +87,13 @@ const RaceType = () => {
                                 (
                                     <>
                                     {raceTypes.map((raceType: IRaceType) => (
-                                        <div className="racetype-item">
-                                            <button onClick={() => setCharacter({...character,raceType: raceType.name,step: 3})}>
-                                                <p className="racetype-item-title">{raceType.name}</p>
-                                                <Image
-                                                    className="racetype-item-image"
-                                                    src={raceType.image}
-                                                    alt={"Image for " + raceType.name}
-                                                    width={175}
-                                                    height={150}
-                                                />
-                                                <p className="racetype-item-desc">{raceType.shortDesc}</p>
-                                            </button>
-                                        </div>
+                                        <ElementCard
+                                            key={raceType.name}
+                                            name={raceType.name}
+                                            description={raceType.shortDesc}
+                                            image={raceType.image}
+                                            handleClick={(value:string) => setCharacterRaceType(value)}
+                                        />
                                     ))}
                                     </>
                                 ) : 

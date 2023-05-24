@@ -1,0 +1,50 @@
+.element-card{
+    flex: 1;
+    margin: 1%
+}
+
+.element-card > button {
+    min-width: 300px;
+    min-height: 400px;
+    max-width: 30%;
+    max-height: 80%;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.32);
+    border-radius: 4%;
+    background-color: rgba(231, 193, 119, 0.497);
+    color: rgba(0,0,0,0.88);
+    box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.22);
+    transition: all 0.5s ease-out;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.element-card :hover{
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.element-card-title{
+    flex: 1;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.element-card-image{
+    flex: 6;
+    object-fit: cover;
+    border-radius: 5%;
+    aspect-ratio: 3/2;
+    width: 70%;
+}
+
+.element-card-desc{
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5%;
+    width: 80%;
+}

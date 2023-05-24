@@ -1,9 +1,10 @@
-import { CharacterContext } from '@/app/contexts/characterContext';
 import React, { useContext } from 'react'
+import RaceList from '../newCharacterSteps/raceList/RaceList';
+import RaceType from '../newCharacterSteps/raceType/RaceType';
+import Categories from '../newCharacterSteps/categories/Categories';
+import Specialties from '../newCharacterSteps/specialties/Specialties';
 
-import { RaceList } from '@/app/components/raceList/RaceList';
-import RaceType from '../raceType/RaceType';
-import Categories from '../categories/Categories';
+import { CharacterContext } from '@/app/contexts/characterContext';
 
 const NewCharacterStepper = () => {
 
@@ -19,7 +20,9 @@ const NewCharacterStepper = () => {
                 case 3:
                     return <Categories />
                 case 4:
-                    return <div>This is step 4: Race: {character.race}</div>;
+                    return <Specialties />
+                case 5:
+                    return <div>This is step 5: Race: {character.race}</div>;
                 default:
                     return <div>This is the default step</div>    
             }
@@ -33,14 +36,16 @@ const NewCharacterStepper = () => {
             case 2:
                 return `Seleccionar Tipo de ${character.race}`;
             case 3:
-                return `Seleccionr Categoria Principal`
+                return `Seleccionar Categoria Principal`;
+            case 4:
+                return `Seleccionar Especialidad`;
             default:
-                return "Continuar"
+                return "Continuar";
         }
     }
 
     return(
-        <div>
+        <div style={{minWidth: '90vw'}}>
             <div style={{marginLeft: '3%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '35%'}}>
                 {character.step > 1 ? 
                     <div style={{flex: 1}}>
@@ -56,7 +61,7 @@ const NewCharacterStepper = () => {
                     Paso {character.step}: {renderStepName()}
                 </div>
             </div>
-            <div style={{minWidth: '90vw'}}>
+            <div>
                 {renderStep()}
             </div>
         </div>

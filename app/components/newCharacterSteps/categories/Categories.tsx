@@ -5,7 +5,8 @@ import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { usePrimaryCategories } from '@/app/hooks/useCategories';
 import './Categories.css';
 import { useRaces } from '@/app/hooks/useRaces';
-import { IRace } from '../raceCard/RaceCard.types';
+import { IRace } from '../raceList/RaceList.types';
+import ElementCard from '../../ElementCard/ElementCard';
 
 const Categories = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -24,6 +25,10 @@ const Categories = () => {
             setSelectedRaceType(raceType);
         }
     }, [races.length,raceTypes.length])
+
+    const setCharacterCategory = (value: string) => {
+        setCharacter({...character, category: value, step: 4});
+    }
 
     return(
         <>
@@ -55,19 +60,13 @@ const Categories = () => {
                             (
                                 <>
                                 {primaryCategories.map((primaryCategory: any) => (
-                                    <div className="categories-item">
-                                        <button onClick={() => setCharacter({...character,category: primaryCategory.name,step: 4})}>
-                                            <p className="categories-item-title">{primaryCategory.name}</p>
-                                            <Image
-                                                className="categories-item-image"
-                                                src={primaryCategory.image}
-                                                alt={"Image for " + primaryCategory.name}
-                                                width={175}
-                                                height={150}
-                                            />
-                                            <p className="categories-item-desc">{primaryCategory.shortDesc}</p>
-                                        </button>
-                                    </div>
+                                    <ElementCard
+                                        key={primaryCategory.name}
+                                        name={primaryCategory.name}
+                                        description={primaryCategory.shortDesc}
+                                        image={primaryCategory.image}
+                                        handleClick={(value:string) => setCharacterCategory(value)}
+                                    />
                                 ))}
                                 </>
                             ) : <div>No se encontraron las categorias</div>}

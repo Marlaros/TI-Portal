@@ -1,8 +1,5 @@
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useRaces } from './hooks/useRaces'
-import { IRace } from './components/raceCard/RaceCard.types'
-import { RaceList } from './components/raceList/RaceList'
 
 export default function Home() {
   

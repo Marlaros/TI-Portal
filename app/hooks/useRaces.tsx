@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IRace } from "../components/raceCard/RaceCard.types";
+import { IRace } from "../components/newCharacterSteps/raceList/RaceList.types";
 
 const getRaces = async () : Promise<IRace[]> => {
     const res = await fetch('http://127.0.0.1:8090/api/collections/razas/records', {
