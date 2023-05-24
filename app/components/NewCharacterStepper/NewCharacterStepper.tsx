@@ -6,6 +6,8 @@ import Specialties from '../newCharacterSteps/specialties/Specialties';
 
 import { CharacterContext } from '@/app/contexts/characterContext';
 
+import './NewCharacterStepper.css';
+
 const NewCharacterStepper = () => {
 
     const {character, setCharacter} = useContext(CharacterContext);
@@ -22,7 +24,7 @@ const NewCharacterStepper = () => {
                 case 4:
                     return <Specialties />
                 case 5:
-                    return <div>This is step 5: Race: {character.race}</div>;
+                    return <div>This is step 5: Race: {character.race} {character.specialty}</div>;
                 default:
                     return <div>This is the default step</div>    
             }
@@ -44,20 +46,22 @@ const NewCharacterStepper = () => {
         }
     }
 
+    const goBack = () => {
+        setCharacter({...character,step: character.step - 1})
+    }
+
     return(
-        <div style={{minWidth: '90vw'}}>
-            <div style={{marginLeft: '3%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '35%'}}>
+        <div className="stepper-container">
+            <div className="stepper-stepname-container">
                 {character.step > 1 ? 
-                    <div style={{flex: 1}}>
-                        <button 
-                            style={{cursor: 'pointer', color: 'rgba(0,0,0,0.88)', backgroundColor: 'rgba(231, 193, 119, 0.497)', borderStyle: 'none', fontWeight: '600', fontSize: '14px', padding: '2%', borderRadius: '8%'}}
-                            onClick={() => setCharacter({...character,step: character.step - 1})}>
+                    <div className="stepper-backbtn-container">
+                        <button className="stepper-backbtn" onClick={() => goBack()}>
                             {'< Atrás'}
                         </button>
                     </div>
                     : <></>
                 }
-                <div style={{flex: 5, fontSize: '18px', fontWeight: 'bold'}}>
+                <div className="stepper-stepname">
                     Paso {character.step}: {renderStepName()}
                 </div>
             </div>

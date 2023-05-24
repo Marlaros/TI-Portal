@@ -38,4 +38,5 @@
     border-radius: 5%;
     transition: all 1s ease-out;
     box-shadow: 8px 10px 12px 6px rgba(32, 31, 27, 0.2);
+    text-align: center;
 }

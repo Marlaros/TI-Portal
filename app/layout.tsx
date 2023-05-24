@@ -24,6 +24,9 @@ export default function RootLayout({
             <Link href="/characters/new" className="main-nav-link">
               <p>Nuevo Personaje</p>
             </Link>
+            <Link href="/" /*href="/characters"*/ className="main-nav-link">
+              <p>Mis Personajes</p>
+            </Link>
           </nav>
           {children}
         </main>
