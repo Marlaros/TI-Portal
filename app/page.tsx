@@ -9,7 +9,7 @@ export default function Home() {
           src={"https://dmsjourney.com/wp-content/uploads/elementor/thumbs/running-dnd-for-8-players-or-more-q2hmz3ka657n8z57zxnidmaspfkvi1kznr5jjzymps.jpg"}
           alt="Party Image"
           width={900}
-          height={450}
+          height={550}
           priority
           style={{objectFit: 'contain', borderRadius: '4%'}}
         />

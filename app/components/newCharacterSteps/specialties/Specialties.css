@@ -17,7 +17,7 @@
 }
 
 .specialties-list{
-    flex: 3;
+    flex: 6;
     width: 100%;
     display: flex;
     flex-direction: row;
