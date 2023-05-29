@@ -10,8 +10,8 @@ const FloatingCard = ({name, description, image, handleClick}: {name: string, de
                 className="floating-card-image"
                 src={image}
                 alt={"Image for " + name}
-                width={225}
-                height={225}/>
+                width={300}
+                height={300}/>
             <p className="floating-card-subtitle">{description}</p>
         </a>
     )
