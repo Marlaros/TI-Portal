@@ -47,7 +47,7 @@ const NewCharacterStepper = () => {
     }
 
     const goBack = () => {
-        setCharacter({...character,step: character.step - 1})
+        setCharacter((prevState) => ({...prevState,step: prevState.step - 1}))
     }
 
     return(

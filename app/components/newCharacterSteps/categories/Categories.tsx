@@ -27,7 +27,7 @@ const Categories = () => {
     }, [races.length,raceTypes.length])
 
     const setCharacterCategory = (value: string) => {
-        setCharacter({...character, category: value, step: 4});
+        setCharacter((prevState) => ({...prevState, category: value, step: 4}));
     }
 
     return(
@@ -49,7 +49,7 @@ const Categories = () => {
                         </div>
                         <div>
                             <p className="race-description">
-                                {selectedRaceType.description}
+                                {selectedRaceType.shortDesc}
                             </p>
                         </div>
                     </div>

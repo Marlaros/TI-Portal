@@ -33,7 +33,7 @@ const RaceType = () => {
     }
 
     const setCharacterRaceType = (value: string) => {
-        setCharacter({...character, raceType: value, step: 3})
+        setCharacter((prevState) => ({...prevState, raceType: value, step: 3}))
     }
 
     const renderAlternative = (race: string) => {

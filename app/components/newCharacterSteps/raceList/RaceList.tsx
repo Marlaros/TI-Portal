@@ -6,11 +6,11 @@ import { IRace } from "./RaceList.types";
 import { CharacterContext } from "@/app/contexts/characterContext";
 
 const RaceList = () => {
-    const {character, setCharacter} = useContext(CharacterContext);
+    const {setCharacter} = useContext(CharacterContext);
     const {races} = useRaces();
 
     const setCharacterRace = (value: string) => {
-        setCharacter({...character, race: value, step: 2})
+        setCharacter((prevState)=> ({...prevState, race: value, step: 2}))
     }
 
     return(

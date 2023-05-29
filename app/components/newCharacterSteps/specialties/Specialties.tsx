@@ -10,7 +10,7 @@ const Specialties = () => {
     const {specialties} = useSpecialties(character.race, character.category);
 
     const setCharacterSpecialty = (value: string) => {
-        setCharacter({...character, specialty: value, step: 5})
+        setCharacter((prevState) => ({...prevState, specialty: value, step: 5}))
     }
 
     return(

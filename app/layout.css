@@ -21,15 +21,29 @@
 
 .main-nav {
     margin-left: 2%;
-    width: 55%;
+    width: 40%;
     height: 5%;
     display: flex;
     justify-content: flex-start;
     text-align: center;
 }
 
+@media screen and (max-width: 1290px){
+    .main-nav{
+        min-width:60%;
+    }
+}
+
+@media screen and (max-width: 690px){
+    .main-nav{
+        min-width:97.5%;
+    }
+}
+
+
+
 .main-nav-link {
-    flex: 1;
+    flex: 1 1 auto;
     margin: 2%;
     padding: 1%;
 }
