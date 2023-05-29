@@ -5,6 +5,20 @@
     align-items: flex-start;
 }
 
+
+@media screen and (max-width: 1050px){
+    .racetype-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .race-section{
+        min-width:80%;
+    }
+}
+
+
 .race-section{
     flex: 1;
     margin: 2%;
