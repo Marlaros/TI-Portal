@@ -1,7 +1,7 @@
 .element-card{
-    flex: 1 1 275px;
+    flex: 1 1 280px;
     margin: 1%;
-    min-width: 33%
+    min-width: 33%;
 }
 
 .element-card > button {
@@ -21,6 +21,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100%
 }
 
 @media screen and (max-width: 1460px){
@@ -35,13 +36,13 @@
 }
 
 .element-card-title{
-    flex: 1 1 30px;
+    flex: 1 1 40px;
     font-size: 20px;
     font-weight: 600;
 }
 
 .element-card-image{
-    flex: 3 1 175px;
+    flex: 5 2 250px;
     object-fit: cover;
     border-radius: 5%;
     aspect-ratio: 3/2;
@@ -49,7 +50,7 @@
 }
 
 .element-card-desc{
-    flex: 2 1 35px;
+    flex: 3 1 65px;
     font-size: 14px;
     font-weight: 500;
     margin-top: 5%;

@@ -11,10 +11,10 @@ const ElementCard = ({name, description, image, handleClick}: {name: string, des
                     className="element-card-image"
                     src={image}
                     alt={"Image for " + name}
-                    width={200}
+                    width={300}
                     height={300}
                 />
-                <p className="element-card-desc">{description}</p>
+                <p className="element-card-desc" style={{width: `${description.length > 250 ? '85%' : '75%'}`}}>{description}</p>
             </button>
         </div>
     )
