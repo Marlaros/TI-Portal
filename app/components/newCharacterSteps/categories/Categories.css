@@ -80,6 +80,10 @@
     margin-left: 2%
 }
 
+.categories-select-grid button{
+    aspect-ratio: 3/4;
+}
+
 
 /*.categories-item{
     flex: 1;

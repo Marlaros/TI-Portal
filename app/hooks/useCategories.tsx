@@ -9,7 +9,8 @@ const getPrimaryCategories = async (raceName: string) : Promise<any[]> => {
         "Elfos": "Elfo",
         "Enanos": "Enano",
         "Duendes": "Duendes",
-        "Ogros": "Ogros"
+        "Ogros": "Ogros",
+        "Semielfos": "Semielfos"
     } 
     const imageFilter : string = imageNameMap[raceName];
     const res = await fetch('http://127.0.0.1:8090/api/collections/categorias/records', {

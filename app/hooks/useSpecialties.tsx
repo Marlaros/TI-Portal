@@ -7,7 +7,8 @@ const getSpecialties = async (race: string, category: string) : Promise<IRace[]>
         "Elfos": "Elfo",
         "Enanos": "Enano",
         "Duendes": "Duende",
-        "Ogros": "Ogros"
+        "Ogros": "Ogros",
+        "Semielfos": "Semielfo"
     } 
     const imageFilter : string = imageNameMap[race];
     const res = await fetch('http://127.0.0.1:8090/api/collections/especialidades/records', {
@@ -18,7 +19,7 @@ const getSpecialties = async (race: string, category: string) : Promise<IRace[]>
     });
     const data : any = await res.json();
     return imageFilter === "Ogros" ? [] : data?.items
-        .filter((specialty: any) => specialty.category === category /*&& specialty.parent.includes(race)*/)
+        .filter((specialty: any) => specialty.category === category && specialty.parent.toLowerCase().includes(race.toLowerCase()))
         .map((specialty:any) => {
             const specialtyDetails : any = {
                 'name': specialty.name,
@@ -28,6 +29,7 @@ const getSpecialties = async (race: string, category: string) : Promise<IRace[]>
             }
             return specialtyDetails
         })
+        .sort((a:any,b:any) => a.name.localeCompare(b.name));
 }
 
 const getSpecialtyImage = (recordId: string, fileName: string) : string => {

@@ -39,7 +39,7 @@ const RaceType = () => {
     const renderAlternative = (race: string) => {
         return(
             <>
-                {["Duendes","Ogros"].includes(race) ?
+                {["Duendes","Semielfos","Ogros"].includes(race) ?
                     <div className="alternative-section">
                         <p className="alternative-comment">Los {race} no poseen subtipos inherentes a su raza</p>
                         <button
