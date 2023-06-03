@@ -12,12 +12,12 @@
         align-items: center;
     }
 
-    .description-section{
+    /* .description-section{
         min-width:80%;
-    }
+    } */
 }
 
-
+/* 
 .specialty-section{
     flex: 2;
     margin: 2%;
@@ -51,7 +51,7 @@
     font-size: 16px;
     font-weight: 600;
     margin-top: 2%;
-}
+} */
 
 .description-section {
     flex: 3;

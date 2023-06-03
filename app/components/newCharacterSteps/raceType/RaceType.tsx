@@ -1,16 +1,18 @@
 
 import React, { useState, useEffect, useContext, Dispatch, SetStateAction } from 'react'
-import Image from 'next/image'
+
+import ElementCard from '../../ElementCard/ElementCard';
+import BigCard from '../../BigCard/BigCard';
+
+import { CharacterContext } from '@/app/contexts/characterContext';
 
 import { useRaces } from '@/app/hooks/useRaces';
-import { CharacterContext } from '@/app/contexts/characterContext';
 import { IRace } from '../raceList/RaceList.types';
 
 import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { IRaceType } from './RaceType.types';
 
 import './RaceType.css';
-import ElementCard from '../../ElementCard/ElementCard';
 
 const RaceType = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -61,25 +63,11 @@ const RaceType = () => {
         <>
             { selectedRace && selectedRace.name  ? 
                 (<div className="racetype-container">
-                    <div className="race-section">
-                        <div className="race-header">
-                                {character.race}
-                        </div>
-                        <div>
-                            <Image
-                                className="race-image"
-                                src={selectedRace.image}
-                                alt={"Image for " + character.race}
-                                width={450}
-                                height={450}
-                            />
-                        </div>
-                        <div>
-                            <p className="race-description">
-                                {selectedRace.description}
-                            </p>
-                        </div>
-                    </div>
+                    <BigCard
+                        name={selectedRace.name}
+                        description={selectedRace.shortDesc}
+                        image={selectedRace.image}
+                    />
                     <div className="racetype-section">
                         <div className="racetype-header">{renderSelectTypeHeader(selectedRace.name)}</div>
                         <div className="racetype-select-grid">

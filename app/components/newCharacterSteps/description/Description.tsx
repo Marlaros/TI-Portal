@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
+
+import BigCard from '../../BigCard/BigCard';
+
 import { CharacterContext } from '@/app/contexts/characterContext';
-import './Description.css';
+
 import { useSpecialties } from '@/app/hooks/useSpecialties';
+
+import './Description.css';
 
 const Description = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -22,27 +26,13 @@ const Description = () => {
         <>
             { selectedSpecialty && selectedSpecialty.name  ? 
                 (<div className="description-container">
-                    <div className="specialty-section">
-                        <div className="specialty-header">
-                            {character.raceType} - {character.specialty}
-                        </div>
-                        <div>
-                            <Image
-                                className="specialty-image"
-                                src={selectedSpecialty.image}
-                                alt={"Image for " + character.specialty}
-                                width={450}
-                                height={450}
-                            />
-                        </div>
-                        <div>
-                            <p className="specialty-description">
-                                {selectedSpecialty.shortDesc}
-                            </p>
-                        </div>
-                    </div>
+                    <BigCard
+                        name={`${character.raceType} - ${selectedSpecialty.name}`}
+                        description={selectedSpecialty.shortDesc}
+                        image={selectedSpecialty.image}
+                    />
                     <div className="description-section">
-                        <div className="description-header">Descripción Física del Personaje</div>
+                        <div className="description-header">Descripción del Personaje</div>
                         <div className="description-select-grid">
                             <>{'Acá van los Inputs de descripcion'}</>
                         </div>

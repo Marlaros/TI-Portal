@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
-import { CharacterContext } from '@/app/contexts/characterContext';
-import { useRaceTypes } from '@/app/hooks/useRaceTypes';
-import { usePrimaryCategories } from '@/app/hooks/useCategories';
-import './Categories.css';
 
-// When there's no race types 
+import ElementCard from '../../ElementCard/ElementCard';
+import BigCard from '../../BigCard/BigCard';
+
+import { CharacterContext } from '@/app/contexts/characterContext';
 
 import { useRaces } from '@/app/hooks/useRaces';
+import { useRaceTypes } from '@/app/hooks/useRaceTypes';
+import { usePrimaryCategories } from '@/app/hooks/useCategories';
+
 import { IRace } from '../raceList/RaceList.types';
-import ElementCard from '../../ElementCard/ElementCard';
+
+import './Categories.css';
+
 
 const Categories = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -37,25 +40,11 @@ const Categories = () => {
         <>
             { selectedRaceType && selectedRaceType.name  ? 
                 (<div className="categories-container">
-                    <div className="racetype-section">
-                        <div className="racetype-header">
-                            {character.raceType}
-                        </div>
-                        <div>
-                            <Image
-                                className="racetype-image"
-                                src={selectedRaceType.image}
-                                alt={"Image for " + character.raceType}
-                                width={450}
-                                height={450}
-                            />
-                        </div>
-                        <div>
-                            <p className="racetype-description">
-                                {selectedRaceType.shortDesc}
-                            </p>
-                        </div>
-                    </div>
+                    <BigCard
+                        name={selectedRaceType.name}
+                        description={selectedRaceType.shortDesc}
+                        image={selectedRaceType.image}
+                    />
                     <div className="categories-section">
                         <div className="categories-header">Seleccionar Categoria Principal</div>
                         <div className="categories-select-grid">

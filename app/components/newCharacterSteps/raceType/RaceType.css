@@ -13,13 +13,13 @@
         align-items: center;
     }
 
-    .race-section{
+    /*.race-section{
         min-width:80%;
-    }
+    }*/
 }
 
 
-.race-section{
+/* .race-section{
     flex: 1;
     margin: 2%;
     display: flex;
@@ -52,7 +52,7 @@
     font-size: 16px;
     font-weight: 600;
     margin-top: 2%;
-}
+} */
 
 .racetype-section {
     flex: 4;
