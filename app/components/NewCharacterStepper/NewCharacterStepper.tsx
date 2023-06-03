@@ -7,6 +7,7 @@ import Specialties from '../newCharacterSteps/specialties/Specialties';
 import { CharacterContext } from '@/app/contexts/characterContext';
 
 import './NewCharacterStepper.css';
+import Description from '../newCharacterSteps/description/Description';
 
 const NewCharacterStepper = () => {
 
@@ -24,7 +25,9 @@ const NewCharacterStepper = () => {
                 case 4:
                     return <Specialties />
                 case 5:
-                    return <div>This is step 5: Race: {character.race} {character.specialty}</div>;
+                    return <Description />
+                case 6:
+                    return <div>This is step 6: Race: {character.race} {character.specialty}</div>;
                 default:
                     return <div>This is the default step</div>    
             }
@@ -41,6 +44,8 @@ const NewCharacterStepper = () => {
                 return `Seleccionar Categoria Principal`;
             case 4:
                 return `Seleccionar Especialidad`;
+            case 5:
+                return `Descripción del Personaje`
             default:
                 return "Continuar";
         }

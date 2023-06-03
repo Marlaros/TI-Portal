@@ -4,6 +4,9 @@ import { CharacterContext } from '@/app/contexts/characterContext';
 import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { usePrimaryCategories } from '@/app/hooks/useCategories';
 import './Categories.css';
+
+// When there's no race types 
+
 import { useRaces } from '@/app/hooks/useRaces';
 import { IRace } from '../raceList/RaceList.types';
 import ElementCard from '../../ElementCard/ElementCard';
@@ -48,7 +51,7 @@ const Categories = () => {
                             />
                         </div>
                         <div>
-                            <p className="race-description">
+                            <p className="racetype-description">
                                 {selectedRaceType.shortDesc}
                             </p>
                         </div>
