@@ -1,9 +1,13 @@
 "use client"
 import React, { useContext } from "react";
+
 import FloatingCard from "../../FloatingCard/FloatingCard";
-import { useRaces } from "@/app/hooks/useRaces";
-import { IRace } from "./RaceList.types";
+
 import { CharacterContext } from "@/app/contexts/characterContext";
+
+import { useRaces } from "@/app/hooks/useRaces";
+
+import { IRace } from "./RaceList.types";
 
 const RaceList = () => {
     const {setCharacter} = useContext(CharacterContext);

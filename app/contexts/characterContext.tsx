@@ -3,6 +3,8 @@ import { Character } from '../characters/new/character.type';
 
 export const emptyCharacter : Character = {
     name: "",
+    level: 1,
+    alignment: "",
     race: "",
     raceType: "",
     category: "",

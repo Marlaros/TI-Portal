@@ -1,8 +1,12 @@
 "use client"
 import React, { useContext } from "react";
-import { CharacterContext } from "@/app/contexts/characterContext";
-import { useSpecialties } from "@/app/hooks/useSpecialties";
+
 import FloatingCard from "../../FloatingCard/FloatingCard";
+
+import { CharacterContext } from "@/app/contexts/characterContext";
+
+import { useSpecialties } from "@/app/hooks/useSpecialties";
+
 import './Specialties.css'
 
 const Specialties = () => {

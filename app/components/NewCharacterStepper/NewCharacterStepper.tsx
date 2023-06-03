@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
+
 import RaceList from '../newCharacterSteps/raceList/RaceList';
 import RaceType from '../newCharacterSteps/raceType/RaceType';
 import Categories from '../newCharacterSteps/categories/Categories';
 import Specialties from '../newCharacterSteps/specialties/Specialties';
+import Description from '../newCharacterSteps/description/Description';
 
 import { CharacterContext } from '@/app/contexts/characterContext';
 
 import './NewCharacterStepper.css';
-import Description from '../newCharacterSteps/description/Description';
 
 const NewCharacterStepper = () => {
 

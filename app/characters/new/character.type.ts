@@ -1,5 +1,7 @@
 export interface Character {
     name: string,
+    level: number,
+    alignment: string,
     race: string,
     raceType: string,
     category: string,
