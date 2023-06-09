@@ -9,8 +9,6 @@ export const emptyCharacter : Character = {
     raceType: "",
     category: "",
     specialty: "",
-    //level: 1,
-    //morality: "",
     attributes: {
         fuerza: 0,
         resistencia: 0,

@@ -17,42 +17,6 @@
     } 
 }
 
-/* 
-.specialty-section{
-    flex: 2;
-    margin: 2%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.specialty-header {
-    flex: 1;
-    margin-bottom: 2%;
-    width: 100%;
-    text-align: center;
-    font-size: 26px;
-    font-weight: 700;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.specialty-image {
-    flex: 5;
-    object-fit: cover;
-    border-radius: 3%;
-    box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.22);
-}
-
-.specialty-description{
-    flex: 3;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 2%;
-} */
-
 .description-section {
     flex: 3;
     margin: 1%;
@@ -69,7 +33,7 @@
     font-size: 26px;
 }
 
-.description-select-grid{
+.description-grid{
     flex: 4;
     display: flex;
     flex-direction: column;
@@ -105,18 +69,41 @@
     padding: 2%;
     box-shadow: 3px 4px 2px 3px rgba(0,0,0,0.11);
     background-color: rgba(231, 193, 119, 0.497);
+    transition: all 0.3s ease-out;
 }
 
-.description-input-value > input{
+.description-input-element{
     width: 100%;
     font-size: 18px;
     font-weight: 700;
+    text-align: center;
     padding: 1%;
-    background-color: inherit;
+    background-color: rgba(231, 194, 119, 0.65);
     color: rgba(0,0,0,0.87);
-    border-color: rgba(0,0,0,0.87);
+    border-color: rgba(0,0,0,0.37);
 }
 
-.description-input-value > input :focus{
-    transition: all 0.2
+/*.description-input-element :focus .description-input-value{
+    transform: scale(1.02);
+    border-color: inherit;
+}*/
+
+.description-btn-container{
+    flex: 1;
+    margin: 2%;
+}
+
+.accept-button{
+    width: 150px;
+    height: 55px;
+    font-size: 22px;
+    font-weight: 700;
+    background-color: rgba(231, 193, 119, 0.497);
+    color: rgba(0,0,0,0.88);
+    border-radius: 5%;
+    margin-top: 2%;
+    border: none;
+    box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.22);
+    cursor: pointer;
+    transition: all 0.3s ease-out;
 }
