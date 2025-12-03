@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint . --ext js,ts,tsx",
     "seed:supabase": "node scripts/seedSupabaseCatalogs.js",
-    "seed:supabase:extras": "node scripts/seedSupabaseExtras.js"
+    "seed:supabase:extras": "node scripts/seedSupabaseExtras.js",
+    "seed:supabase:media": "node scripts/uploadSupabaseMedia.js"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

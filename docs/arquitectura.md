@@ -55,11 +55,26 @@ src/
 
 ## 7. Supabase & catálogos
 - **Variables de entorno**: definir en `.env.local` los valores `SUPABASE_URL`, `SUPABASE_ANON_KEY` (cliente) y `SUPABASE_SERVICE_ROLE` (sólo para seeds). Opcionalmente `POCKETBASE_URL` si tu instancia local no vive en `http://127.0.0.1:8090`.
-- **Esquema**: `supabase/schema.sql` incluye tablas para razas, categorías, especialidades, personajes y ahora también ventajas, desventajas, equipo, estilos, maestrías y pericias. Cada vez que se agreguen tablas nuevas, vuelve a ejecutar el script completo en el SQL editor de Supabase para sincronizar el esquema.
+- **Esquema**: `supabase/schema.sql` incluye tablas para razas, categorías, especialidades, personajes y ahora también ventajas, desventajas, equipo, estilos, maestrías y pericias. Cada vez que se agreguen tablas nuevas, vuelve a ejecutar el script completo en el SQL editor de Supabase para sincronizar el esquema (los `create table` son idempotentes).
 - **Ingesta masiva**:
   - `npm run seed:supabase` lee `pb_data/data.db`, genera slugs/UUIDs y publica razas, subrazas, categorías y especialidades.
   - `npm run seed:supabase:extras` carga los catálogos declarativos (ventajas, desventajas, equipo, estilos, maestrías y pericias) definidos en `scripts/seedSupabaseExtras.js`.
-- **Próximas migraciones**: una vez que el storage de Supabase esté configurado, actualizaremos los seeds para subir los assets y reemplazar las URL temporales que siguen apuntando a PocketBase.
+- **Medios (imágenes)**:
+  - Define `SUPABASE_STORAGE_BUCKET` en `.env.local` (p. ej. `tierras-media`) y crea el bucket en Supabase Storage con políticas públicas de lectura.
+  - Ejecuta `npm run seed:supabase:media` para subir los archivos de `pb_data/storage/**` al bucket y actualizar las columnas `image_url` / `image_urls`.
+  - Next.js detecta `SUPABASE_URL` en build time y permite cargar imágenes desde `https://<project>.supabase.co/storage/v1/object/public/**`.
+
+## 8. Auth, RLS y Storage
+- **Auth**: habilita email/password o proveedores OAuth en Supabase. El frontend usa `SUPABASE_ANON_KEY`; scripts/SSR usan `SUPABASE_SERVICE_ROLE`.
+- **RLS**:
+  - Activa Row Level Security en `characters` y `character_versions`.
+  - Políticas sugeridas:
+    - `characters`: `INSERT/SELECT/UPDATE/DELETE` sólo si `auth.uid() = user_id`.
+    - `character_versions`: `SELECT` sólo si el personaje padre pertenece al usuario; `INSERT` restringido a Edge Functions o service role.
+  - Catálogos (`races`, `categories`, etc.) pueden dejarse con RLS desactivado o con política `SELECT true` para `anon`.
+- **Storage**:
+  - Bucket `tierras-media` (u otro nombre) con política pública de lectura para servir assets del manual.
+  - Para retratos privados se recomienda un bucket separado con política basada en `auth.uid()`.
 
 Este documento será el punto de referencia para coordinar cada entrega. Actualizarlo si se añaden módulos o cambian decisiones.
 
