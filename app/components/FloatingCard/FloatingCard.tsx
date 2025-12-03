@@ -1,20 +1,41 @@
-import React from 'react';
 import Image from 'next/image';
-import './FloatingCard.css'
+import styles from './FloatingCard.module.css';
 
-const FloatingCard = ({name, description, image, handleClick}: {name: string, description: string, image: string, handleClick: (value: string) => any}) => {
-    return (
-        <a key={name} className="floating-card" onClick={() => handleClick(name)}>
-            <h3 className="floating-card-title">{name}</h3>
-            <Image
-                className="floating-card-image"
-                src={image}
-                alt={"Image for " + name}
-                width={275}
-                height={275}/>
-            <p className="floating-card-subtitle">{description}</p>
-        </a>
-    )
+interface FloatingCardProps {
+  name: string;
+  description: string;
+  image: string;
+  handleClick: (value: string) => void;
 }
 
-export default FloatingCard;
+export default function FloatingCard({
+  name,
+  description,
+  image,
+  handleClick
+}: FloatingCardProps) {
+  return (
+    <button
+      type="button"
+      className={styles.card}
+      onClick={() => handleClick(name)}
+      aria-label={`Seleccionar ${name}`}
+    >
+      <div className={styles.header}>
+        <h3 className={styles.title}>{name}</h3>
+        <span className={styles.pill}>Ver detalles</span>
+      </div>
+      <div className={styles.imageFrame}>
+        <Image
+          className={styles.image}
+          src={image}
+          alt={`Ilustración de ${name}`}
+          width={275}
+          height={275}
+        />
+        <div className={styles.glow} />
+      </div>
+      <p className={styles.description}>{description}</p>
+    </button>
+  );
+}

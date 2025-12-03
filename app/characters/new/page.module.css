@@ -1,0 +1,11 @@
+.canvas {
+  width: 100%;
+  padding: 2rem 0 4rem;
+}
+
+.stack {
+  width: min(1300px, 100%);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+

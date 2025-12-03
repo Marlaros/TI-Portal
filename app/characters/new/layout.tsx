@@ -1,12 +1,16 @@
+import styles from './layout.module.css';
+
 export default function NewCharacterLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <div style={{ boxShadow: 'inset 0px 8px 6px 0px rgba(31,32,31,0.15)'}}>
-        <header style={{display: 'grid', placeItems: 'center', height: '10%', marginTop: '1%'}}>
-            <h2 style={{marginTop: '2%', transform: 'scale(1.05)', fontWeight: 'bold'}}>Nuevo Personaje</h2>
+    <div className={styles.layout}>
+        <header className={styles.header}>
+            <p>Forja un héroe</p>
+            <h2>Nuevo personaje</h2>
+            <span>Completa cada paso para generar la hoja automáticamente.</span>
         </header>
         {children}
     </div>

@@ -1,41 +1,23 @@
-"use client"
-import React, { useState, useEffect } from "react";
+'use client'
+import { useMemo } from 'react';
+import { useCatalogs } from '@/app/contexts/catalogContext';
 import { IRaceType } from "../components/newCharacterSteps/raceType/RaceType.types";
 
-const getRaceTypes = async () : Promise<IRaceType[]> => {
-    const res = await fetch('http://127.0.0.1:8090/api/collections/tiporazas/records', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-    const data : any = await res.json();
-    return data.items.map((tipo:any) => {
-        const tipoRaza = {
-            'name': tipo.name,
-            'parent': tipo.parent,
-            'shortDesc': tipo.short_desc,
-            'description': tipo.details,
-            'image': getRaceTypeImage(tipo.id, tipo.image)
-        }
-        return tipoRaza
-    });
-}
-
-const getRaceTypeImage = (recordId: string, fileName: string) : string => {
-    return `http://127.0.0.1:8090/api/files/tiporazas/${recordId}/${fileName}`
-}
-
 export const useRaceTypes = (selectedRaceName : string) : {raceTypes: IRaceType[]}=> {
-    const [raceTypes, setRaceTypes] = useState([]);
-    useEffect(() => {
-        getRaceTypes().then((raceTypes: any) => {
-            const availableRaceTypes = raceTypes.filter((tipoRaza: any) => tipoRaza.parent === selectedRaceName);
-            setRaceTypes(availableRaceTypes);
-        }).catch((err: any) => {
-            console.log(err);
-            setRaceTypes([]);
-        })
-    }, [])
+    const { raceVariants } = useCatalogs();
+
+    const raceTypes = useMemo<IRaceType[]>(() => {
+        if (!selectedRaceName) return [];
+        return raceVariants
+          .filter((variant) => variant.raceName === selectedRaceName)
+          .map((variant) => ({
+            name: variant.name,
+            parent: variant.raceName,
+            shortDesc: variant.shortDescription ?? '',
+            description: variant.description ?? '',
+            image: variant.imageUrl ?? ''
+          }));
+    }, [raceVariants, selectedRaceName]);
+
     return { raceTypes };
 }

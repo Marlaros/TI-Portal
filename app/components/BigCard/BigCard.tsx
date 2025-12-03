@@ -1,29 +1,28 @@
-import React from 'react'
-import Image from 'next/image'
-import './BigCard.css'
+import Image from 'next/image';
+import styles from './BigCard.module.css';
 
-const BigCard = ({name, description, image}: {name: string, description: string, image: string}) => {
-    return (
-        <div className="big-card-section">
-            <div className="big-card-header">
-                {name}
-            </div>
-            <div>
-                <Image
-                    className="big-card-image"
-                    src={image}
-                    alt={"Image for " +  name}
-                    width={450}
-                    height={450}
-                />
-            </div>
-            <div>
-                <p className="big-card-description">
-                    {description}
-                </p>
-            </div>
-        </div>
-    )
+interface BigCardProps {
+  name: string;
+  description: string;
+  image: string;
 }
 
-export default BigCard;
+export default function BigCard({ name, description, image }: BigCardProps) {
+  return (
+    <article className={styles.card}>
+      <header className={styles.header}>
+        <h3>{name}</h3>
+      </header>
+      <div className={styles.media}>
+        <Image
+          className={styles.image}
+          src={image}
+          alt={`Ilustración de ${name}`}
+          width={420}
+          height={420}
+        />
+      </div>
+      <p className={styles.description}>{description}</p>
+    </article>
+  );
+}

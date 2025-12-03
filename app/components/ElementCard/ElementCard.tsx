@@ -1,23 +1,37 @@
-import React from 'react'
-import Image from 'next/image'
-import './ElementCard.css'
+import Image from 'next/image';
+import styles from './ElementCard.module.css';
 
-const ElementCard = ({name, description, image, handleClick}: {name: string, description: string, image: string, handleClick: (value:string) => any}) => {
-    return (
-        <div className="element-card" /*style={{["Guerrero","Hechicero"].includes(name) ? }}*/>
-            <button key={name} onClick={() => handleClick(name)}>
-                <p className="element-card-title">{name}</p>
-                <Image
-                    className="element-card-image"
-                    src={image}
-                    alt={"Image for " + name}
-                    width={300}
-                    height={300}
-                />
-                <p className="element-card-desc" style={{width: `${description.length > 250 ? '85%' : '75%'}`}}>{description}</p>
-            </button>
-        </div>
-    )
+interface ElementCardProps {
+  name: string;
+  description: string;
+  image: string;
+  handleClick: (value: string) => void;
 }
 
-export default ElementCard;
+export default function ElementCard({
+  name,
+  description,
+  image,
+  handleClick
+}: ElementCardProps) {
+  return (
+    <button
+      type="button"
+      className={styles.card}
+      onClick={() => handleClick(name)}
+      aria-label={`Seleccionar ${name}`}
+    >
+      <p className={styles.title}>{name}</p>
+      <div className={styles.media}>
+        <Image
+          className={styles.image}
+          src={image}
+          alt={`Ilustración de ${name}`}
+          width={320}
+          height={240}
+        />
+      </div>
+      <p className={styles.description}>{description}</p>
+    </button>
+  );
+}

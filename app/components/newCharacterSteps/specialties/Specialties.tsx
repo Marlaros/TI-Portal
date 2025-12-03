@@ -1,5 +1,5 @@
-"use client"
-import React, { useContext } from "react";
+'use client'
+import { useContext } from "react";
 
 import FloatingCard from "../../FloatingCard/FloatingCard";
 
@@ -7,7 +7,7 @@ import { CharacterContext } from "@/app/contexts/characterContext";
 
 import { useSpecialties } from "@/app/hooks/useSpecialties";
 
-import './Specialties.css'
+import styles from './Specialties.module.css';
 
 const Specialties = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -18,36 +18,33 @@ const Specialties = () => {
     }
 
     return(
-        <div className="specialties-container">
-            <div className="specialties-header">
-                <p>
-                    Especialidades de los {character.race} {character.category}s
-                </p>
-            </div>
-            <div className="specialties-list">
+        <section className={styles.container}>
+            <header className={styles.header}>
+                <p className={styles.tag}>Paso 4</p>
+                <h3>
+                    Especialidades para {character.race || 'tu raza'} {character.category || ''}
+                </h3>
+                <p>Elige la senda que refina las habilidades únicas de tu héroe.</p>
+            </header>
+            <div className={styles.list}>
                 {specialties.length > 0 ? 
-                    <>
-                        {specialties.map((specialty: any) => (
-                            <FloatingCard 
-                                key={specialty.name}
-                                name={specialty.name}
-                                description={specialty.shortDesc}
-                                image={specialty.image}
-                                handleClick={(value: string) => setCharacterSpecialty(value)}
-                            />
-                        ))
-                        }
-                    </> : 
-                    <div className="specialties-empty-list">
-                        <p>
-                            {character.race === "Ogros" ?
+                    specialties.map((specialty: any) => (
+                        <FloatingCard 
+                            key={specialty.name}
+                            name={specialty.name}
+                            description={specialty.shortDesc}
+                            image={specialty.image}
+                            handleClick={(value: string) => setCharacterSpecialty(value)}
+                        />
+                    )) : 
+                    <div className={styles.empty}>
+                        {character.race === "Ogros" ?
                             "Los ogros no poseen especialidades. Solo son Guerreros :)" :
-                            "No se han encontrado especialidades para esta categoria."}
-                        </p>
+                            "No se han encontrado especialidades para esta categoría."}
                     </div>
                 }
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -1,38 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { IRace } from "../components/newCharacterSteps/raceList/RaceList.types";
+'use client'
+import { useMemo } from 'react';
+import { useCatalogs } from '@/app/contexts/catalogContext';
+import { IRace } from '../components/newCharacterSteps/raceList/RaceList.types';
 
-const getRaces = async () : Promise<IRace[]> => {
-    const res = await fetch('http://127.0.0.1:8090/api/collections/razas/records', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-    const data : any = await res.json();
-    return data.items.map((race:any) => {
-        const raceDetails : IRace = {
-            'name': race.name,
-            'shortDesc': race.short_desc,
-            'description': race.details,
-            'image': getRaceImage(race.id,race.image)
-        }
-        return raceDetails
-    })
-}
+export const useRaces = (): { races: IRace[]; status: 'loading' | 'ready' | 'error' } => {
+    const { races, status } = useCatalogs();
 
-const getRaceImage = (recordId: string, fileName: string) : string => {
-    return `http://127.0.0.1:8090/api/files/razas/${recordId}/${fileName}`
-}
+    const mapped = useMemo<IRace[]>(() => {
+        return races.map((race) => ({
+            name: race.name,
+            shortDesc: race.shortDescription ?? '',
+            description: race.description ?? '',
+            image: race.imageUrl ?? ''
+        }));
+    }, [races]);
 
-export const useRaces = () : {races: IRace[]} => {
-    const [races, setRaces] = useState([]);
-    useEffect(() => {
-        getRaces().then((races: any) => {
-            setRaces(races);
-        }).catch((err: any) => {
-            console.log(err);
-            setRaces([]);
-        })
-    }, [])
-    return { races : (races as IRace[])};
+    return { races: mapped, status };
 }

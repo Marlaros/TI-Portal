@@ -1,0 +1,41 @@
+.card {
+  flex: 1;
+  padding: 2rem;
+  border-radius: 32px;
+  border: 1px solid rgba(243, 230, 204, 0.25);
+  background: radial-gradient(circle at 80% 0%, rgba(196, 71, 50, 0.18), transparent 50%),
+    rgba(14, 25, 21, 0.95);
+  color: var(--ti-color-pergamino);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: var(--ti-shadow-card);
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.media {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(165, 139, 97, 0.4);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(243, 230, 204, 0.85);
+  margin: 0;
+  text-align: center;
+}
+

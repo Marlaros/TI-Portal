@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useMemo } from 'react';
 
 import ElementCard from '../../ElementCard/ElementCard';
 import BigCard from '../../BigCard/BigCard';
@@ -11,62 +11,64 @@ import { usePrimaryCategories } from '@/app/hooks/useCategories';
 
 import { IRace } from '../raceList/RaceList.types';
 
-import './Categories.css';
+import styles from './Categories.module.css';
 
 
 const Categories = () => {
     const {character, setCharacter} = useContext(CharacterContext);
-    const [selectedRaceType, setSelectedRaceType] = useState(undefined as any);
     const {raceTypes} = useRaceTypes(character.race);
     const {races} = useRaces(); 
     const {primaryCategories} = usePrimaryCategories(character.race);
 
-    useEffect(() => {
-        if(character.race === character.raceType){
-            const race = races.filter((race: IRace) => race.name === character.race)[0];
-            setSelectedRaceType(race);
+    const selectedRaceType = useMemo(() => {
+        if (!character.race) return undefined;
+        if (!character.raceType || character.race === character.raceType) {
+            return races.find((race: IRace) => race.name === character.race);
         }
-        else{
-            const raceType = (raceTypes.filter((raceType: any) => raceType.name === character.raceType)[0]);
-            setSelectedRaceType(raceType);
-        }
-    }, [races.length,raceTypes.length])
+        return raceTypes.find((raceType: any) => raceType.name === character.raceType) ??
+            races.find((race: IRace) => race.name === character.race);
+    }, [character.race, character.raceType, raceTypes, races]);
 
     const setCharacterCategory = (value: string) => {
         setCharacter((prevState) => ({...prevState, category: value, step: 4}));
     }
 
     return(
-        <>
-            { selectedRaceType && selectedRaceType.name  ? 
-                (<div className="categories-container">
-                    <BigCard
-                        name={selectedRaceType.name}
-                        description={selectedRaceType.shortDesc}
-                        image={selectedRaceType.image}
-                    />
-                    <div className="categories-section">
-                        <div className="categories-header">Seleccionar Categoria Principal</div>
-                        <div className="categories-select-grid">
-                            { primaryCategories.length > 0 ? 
-                            (
-                                <>
-                                {primaryCategories.map((primaryCategory: any) => (
-                                    <ElementCard
-                                        key={primaryCategory.name}
-                                        name={primaryCategory.name}
-                                        description={primaryCategory.shortDesc}
-                                        image={primaryCategory.image}
-                                        handleClick={(value:string) => setCharacterCategory(value)}
-                                    />
-                                ))}
-                                </>
-                            ) : <div>No se encontraron las categorias</div>}
-                        </div>
-                    </div>
-                </div>) : <div>Cargando...</div>
-            }
-        </>
+        <div className={styles.container}>
+            {selectedRaceType && selectedRaceType.name && (
+                <BigCard
+                    name={selectedRaceType.name}
+                    description={selectedRaceType.shortDesc}
+                    image={selectedRaceType.image}
+                />
+            )}
+            <section className={styles.section}>
+                <header className={styles.header}>
+                    <p className={styles.tag}>Paso 3</p>
+                    <h3>Selecciona la categoría principal</h3>
+                    <p>
+                        Define el rol de tu {character.race || 'aventurero'} en batalla. Cada
+                        categoría desbloquea estilos y especialidades únicas.
+                    </p>
+                </header>
+                <div className={styles.grid}>
+                    { primaryCategories.length > 0 ? 
+                        primaryCategories.map((primaryCategory: any) => (
+                            <ElementCard
+                                key={primaryCategory.name}
+                                name={primaryCategory.name}
+                                description={primaryCategory.shortDesc}
+                                image={primaryCategory.image}
+                                handleClick={(value:string) => setCharacterCategory(value)}
+                            />
+                        )) : (
+                            <div className={styles.empty}>
+                                No se encontraron categorías disponibles para esta combinación.
+                            </div>
+                        )}
+                </div>
+            </section>
+        </div>
     )
 }
 

@@ -1,50 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { IRace } from "../components/newCharacterSteps/raceList/RaceList.types";
-
-const getSpecialties = async (race: string, category: string) : Promise<IRace[]> => {
-    const imageNameMap : {[key: string] : string} = {
-        "Humanos": "Humano",
-        "Elfos": "Elfo",
-        "Enanos": "Enano",
-        "Duendes": "Duende",
-        "Ogros": "Ogros",
-        "Semielfos": "Semielfo"
-    } 
-    const imageFilter : string = imageNameMap[race];
-    const res = await fetch('http://127.0.0.1:8090/api/collections/especialidades/records', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-    const data : any = await res.json();
-    return imageFilter === "Ogros" ? [] : data?.items
-        .filter((specialty: any) => specialty.category === category && specialty.parent.toLowerCase().includes(race.toLowerCase()))
-        .map((specialty:any) => {
-            const specialtyDetails : any = {
-                'name': specialty.name,
-                'shortDesc': specialty.short_desc,
-                'description': specialty.details,
-                'image': getSpecialtyImage(specialty.id,specialty.images.filter((img: string) => img.toLowerCase().includes(imageFilter.toLowerCase()))[0])
-            }
-            return specialtyDetails
-        })
-        .sort((a:any,b:any) => a.name.localeCompare(b.name));
-}
-
-const getSpecialtyImage = (recordId: string, fileName: string) : string => {
-    return `http://127.0.0.1:8090/api/files/especialidades/${recordId}/${fileName}`
-}
+'use client'
+import { useMemo } from "react";
+import { useCatalogs } from "@/app/contexts/catalogContext";
 
 export const useSpecialties = (race: string, category: string) : {specialties: any[]} => {
-    const [specialties, setSpecialties] = useState([]);
-    useEffect(() => {
-        getSpecialties(race, category).then((specialties: any) => {
-            setSpecialties(specialties);
-        }).catch((err: any) => {
-            console.log(err);
-            setSpecialties([]);
-        })
-    }, [])
-    return { specialties : (specialties as any[])};
+    const { specialties } = useCatalogs();
+
+    const filtered = useMemo(() => {
+        if (!race || !category) return [];
+        return specialties
+            .filter((specialty) => {
+                const matchesCategory = specialty.categoryName === category;
+                const matchesRace = specialty.allowedRaces.length === 0
+                    ? true
+                    : specialty.allowedRaces.some((entry) => entry.toLowerCase().includes(race.toLowerCase()));
+                return matchesCategory && matchesRace;
+            })
+            .map((specialty) => ({
+                name: specialty.name,
+                shortDesc: specialty.shortDescription ?? '',
+                description: specialty.description ?? '',
+                image: specialty.imageUrls?.[0] ?? ''
+            }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+    }, [specialties, race, category]);
+
+    return { specialties: filtered };
 }

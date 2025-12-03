@@ -1,17 +1,20 @@
 "use client"
-import React from 'react';
 import CharacterProvider from '@/app/contexts/characterContext';
+import { CatalogProvider } from '@/app/contexts/catalogContext';
 import NewCharacterStepper from '@/app/components/NewCharacterStepper/NewCharacterStepper';
+import styles from './page.module.css';
 
 
 export default function NewCharacter() {
-    //const [character, setCharacter] : [Character, Dispatch<SetStateAction<Character>>] = useState(emptyCharacter);
-
     return(
-        <CharacterProvider>
-            <div style={{maxWidth:'95%', display: 'flex', justifyContent: 'center', overflow: 'hidden'}}>
-                <NewCharacterStepper />
-            </div>
-        </CharacterProvider>
+        <CatalogProvider>
+            <CharacterProvider>
+                <section className={styles.canvas}>
+                    <div className={styles.stack}>
+                        <NewCharacterStepper />
+                    </div>
+                </section>
+            </CharacterProvider>
+        </CatalogProvider>
     )
 }

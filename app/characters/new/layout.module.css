@@ -1,0 +1,27 @@
+.layout {
+  box-shadow: inset 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--ti-color-pergamino);
+}
+
+.header p {
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  font-size: 0.75rem;
+  color: rgba(243, 230, 204, 0.6);
+  margin-bottom: 0.6rem;
+}
+
+.header h2 {
+  margin: 0.4rem 0;
+}
+
+.header span {
+  color: rgba(243, 230, 204, 0.75);
+  font-size: 0.95rem;
+}
+
