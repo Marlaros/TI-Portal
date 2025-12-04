@@ -1,11 +1,45 @@
 .canvas {
   width: 100%;
+  display: flex;
+  justify-content: center;
   padding: 2rem 0 4rem;
 }
 
-.stack {
-  width: min(1300px, 100%);
-  margin: 0 auto;
-  padding: 0 1rem;
+/* Custom, golden and rounded scrollbar with more space and bright hover */
+::-webkit-scrollbar {
+  width: 0.75rem;
+  background: var(--ti-color-bg);
+  margin: 1rem 0;
 }
 
+::-webkit-scrollbar-thumb {
+  background: var(--ti-color-dorado);
+  border-radius: 0.75rem;
+  margin: 0.5rem 0;
+  min-height: 2rem;
+  border: 3px solid var(--ti-color-bg);
+  /* Give some padding by using border on thumb */
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffe066; /* Bright, saturated gold, override to be visually lighter */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ti-color-bg);
+  border-radius: 0.75rem;
+}
+
+.stack {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .stack {
+    padding: 0 1rem;
+  }
+}

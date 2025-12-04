@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 
 import FloatingCard from "../../FloatingCard/FloatingCard";
+import styles from './RaceList.module.css';
 
 import { CharacterContext } from "@/app/contexts/characterContext";
 
@@ -18,7 +19,7 @@ const RaceList = () => {
     }
 
     return(
-        <div style={{display:'flex',justifyContent:'center', alignItems: 'center', flexWrap: 'wrap', width: '100%', marginLeft: '1%', marginTop: '-2%'}}>
+        <div className={styles.grid}>
             {races.map((race: IRace) => 
                 <FloatingCard 
                     key={race.name}

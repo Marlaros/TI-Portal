@@ -2,19 +2,23 @@ import React, {Dispatch, SetStateAction, createContext, useState} from 'react'
 import { Character } from '../characters/new/character.type';
 
 export const emptyCharacter : Character = {
+    userName: "",
     name: "",
     level: 1,
     alignment: "",
     race: "",
     raceType: "",
     category: "",
+    secondaryCategory: null,
     specialty: "",
     advantages: [],
     disadvantages: [],
     equipment: [],
+    mounts: [],
     fightingStyle: null,
     weaponSpecialization: null,
     skills: [],
+    skillRanks: {},
     attributes: {
         fuerza: 10,
         resistencia: 10,
@@ -35,12 +39,16 @@ export const emptyCharacter : Character = {
         piel: "",
         genero: "",
     },
+    countryOfOrigin: "",
     stats: {
         ataque: 0,
+        disparos: 0,
+        probCritico: 0,
         modAlDaño: 0,
         defensa: 0,
         defEspontanea: 0,
         penDef: 0,
+        reduccionDano: 0,
         iniciativa: 0,
         AR: 0,
         PG: 0,
@@ -53,6 +61,8 @@ export const emptyCharacter : Character = {
             deL: {}
         }, 
     },
+    experience: 0,
+    experiencePenalty: 0,
     step: 1,
 }
 

@@ -1,7 +1,8 @@
 .card {
-  flex: 1 1 280px;
-  min-width: 260px;
+  flex: 1 1 320px;
+  min-width: 280px;
   max-width: 360px;
+  min-height: 460px;
   margin: 0.5rem;
   padding: 1.75rem;
   display: flex;
@@ -45,11 +46,12 @@
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(107, 160, 140, 0.5);
+  aspect-ratio: 4 / 3;
 }
 
 .image {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -65,5 +67,10 @@
   color: rgba(243, 230, 204, 0.85);
   margin: 0;
   line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 4.8rem;
 }
 

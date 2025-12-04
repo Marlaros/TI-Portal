@@ -22,11 +22,12 @@
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid rgba(165, 139, 97, 0.4);
+  aspect-ratio: 4 / 3;
 }
 
 .image {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
 }

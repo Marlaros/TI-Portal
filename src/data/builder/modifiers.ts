@@ -12,6 +12,7 @@ export interface BuilderSelections {
   race?: string;
   raceType?: string;
   category?: string;
+  secondaryCategory?: string | null;
   specialty?: string;
   advantageIds: string[];
   disadvantageIds: string[];
@@ -19,6 +20,7 @@ export interface BuilderSelections {
   fightingStyleId?: string | null;
   weaponSpecializationId?: string | null;
   skillIds: string[];
+  mountIds: string[];
 }
 
 const optionMap = <T extends BuilderOption>(options: T[]) =>

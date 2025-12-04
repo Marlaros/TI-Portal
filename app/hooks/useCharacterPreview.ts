@@ -32,24 +32,18 @@ const buildSelections = (character: Character): BuilderSelections => ({
   race: character.race,
   raceType: character.raceType,
   category: character.category,
+  secondaryCategory: character.secondaryCategory ?? undefined,
   specialty: character.specialty,
   advantageIds: character.advantages,
   disadvantageIds: character.disadvantages,
   equipmentIds: character.equipment,
   fightingStyleId: character.fightingStyle,
   weaponSpecializationId: character.weaponSpecialization,
-  skillIds: character.skills
+  skillIds: character.skills,
+  mountIds: character.mounts
 });
 
-const isReadyForPreview = (character: Character) =>
-  Boolean(
-    character.name &&
-      character.race &&
-      character.category &&
-      character.specialty &&
-      character.fightingStyle &&
-      character.weaponSpecialization
-  );
+const isReadyForPreview = (character: Character) => Boolean(character.race && character.category);
 
 export const useCharacterPreview = (character: Character): PreviewResult => {
   const { builderCatalogs, status } = useCatalogs();
@@ -80,24 +74,24 @@ export const useCharacterPreview = (character: Character): PreviewResult => {
             nombre: character.name,
             nivel: character.level,
             categoriaPrincipal: character.category,
-            categoriaSecundaria: null,
+            categoriaSecundaria: character.secondaryCategory,
             raza: character.race,
             alineamiento: character.alignment,
             estatusSocial: String(character.attributes.categoriaSocial ?? ''),
-            paisOrigen: character.raceType || ''
+            paisOrigen: character.countryOfOrigin || ''
           },
           attributes: mapAttributes(character.attributes),
           selections: {
             raceId: character.race || 'sin-raza',
             raceVariantId: character.raceType || undefined,
             primaryCategoryId: character.category || 'sin-categoria',
-            secondaryCategoryId: null,
+            secondaryCategoryId: character.secondaryCategory || null,
             specialtyIds: character.specialty ? [character.specialty] : [],
             advantageIds: character.advantages,
             disadvantageIds: character.disadvantages,
             weaponIds: character.equipment,
             fightingStyleId: character.fightingStyle || undefined,
-            mountIds: []
+            mountIds: character.mounts
           },
           customModifiers,
           contextFlags

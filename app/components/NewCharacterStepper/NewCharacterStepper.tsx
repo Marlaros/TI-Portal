@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 
 import RaceList from '../newCharacterSteps/raceList/RaceList';
 import RaceType from '../newCharacterSteps/raceType/RaceType';
@@ -12,10 +12,10 @@ import EquipmentStep from '../newCharacterSteps/equipment/Equipment';
 import FightingStyleStep from '../newCharacterSteps/fightingStyle/FightingStyle';
 import WeaponMasteryStep from '../newCharacterSteps/weaponMastery/WeaponMastery';
 import SkillsStep from '../newCharacterSteps/skills/Skills';
-import PreviewStep from '../newCharacterSteps/preview/Preview';
+import CharacterPreviewPanel from '../newCharacterSteps/preview/Preview';
+import AttributesStep from '../newCharacterSteps/attributes/Attributes';
 
 import { CharacterContext } from '@/app/contexts/characterContext';
-import type { Character } from '@/app/characters/new/character.type';
 import { cn } from '@/utils/cn';
 
 import styles from './NewCharacterStepper.module.css';
@@ -26,16 +26,16 @@ const STEP_META = [
   { title: 'Categoría principal', helper: 'Selecciona el rol base que determinará tus progresiones.' },
   { title: 'Especialidad', helper: 'Perfecciona tu estilo con escuelas avanzadas.' },
   { title: 'Descripción', helper: 'Completa los datos narrativos de la hoja.' },
+  { title: 'Atributos base', helper: 'Define los valores que alimentarán tus estadísticas.' },
   { title: 'Ventajas', helper: 'Añade dones excepcionales según tu linaje.' },
   { title: 'Desventajas', helper: 'Equilibra el poder con compromisos o restricciones.' },
   { title: 'Equipo', helper: 'Define armas, armaduras y kits iniciales.' },
   { title: 'Estilo de lucha', helper: 'Selecciona la técnica de combate predominante.' },
   { title: 'Arma predilecta', helper: 'Especialízate en el arma que dominarás.' },
-  { title: 'Pericias', helper: 'Selecciona talentos clave para la aventura.' },
-  { title: 'Previsualización', helper: 'Revisa todos los datos antes de crear.' }
+  { title: 'Pericias', helper: 'Selecciona talentos clave para la aventura.' }
 ] as const;
 
-const STEP_COMPONENT = (step: number, handlers: { onCreate: () => void }) => {
+const STEP_COMPONENT = (step: number) => {
   switch (step) {
     case 1:
       return <RaceList />;
@@ -48,30 +48,23 @@ const STEP_COMPONENT = (step: number, handlers: { onCreate: () => void }) => {
     case 5:
       return <Description />;
     case 6:
-      return <AdvantagesStep />;
+      return <AttributesStep />;
     case 7:
-      return <DisadvantagesStep />;
+      return <AdvantagesStep />;
     case 8:
-      return <EquipmentStep />;
+      return <DisadvantagesStep />;
     case 9:
-      return <FightingStyleStep />;
+      return <EquipmentStep />;
     case 10:
-      return <WeaponMasteryStep />;
+      return <FightingStyleStep />;
     case 11:
-      return <SkillsStep />;
+      return <WeaponMasteryStep />;
     case 12:
-      return <PreviewStep onCreate={handlers.onCreate} />;
+      return <SkillsStep />;
     default:
       return <div className={styles.placeholder}>Seleccione una opción para continuar.</div>;
   }
 };
-
-const formatValue = (value: string | number | undefined | null) =>
-  value !== undefined && value !== null && value !== '' ? value : 'Sin definir';
-
-const toTitle = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
-const formatList = (values: string[]) =>
-  values.length ? values.map((value) => toTitle(String(value))).join(', ') : 'Sin definir';
 
 export default function NewCharacterStepper() {
   const { character, setCharacter } = useContext(CharacterContext);
@@ -80,52 +73,6 @@ export default function NewCharacterStepper() {
   const activeIndex = clampedStep - 1;
   const activeMeta = STEP_META[activeIndex];
   const isFinalStep = clampedStep === totalSteps;
-
-  const summarySections = useMemo(() => {
-    const identityRows = [
-      { label: 'Nombre', value: formatValue(character.name) },
-      { label: 'Nivel', value: formatValue(character.level) },
-      { label: 'Alineación', value: formatValue(character.alignment) }
-    ];
-
-    const lineageRows = [
-      { label: 'Raza', value: formatValue(character.race) },
-      { label: 'Variante', value: formatValue(character.raceType) },
-      { label: 'Categoría', value: formatValue(character.category) },
-      { label: 'Especialidad', value: formatValue(character.specialty) }
-    ];
-
-    const stats = character.stats || ({} as Character['stats']);
-    const statMap: Array<{ label: string; key: keyof Character['stats'] }> = [
-      { label: 'Ataque', key: 'ataque' },
-      { label: 'Defensa', key: 'defensa' },
-      { label: 'Iniciativa', key: 'iniciativa' },
-      { label: 'PG', key: 'PG' },
-      { label: 'PC', key: 'PC' },
-      { label: 'PM', key: 'PM' }
-    ];
-
-    const statRows = statMap.map(({ label, key }) => ({
-      label,
-      value: formatValue((stats as any)?.[key])
-    }));
-
-    const traitsRows = [
-      { label: 'Ventajas', value: formatList(character.advantages) },
-      { label: 'Desventajas', value: formatList(character.disadvantages) },
-      { label: 'Equipo', value: formatList(character.equipment) },
-      { label: 'Estilo', value: formatValue(character.fightingStyle) },
-      { label: 'Arma favorita', value: formatValue(character.weaponSpecialization) },
-      { label: 'Pericias', value: formatList(character.skills) }
-    ];
-
-    return [
-      { title: 'Identidad', rows: identityRows },
-      { title: 'Linaje y rol', rows: lineageRows },
-      { title: 'Estadísticas', rows: statRows },
-      { title: 'Rasgos adicionales', rows: traitsRows }
-    ];
-  }, [character]);
 
   const goToStep = (index: number) => {
     setCharacter((prev) => ({ ...prev, step: index + 1 }));
@@ -147,7 +94,7 @@ export default function NewCharacterStepper() {
 
   return (
     <div className={styles.shell}>
-      <aside className={styles.timeline}>
+      <div className={styles.timelineBar}>
         <div className={styles.timelineHeader}>
           <p>Progreso</p>
           <span>{activeIndex + 1}/{STEP_META.length}</span>
@@ -174,7 +121,7 @@ export default function NewCharacterStepper() {
             );
           })}
         </ol>
-      </aside>
+      </div>
 
       <section className={styles.stage}>
         <header className={styles.stageHeader}>
@@ -182,7 +129,7 @@ export default function NewCharacterStepper() {
           <h2>{activeMeta.title}</h2>
           <span>{activeMeta.helper}</span>
         </header>
-        <div className={styles.stageBody}>{STEP_COMPONENT(clampedStep, { onCreate: handleCreate })}</div>
+        <div className={styles.stageBody}>{STEP_COMPONENT(clampedStep)}</div>
         <div className={styles.stageActions}>
           <button type="button" onClick={goBack} disabled={clampedStep <= 1}>
             Volver
@@ -194,23 +141,9 @@ export default function NewCharacterStepper() {
           )}
         </div>
       </section>
-
-      <aside className={styles.summary}>
-        <h4>Resumen del personaje</h4>
-        {summarySections.map((section) => (
-          <div key={section.title} className={styles.summarySection}>
-            <p className={styles.summaryTitle}>{section.title}</p>
-            <ul>
-              {section.rows.map((row) => (
-                <li key={row.label}>
-                  <span>{row.label}</span>
-                  <strong>{toTitle(String(row.value))}</strong>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </aside>
+      <section className={styles.previewSection}>
+        <CharacterPreviewPanel onCreate={handleCreate} />
+      </section>
     </div>
   );
 }
