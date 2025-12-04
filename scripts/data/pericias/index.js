@@ -49,8 +49,8 @@ module.exports = [
     "description": ""
   },
   {
-    "slug": "1d4-dias",
-    "name": "1D4 días",
+    "slug": "1d4-dias-escudo",
+    "name": "1D4 días escudo",
     "attribute": null,
     "cost": null,
     "description": ""
@@ -63,8 +63,8 @@ module.exports = [
     "description": ""
   },
   {
-    "slug": "1d4-dias",
-    "name": "1D4 días",
+    "slug": "1d4-dias-armadura",
+    "name": "1D4 días armadura",
     "attribute": null,
     "cost": null,
     "description": ""
@@ -84,8 +84,8 @@ module.exports = [
     "description": ""
   },
   {
-    "slug": "martillos-fuego-y-o-algo-que-simule-un-yunque-refaccion-de-armaduras-metal-cuero-hilo-cuerda",
-    "name": "Martillos, fuego y/o algo que simule un yunque Refacción de armaduras • Metal, cuero, hilo/cuerda.",
+    "slug": "martillos-fuego-y-o-algo-que-simule-un-yunque-refaccion-de-armaduras-metal-cuero-hilo-cuerda-crear-o-refaccionar-armadura",
+    "name": "Martillos, fuego y/o algo que simule un yunque Refacción de armaduras • Metal, cuero, hilo/cuerda. Crear o refaccionar armadura",
     "attribute": null,
     "cost": null,
     "description": ""
@@ -98,8 +98,8 @@ module.exports = [
     "description": ""
   },
   {
-    "slug": "martillos-fuego-y-o-algo-que-simule-un-yunque",
-    "name": "Martillos, fuego y/o algo que simule un yunque",
+    "slug": "martillos-fuego-y-o-algo-que-simule-un-yunque-refaccion-de-armaduras-magicas-metal-cuero-hilo-cuerda",
+    "name": "Martillos, fuego y/o algo que simule un yunque Refacción de armaduras mágicas • Metal, cuero, hilo/cuerda.",
     "attribute": null,
     "cost": null,
     "description": ""
@@ -119,8 +119,8 @@ module.exports = [
     "description": ""
   },
   {
-    "slug": "martillos-fuego-y-o-algo-que-simule-un-yunque",
-    "name": "Martillos, fuego y/o algo que simule un yunque",
+    "slug": "martillos-fuego-y-o-algo-que-simule-un-yunque-refaccion-de-armaduras-metal-cuero-hilo-cuerda",
+    "name": "Martillos, fuego y/o algo que simule un yunque Refacción de armaduras • Metal, cuero, hilo/cuerda.",
     "attribute": null,
     "cost": null,
     "description": ""
