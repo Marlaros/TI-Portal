@@ -335,6 +335,20 @@
   cursor: not-allowed;
 }
 
+.feedbackSuccess,
+.feedbackError {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.feedbackSuccess {
+  color: #70c5a6;
+}
+
+.feedbackError {
+  color: #f29b9b;
+}
+
 .helperText {
   margin-top: 0;
   margin-bottom: 0.75rem;

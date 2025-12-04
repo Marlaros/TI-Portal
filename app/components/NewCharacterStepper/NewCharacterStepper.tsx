@@ -88,10 +88,6 @@ export default function NewCharacterStepper() {
     setCharacter((prev) => ({ ...prev, step: prev.step + 1 }));
   };
 
-  const handleCreate = () => {
-    console.log('Personaje listo para crear', character);
-  };
-
   return (
     <div className={styles.shell}>
       <div className={styles.timelineBar}>
@@ -142,7 +138,7 @@ export default function NewCharacterStepper() {
         </div>
       </section>
       <section className={styles.previewSection}>
-        <CharacterPreviewPanel onCreate={handleCreate} />
+        <CharacterPreviewPanel />
       </section>
     </div>
   );

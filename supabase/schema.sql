@@ -70,6 +70,7 @@ create index if not exists specialties_category_idx on public.specialties (categ
 create table if not exists public.characters (
     id uuid primary key default gen_random_uuid(),
     user_id uuid references auth.users(id) on delete cascade,
+    owner_name text not null,
     name text not null,
     level int not null default 1,
     alignment text,
@@ -83,6 +84,7 @@ create table if not exists public.characters (
 );
 
 create index if not exists characters_user_idx on public.characters (user_id);
+create index if not exists characters_owner_idx on public.characters (owner_name);
 
 -- Historial de versiones de personajes
 create table if not exists public.character_versions (

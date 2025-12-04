@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import type { Character } from '@/app/characters/new/character.type';
 import { CharacterContext } from '@/app/contexts/characterContext';
@@ -12,10 +12,6 @@ import type { RuleModifier } from '@/domain/rules';
 import type { Attributes } from '@/domain/state';
 
 import styles from './Preview.module.css';
-
-interface PreviewPanelProps {
-  onCreate: () => void;
-}
 
 const PERCEPTION_SKILLS = [
   { key: 'alerta', label: 'Alerta' },
@@ -78,10 +74,12 @@ const resolveName = <T extends { slug: string; name: string }>(collection: T[], 
 const readSkillValue = (pool: Record<string, number> | undefined, key: string) =>
   pool?.[key] ?? pool?.[key.toLowerCase()] ?? 0;
 
-export default function CharacterPreviewPanel({ onCreate }: PreviewPanelProps) {
+export default function CharacterPreviewPanel() {
   const { character } = useContext(CharacterContext);
   const catalogs = useCatalogs();
   const { ready, snapshot, debugLog, error } = useCharacterPreview(character);
+  const [createStatus, setCreateStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle');
+  const [createMessage, setCreateMessage] = useState<string>();
   const manualSummary = useMemo(
     () => computeManualAttributeSummary(toCoreAttributes(character.attributes)),
     [character.attributes]
@@ -164,11 +162,39 @@ export default function CharacterPreviewPanel({ onCreate }: PreviewPanelProps) {
   const canCreate =
     ready &&
     Boolean(
-      character.name &&
+      character.userName &&
+        character.name &&
         character.specialty &&
         character.fightingStyle &&
-        character.weaponSpecialization
+        character.weaponSpecialization &&
+        snapshot
     );
+
+  const handleCreate = async () => {
+    if (!snapshot || !canCreate || createStatus === 'saving') return;
+    setCreateStatus('saving');
+    setCreateMessage(undefined);
+    try {
+      const response = await fetch('/api/characters', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ character, snapshot })
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || 'Request failed');
+      }
+
+      const { id } = (await response.json()) as { id?: string };
+      setCreateStatus('success');
+      setCreateMessage(id ? `Personaje guardado (#${id}).` : 'Personaje guardado.');
+    } catch (creationError) {
+      console.error('Create character failed', creationError);
+      setCreateStatus('error');
+      setCreateMessage('No se pudo guardar el personaje. Intenta nuevamente.');
+    }
+  };
 
   const attributeValues = character.attributes;
 
@@ -542,13 +568,21 @@ export default function CharacterPreviewPanel({ onCreate }: PreviewPanelProps) {
       </section>
 
       <div className={styles.actions}>
-        <button type="button" onClick={onCreate} disabled={!canCreate}>
-          Crear personaje
+        <button
+          type="button"
+          onClick={handleCreate}
+          disabled={!canCreate || createStatus === 'saving'}
+        >
+          {createStatus === 'saving' ? 'Guardando…' : 'Crear personaje'}
         </button>
-        {!canCreate && (
+        {createMessage && (
+          <p className={createStatus === 'success' ? styles.feedbackSuccess : styles.feedbackError}>
+            {createMessage}
+          </p>
+        )}
+        {!createMessage && !canCreate && (
           <p>
-            Completa estilo de lucha, arma predilecta y asegúrate de que todos los pasos estén en verde
-            para habilitar la creación.
+            Completa nombre de usuario, estilo de lucha y arma predilecta para habilitar la creación.
           </p>
         )}
       </div>
