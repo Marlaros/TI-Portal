@@ -1,18 +1,18 @@
 const { createSource, addAttribute, addResource, addCombat } = require('../raceModifiers/shared');
 
 const makeSource = (slug, name, manualPage) =>
-  createSource(`sec-${slug}`, `Categoría secundaria: ${name}`, manualPage);
+  createSource(`spec-${slug}`, `Especialidad: ${name}`, manualPage);
 
 const amazonSource = makeSource('amazonas', 'Amazonas', 812);
 const assassinSource = makeSource('asesinos', 'Asesinos', 842);
 const barbarianSource = makeSource('barbaros', 'Bárbaros', 864);
 const berserkerSource = makeSource('berserker', 'Berserker', 890);
 
-const secondaryCategories = [
+const staticSpecialties = [
   {
     slug: 'amazonas',
     name: 'Amazonas',
-    role: 'secundaria',
+    categoryName: 'Guerrero',
     short_description: 'Guerreras tribales devotas a Shavaloon.',
     description:
       'Veloz fuerza de choque integrada sólo por mujeres humanas. Forjadas en la selva, combinan jabalinas, acrobacias y tácticas de emboscada para desorientar a sus presas.',
@@ -30,7 +30,7 @@ const secondaryCategories = [
   {
     slug: 'asesinos',
     name: 'Asesinos',
-    role: 'secundaria',
+    categoryName: 'Guerrero',
     short_description: 'Especialistas en sigilo, venenos y suplantación.',
     description:
       'Cohortes de alquimistas y verdugos que viven de la sombra. Se destacan por su agilidad imposible y el dominio absoluto de toxinas y disfraces.',
@@ -52,7 +52,7 @@ const secondaryCategories = [
   {
     slug: 'barbaros',
     name: 'Bárbaros',
-    role: 'secundaria',
+    categoryName: 'Guerrero',
     short_description: 'Guerreros tribales curtidos por el frío y la batalla.',
     description:
       'Clanes nómadas que basan su cultura en la caza y los ritos de sangre. Prefieren la furia y la fuerza desmedida sobre la etiqueta de las cortes.',
@@ -69,7 +69,7 @@ const secondaryCategories = [
   {
     slug: 'berserker',
     name: 'Berserker',
-    role: 'secundaria',
+    categoryName: 'Guerrero',
     short_description: 'Portadores de la furia que todo lo arrasa.',
     description:
       'Campeones que canalizan traumas o entrenamientos extremos en estallidos de rabia. Sus músculos se tensan hasta romper acero cuando desatan el estado berserker.',
@@ -83,6 +83,6 @@ const secondaryCategories = [
 ];
 
 module.exports = {
-  secondaryCategories
+  staticSpecialties
 };
 

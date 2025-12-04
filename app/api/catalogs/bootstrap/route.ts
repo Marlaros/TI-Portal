@@ -57,7 +57,8 @@ const mapSpecialties = (rows: any[], categoryIndex: Map<string, { name: string }
       imageUrls: row.image_urls ?? [],
       categoryId: row.category_id,
       categoryName: category.name,
-      allowedRaces: row.allowed_races ?? []
+      allowedRaces: row.allowed_races ?? [],
+      modifiers: row.modifiers ?? []
     };
   });
 
@@ -114,13 +115,10 @@ export async function GET() {
     const raceIndex = new Map((racesRes.data ?? []).map((row) => [row.id, { name: row.name, slug: row.slug }]));
     const categoryIndex = new Map((categoriesRes.data ?? []).map((row) => [row.id, { name: row.name }]));
 
-    const categories = mapCategories(categoriesRes.data ?? []);
-
     const payload: CatalogBootstrapPayload = {
       races: mapRaces(racesRes.data ?? []),
       raceVariants: mapRaceVariants(variantsRes.data ?? [], raceIndex),
-      categories,
-      secondaryCategories: categories.filter((category) => category.role !== 'principal'),
+      categories: mapCategories(categoriesRes.data ?? []),
       specialties: mapSpecialties(specialtiesRes.data ?? [], categoryIndex),
       advantages: (advantagesRes.data ?? []).map((row) => ({
         ...mapStandard([row])[0],

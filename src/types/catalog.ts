@@ -45,6 +45,7 @@ export interface SpecialtyRecord {
   categoryId: string;
   categoryName: string;
   allowedRaces: string[];
+  modifiers: RuleModifier[];
 }
 
 export interface AdvantageRecord {
@@ -100,7 +101,6 @@ export interface CatalogBootstrapPayload {
   races: RaceRecord[];
   raceVariants: RaceVariantRecord[];
   categories: CategoryRecord[];
-  secondaryCategories: CategoryRecord[];
   specialties: SpecialtyRecord[];
   advantages: AdvantageRecord[];
   disadvantages: DisadvantageRecord[];

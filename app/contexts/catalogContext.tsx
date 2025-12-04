@@ -26,7 +26,6 @@ interface CatalogContextValue {
   races: RaceRecord[];
   raceVariants: RaceVariantRecord[];
   categories: CategoryRecord[];
-  secondaryCategories: CategoryRecord[];
   specialties: SpecialtyRecord[];
   advantages: AdvantageRecord[];
   disadvantages: DisadvantageRecord[];
@@ -43,7 +42,6 @@ const defaultPayload: CatalogBootstrapPayload = {
   races: [],
   raceVariants: [],
   categories: [],
-  secondaryCategories: [],
   specialties: [],
   advantages: [],
   disadvantages: [],

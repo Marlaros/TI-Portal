@@ -59,6 +59,7 @@ create table if not exists public.specialties (
     description text,
     image_urls text[] not null default '{}',
     allowed_races text[] not null default '{}',
+    modifiers jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );

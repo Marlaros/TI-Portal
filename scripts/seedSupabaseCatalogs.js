@@ -17,8 +17,8 @@ const { createClient } = require('@supabase/supabase-js');
 const dotenv = require('dotenv');
 const { raceModifiers, raceVariantModifiers } = require('./data/raceModifiers');
 const { primaryCategoryModifiers } = require('./data/categoryModifiers/primary');
-const { secondaryCategories } = require('./data/secondaryCategories');
 const { cloneModifiers, parseJsonArray, insertInChunks } = require('./seedSupabaseCatalogs/utils');
+const { insertStaticSpecialties } = require('./seedSupabaseCatalogs/staticSpecialties');
 
 const ROOT = process.cwd();
 const ENV_PATH = path.join(ROOT, '.env.local');
@@ -122,51 +122,40 @@ const fetchRaceVariants = (raceMap) => {
     .filter(Boolean);
 };
 
+const PRIMARY_CATEGORY_NAMES = new Set(['Guerrero', 'Hechicero']);
+
 const fetchCategories = () => {
   const detailsExpr = selectColumnOrEmpty('categorias', 'details');
   const rows = db.prepare(`select id, name, short_desc, ${detailsExpr} as details, images from categorias`).all();
   const map = new Map();
-  const payload = rows.map((row) => {
-    const uuid = uuidv5(`categorias:${row.id}`, UUID_NAMESPACE);
-    map.set(row.name, uuid);
-    const slug = slugify(row.name);
-    return {
-      id: uuid,
-      legacy_id: row.id,
-      slug,
-      name: row.name,
-      role: 'principal',
-      short_description: row.short_desc || null,
-      description: row.details || null,
-      image_urls: parseJsonArray(row.images).map((img) => buildImageUrl('categorias', row.id, img)).filter(Boolean),
-      allowed_races: [],
-      modifiers: cloneModifiers(primaryCategoryModifiers[slug])
-    };
-  });
+  const payload = rows
+    .filter((row) => {
+      const include = PRIMARY_CATEGORY_NAMES.has(row.name);
+      if (!include) {
+        console.warn(`ℹ️  Se omitió la categoría "${row.name}" (solo se migran categorías principales).`);
+      }
+      return include;
+    })
+    .map((row) => {
+      const uuid = uuidv5(`categorias:${row.id}`, UUID_NAMESPACE);
+      map.set(row.name, uuid);
+      const slug = slugify(row.name);
+      return {
+        id: uuid,
+        legacy_id: row.id,
+        slug,
+        name: row.name,
+        role: 'principal',
+        short_description: row.short_desc || null,
+        description: row.details || null,
+        image_urls: parseJsonArray(row.images)
+          .map((img) => buildImageUrl('categorias', row.id, img))
+          .filter(Boolean),
+        allowed_races: [],
+        modifiers: cloneModifiers(primaryCategoryModifiers[slug])
+      };
+    });
   return { payload, map };
-};
-
-const buildSecondaryCategoryRows = () =>
-  secondaryCategories.map((entry) => ({
-    id: uuidv5(`categorias:sec:${entry.slug}`, UUID_NAMESPACE),
-    legacy_id: entry.legacy_id ?? null,
-    slug: entry.slug,
-    name: entry.name,
-    role: entry.role ?? 'secundaria',
-    short_description: entry.short_description ?? null,
-    description: entry.description ?? null,
-    image_urls: entry.image_urls ?? [],
-    allowed_races: entry.allowed_races ?? [],
-    modifiers: cloneModifiers(entry.modifiers ?? [])
-  }));
-
-const insertSecondaryCategories = async () => {
-  if (!secondaryCategories.length) {
-    console.log('ℹ️  No se definieron categorías secundarias estáticas, se omite su inserción.');
-    return;
-  }
-  const rows = buildSecondaryCategoryRows();
-  await upsert('categories', rows);
 };
 
 const fetchSpecialties = (categoryMap) => {
@@ -196,7 +185,8 @@ const fetchSpecialties = (categoryMap) => {
         short_description: row.short_desc || null,
         description: row.details || null,
         image_urls: imageUrls,
-        allowed_races: allowedRaces
+        allowed_races: allowedRaces,
+        modifiers: []
       };
     })
     .filter(Boolean);
@@ -213,7 +203,7 @@ const run = async () => {
 
     const { payload: categoryPayload, map: categoryMap } = fetchCategories();
     await upsert('categories', categoryPayload);
-    await insertSecondaryCategories();
+    await insertStaticSpecialties(categoryMap, upsert, uuidv5, UUID_NAMESPACE);
 
     const specialties = fetchSpecialties(categoryMap);
     await upsert('specialties', specialties);
