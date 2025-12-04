@@ -24,7 +24,13 @@ const ATTRIBUTE_FIELDS: Array<{
   { key: 'liderazgo', label: 'Liderazgo', helper: 'Influye en maniobras y chequeos sociales.' },
   { key: 'inteligencia', label: 'Inteligencia', helper: 'Modifica PM y habilidades mágicas.' },
   { key: 'belleza', label: 'Belleza', helper: 'Referencia estética y rasgos sociales.', min: 1, max: 20 },
-  { key: 'categoriaSocial', label: 'Categoría social', helper: 'Determina estatus y recursos iniciales.', min: 0, max: 5 }
+  {
+    key: 'categoriaSocial',
+    label: 'Categoría social',
+    helper: 'Determina estatus y recursos iniciales.',
+    min: 1,
+    max: 100
+  }
 ];
 
 const COMBAT_HIGHLIGHTS = ['ataque', 'dano', 'defensa', 'iniciativa'] as const;

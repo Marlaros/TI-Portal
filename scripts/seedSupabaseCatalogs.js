@@ -15,6 +15,10 @@ const Database = require('better-sqlite3');
 const { v5: uuidv5 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
 const dotenv = require('dotenv');
+const { raceModifiers, raceVariantModifiers } = require('./data/raceModifiers');
+const { primaryCategoryModifiers } = require('./data/categoryModifiers/primary');
+const { secondaryCategories } = require('./data/secondaryCategories');
+const { cloneModifiers, parseJsonArray, insertInChunks } = require('./seedSupabaseCatalogs/utils');
 
 const ROOT = process.cwd();
 const ENV_PATH = path.join(ROOT, '.env.local');
@@ -35,6 +39,7 @@ const UUID_NAMESPACE = '5f6a8b8e-1b43-4b60-8b0d-b8a1c48f9a0b';
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
   auth: { autoRefreshToken: false, persistSession: false }
 });
+const upsert = (table, rows) => insertInChunks(supabase, table, rows);
 
 const sqlitePath = path.join(ROOT, 'pb_data', 'data.db');
 if (!fs.existsSync(sqlitePath)) {
@@ -77,14 +82,16 @@ const fetchRaces = () => {
   const payload = rows.map((row) => {
     const uuid = uuidv5(`razas:${row.id}`, UUID_NAMESPACE);
     map.set(row.id, { uuid, name: row.name });
+    const slug = slugify(row.name);
     return {
       id: uuid,
       legacy_id: row.id,
-      slug: slugify(row.name),
+      slug,
       name: row.name,
       short_description: row.short_desc || null,
       description: row.details || null,
-      image_url: buildImageUrl('razas', row.id, row.image)
+      image_url: buildImageUrl('razas', row.id, row.image),
+      modifiers: cloneModifiers(raceModifiers[slug])
     };
   });
   return { payload, map };
@@ -99,28 +106,20 @@ const fetchRaceVariants = (raceMap) => {
         console.warn(`⚠️  No se encontró raza para la subraza "${row.name}" (parent: ${row.parent})`);
         return null;
       }
+      const slug = slugify(`${raceEntry.name}-${row.name}`);
       return {
         id: uuidv5(`tiporazas:${row.id}`, UUID_NAMESPACE),
         legacy_id: row.id,
         race_id: raceEntry.uuid,
-        slug: slugify(`${raceEntry.name}-${row.name}`),
+        slug,
         name: row.name,
         short_description: row.short_desc || null,
         description: row.details || null,
-        image_url: buildImageUrl('tiporazas', row.id, row.image)
+        image_url: buildImageUrl('tiporazas', row.id, row.image),
+        modifiers: cloneModifiers(raceVariantModifiers[slug])
       };
     })
     .filter(Boolean);
-};
-
-const parseJsonArray = (value) => {
-  if (!value) return [];
-  try {
-    const parsed = JSON.parse(value);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
 };
 
 const fetchCategories = () => {
@@ -130,18 +129,44 @@ const fetchCategories = () => {
   const payload = rows.map((row) => {
     const uuid = uuidv5(`categorias:${row.id}`, UUID_NAMESPACE);
     map.set(row.name, uuid);
+    const slug = slugify(row.name);
     return {
       id: uuid,
       legacy_id: row.id,
-      slug: slugify(row.name),
+      slug,
       name: row.name,
       role: 'principal',
       short_description: row.short_desc || null,
       description: row.details || null,
-      image_urls: parseJsonArray(row.images).map((img) => buildImageUrl('categorias', row.id, img)).filter(Boolean)
+      image_urls: parseJsonArray(row.images).map((img) => buildImageUrl('categorias', row.id, img)).filter(Boolean),
+      allowed_races: [],
+      modifiers: cloneModifiers(primaryCategoryModifiers[slug])
     };
   });
   return { payload, map };
+};
+
+const buildSecondaryCategoryRows = () =>
+  secondaryCategories.map((entry) => ({
+    id: uuidv5(`categorias:sec:${entry.slug}`, UUID_NAMESPACE),
+    legacy_id: entry.legacy_id ?? null,
+    slug: entry.slug,
+    name: entry.name,
+    role: entry.role ?? 'secundaria',
+    short_description: entry.short_description ?? null,
+    description: entry.description ?? null,
+    image_urls: entry.image_urls ?? [],
+    allowed_races: entry.allowed_races ?? [],
+    modifiers: cloneModifiers(entry.modifiers ?? [])
+  }));
+
+const insertSecondaryCategories = async () => {
+  if (!secondaryCategories.length) {
+    console.log('ℹ️  No se definieron categorías secundarias estáticas, se omite su inserción.');
+    return;
+  }
+  const rows = buildSecondaryCategoryRows();
+  await upsert('categories', rows);
 };
 
 const fetchSpecialties = (categoryMap) => {
@@ -177,32 +202,21 @@ const fetchSpecialties = (categoryMap) => {
     .filter(Boolean);
 };
 
-const insertInChunks = async (table, rows) => {
-  const chunkSize = 500;
-  for (let i = 0; i < rows.length; i += chunkSize) {
-    const chunk = rows.slice(i, i + chunkSize);
-    const { error } = await supabase.from(table).upsert(chunk, { onConflict: 'slug' });
-    if (error) {
-      throw new Error(`Error insertando en ${table}: ${error.message}`);
-    }
-    console.log(`✅ ${table}: +${chunk.length} registros`);
-  }
-};
-
 const run = async () => {
   console.log('🚀 Iniciando migración de catálogos hacia Supabase…');
   try {
     const { payload: racePayload, map: raceMap } = fetchRaces();
-    await insertInChunks('races', racePayload);
+    await upsert('races', racePayload);
 
     const raceVariants = fetchRaceVariants(raceMap);
-    await insertInChunks('race_variants', raceVariants);
+    await upsert('race_variants', raceVariants);
 
     const { payload: categoryPayload, map: categoryMap } = fetchCategories();
-    await insertInChunks('categories', categoryPayload);
+    await upsert('categories', categoryPayload);
+    await insertSecondaryCategories();
 
     const specialties = fetchSpecialties(categoryMap);
-    await insertInChunks('specialties', specialties);
+    await upsert('specialties', specialties);
 
     console.log('🎉 Migration completa.');
     process.exit(0);

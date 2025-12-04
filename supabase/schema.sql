@@ -10,6 +10,7 @@ create table if not exists public.races (
     short_description text,
     description text,
     image_url text,
+    modifiers jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -24,6 +25,7 @@ create table if not exists public.race_variants (
     short_description text,
     description text,
     image_url text,
+    modifiers jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -40,6 +42,8 @@ create table if not exists public.categories (
     short_description text,
     description text,
     image_urls text[] not null default '{}',
+    allowed_races text[] not null default '{}',
+    modifiers jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -157,8 +161,40 @@ create table if not exists public.skills (
     slug text unique not null,
     name text not null,
     description text,
+    attribute text,
+    cost int,
     modifiers jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
+
+-- Tabla de belleza (rangos y efectos narrativos)
+create table if not exists public.beauty_tiers (
+    id uuid primary key default gen_random_uuid(),
+    slug text unique not null,
+    label text not null,
+    min_value int not null,
+    max_value int,
+    description text,
+    notes text,
+    modifiers jsonb not null default '[]'::jsonb,
+    created_at timestamptz not null default now(),
+    updated_at timestamptz not null default now()
+);
+
+-- Progresiones de estilos de lucha (grupos y destrezas)
+create table if not exists public.fighting_style_tiers (
+    id uuid primary key default gen_random_uuid(),
+    fighting_style_id uuid not null references public.fighting_styles(id) on delete cascade,
+    slug text unique not null,
+    group_index int not null,
+    order_index int not null,
+    title text not null,
+    description text,
+    modifiers jsonb not null default '[]'::jsonb,
+    created_at timestamptz not null default now(),
+    updated_at timestamptz not null default now()
+);
+
+create index if not exists fighting_style_tiers_style_idx on public.fighting_style_tiers (fighting_style_id, group_index);
 

@@ -9,7 +9,15 @@ export const ATTRIBUTE_KEYS = [
 
 export type AttributeKey = (typeof ATTRIBUTE_KEYS)[number];
 
-export const RESOURCE_KEYS = ['pg', 'pc', 'pm', 'recuperacionPg'] as const;
+export const RESOURCE_KEYS = [
+  'pg',
+  'pc',
+  'pm',
+  'recuperacionPg',
+  'advantagePoints',
+  'skillPoints',
+  'xpModifier'
+] as const;
 export type ResourceKey = (typeof RESOURCE_KEYS)[number];
 
 export const COMBAT_STAT_KEYS = [
@@ -23,7 +31,21 @@ export const COMBAT_STAT_KEYS = [
   'iniciativa',
   'concentracion',
   'percepcionChequeo',
-  'liderazgoChequeo'
+  'liderazgoChequeo',
+  'valentia',
+  'intimidar',
+  'hablarMasas',
+  'negociarRogar',
+  'adular',
+  'alerta',
+  'climaTerrenos',
+  'detectarRuidos',
+  'detectarTrampas',
+  'observacion',
+  'orientacion',
+  'sospecha',
+  'rastreo',
+  'detectarMagia'
 ] as const;
 
 export type CombatStatKey = (typeof COMBAT_STAT_KEYS)[number];
@@ -42,14 +64,16 @@ export const DESCRIPTION_FIELDS = [
 export type DescriptionField = (typeof DESCRIPTION_FIELDS)[number];
 
 export const FIGHTING_STYLE_KEYS = [
-  'sinArmadura',
+  'sinArmas',
   'armaUnaMano',
+  'armaDeAsta',
   'armaDosManos',
   'dosArmas',
   'armaYEscudo',
-  'arqueria',
+  'arcosBallestas',
   'arrojadizas',
-  'montada'
+  'montada',
+  'sinArmadura'
 ] as const;
 
 export type FightingStyleKey = (typeof FIGHTING_STYLE_KEYS)[number];

@@ -9,7 +9,9 @@ export const usePrimaryCategories = (selectedRaceName : string)  => {
 
     const primaryCategories = useMemo(() => {
         if (!selectedRaceName) return [];
-        return categories.map((category) => ({
+        return categories
+            .filter((category) => category.role === 'principal')
+            .map((category) => ({
             name: category.name,
             shortDesc: selectedRaceName === 'Ogros' ? ogreOnly : category.shortDescription ?? '',
             description: category.description ?? '',

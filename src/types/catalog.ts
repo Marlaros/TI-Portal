@@ -7,6 +7,7 @@ export interface RaceRecord {
   shortDescription: string | null;
   description: string | null;
   imageUrl: string | null;
+  modifiers: RuleModifier[];
 }
 
 export interface RaceVariantRecord {
@@ -19,6 +20,7 @@ export interface RaceVariantRecord {
   raceId: string;
   raceName: string;
   raceSlug: string;
+  modifiers: RuleModifier[];
 }
 
 export interface CategoryRecord {
@@ -29,6 +31,8 @@ export interface CategoryRecord {
   shortDescription: string | null;
   description: string | null;
   imageUrls: string[];
+  allowedRaces: string[];
+  modifiers: RuleModifier[];
 }
 
 export interface SpecialtyRecord {
@@ -87,6 +91,8 @@ export interface SkillRecord {
   slug: string;
   name: string;
   description: string | null;
+  attribute: string | null;
+  cost: number | null;
   modifiers: RuleModifier[];
 }
 
@@ -94,6 +100,7 @@ export interface CatalogBootstrapPayload {
   races: RaceRecord[];
   raceVariants: RaceVariantRecord[];
   categories: CategoryRecord[];
+  secondaryCategories: CategoryRecord[];
   specialties: SpecialtyRecord[];
   advantages: AdvantageRecord[];
   disadvantages: DisadvantageRecord[];

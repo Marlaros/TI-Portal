@@ -11,7 +11,8 @@ const mapRaces = (rows: any[]) =>
     name: row.name,
     shortDescription: row.short_description ?? null,
     description: row.description ?? null,
-    imageUrl: row.image_url ?? null
+    imageUrl: row.image_url ?? null,
+    modifiers: row.modifiers ?? []
   }));
 
 const mapRaceVariants = (rows: any[], raceIndex: Map<string, { name: string; slug: string }>) =>
@@ -26,7 +27,8 @@ const mapRaceVariants = (rows: any[], raceIndex: Map<string, { name: string; slu
       imageUrl: row.image_url ?? null,
       raceId: row.race_id,
       raceName: race.name,
-      raceSlug: race.slug
+      raceSlug: race.slug,
+      modifiers: row.modifiers ?? []
     };
   });
 
@@ -38,7 +40,9 @@ const mapCategories = (rows: any[]) =>
     role: row.role,
     shortDescription: row.short_description ?? null,
     description: row.description ?? null,
-    imageUrls: row.image_urls ?? []
+    imageUrls: row.image_urls ?? [],
+    allowedRaces: row.allowed_races ?? [],
+    modifiers: row.modifiers ?? []
   }));
 
 const mapSpecialties = (rows: any[], categoryIndex: Map<string, { name: string }>) =>
@@ -62,6 +66,16 @@ const mapStandard = (rows: any[]) =>
     slug: row.slug,
     name: row.name,
     description: row.description ?? null,
+    modifiers: row.modifiers ?? []
+  }));
+
+const mapSkills = (rows: any[]) =>
+  rows.map((row) => ({
+    slug: row.slug,
+    name: row.name,
+    description: row.description ?? null,
+    attribute: row.attribute ?? null,
+    cost: row.cost ?? null,
     modifiers: row.modifiers ?? []
   }));
 
@@ -100,10 +114,13 @@ export async function GET() {
     const raceIndex = new Map((racesRes.data ?? []).map((row) => [row.id, { name: row.name, slug: row.slug }]));
     const categoryIndex = new Map((categoriesRes.data ?? []).map((row) => [row.id, { name: row.name }]));
 
+    const categories = mapCategories(categoriesRes.data ?? []);
+
     const payload: CatalogBootstrapPayload = {
       races: mapRaces(racesRes.data ?? []),
       raceVariants: mapRaceVariants(variantsRes.data ?? [], raceIndex),
-      categories: mapCategories(categoriesRes.data ?? []),
+      categories,
+      secondaryCategories: categories.filter((category) => category.role !== 'principal'),
       specialties: mapSpecialties(specialtiesRes.data ?? [], categoryIndex),
       advantages: (advantagesRes.data ?? []).map((row) => ({
         ...mapStandard([row])[0],
@@ -125,7 +142,7 @@ export async function GET() {
         ...mapStandard([row])[0],
         weaponTag: row.weapon_tag ?? null
       })),
-      skills: mapStandard(skillsRes.data ?? [])
+      skills: mapSkills(skillsRes.data ?? [])
     };
 
     return NextResponse.json(payload, { status: 200 });

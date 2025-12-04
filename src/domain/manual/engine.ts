@@ -63,16 +63,16 @@ const applyEffect = (
 }
 
 export const evaluateAttributes = (context: RuleContext) => {
-  const output: Partial<Record<CalculatedStat, StatComputationResult>> = {}
-  (Object.keys(ATTRIBUTE_DEFINITIONS) as AttributeCode[]).forEach((code) => {
-    const value = context.atributos[code]
-    const tables = ATTRIBUTE_TABLES[code] ?? []
+  const output: Partial<Record<CalculatedStat, StatComputationResult>> = {};
+  (Object.keys(ATTRIBUTE_DEFINITIONS) as Array<keyof typeof ATTRIBUTE_DEFINITIONS>).forEach((code: AttributeCode) => {
+    const value = context.atributos[code as AttributeCode]
+    const tables = ATTRIBUTE_TABLES[code as AttributeCode] ?? []
     tables
-      .filter((row) => inRange(value, row))
+      .filter((row: ThresholdModifier) => inRange(value, row))
       .forEach((row) => {
-        row.efectos?.forEach((effect) => {
+        row.efectos?.forEach((effect: ThresholdEffect) => {
           const delta = computeDelta(value, effect)
-          applyEffect(output, effect.stat, delta, effect)
+          applyEffect(output, effect.stat as CalculatedStat, delta, effect)
         })
       })
   })
