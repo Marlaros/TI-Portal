@@ -27,6 +27,7 @@ export const COMBAT_STAT_KEYS = [
   'critico',
   'defensa',
   'armadura',
+  'defensaEspontanea',
   'reduccionDefensaEnemiga',
   'iniciativa',
   'concentracion',

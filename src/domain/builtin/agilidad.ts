@@ -38,7 +38,7 @@ const agilidadFlatModifiers = agilidadFlatEntries.flatMap((entry) => [
   ),
   exactAttributeModifier(
     {
-      id: `agilidad-${entry.value}-dist`,
+      id: `agilidad-${entry.value}-ataqueDistancia`,
       attribute: 'agilidad',
       exact: entry.value,
       target: { kind: 'combat', key: 'ataqueDistancia' },
@@ -66,7 +66,7 @@ const agilidadScalingModifiers = [
       target: { kind: 'combat', key: 'iniciativa' },
       startValue: 13,
       step: 2,
-      includeStart: false,
+      includeStart: true,
       value: 1
     },
     agilidadSource
@@ -78,7 +78,19 @@ const agilidadScalingModifiers = [
       target: { kind: 'combat', key: 'defensa' },
       startValue: 15,
       step: 3,
-      includeStart: false,
+      includeStart: true,
+      value: 1
+    },
+    agilidadSource
+  ),
+  perPointModifier(
+    {
+      id: 'agilidad-17-defensaEspontanea',
+      attribute: 'agilidad',
+      target: { kind: 'combat', key: 'defensaEspontanea' },
+      startValue: 17,
+      step: 3,
+      includeStart: true,
       value: 1
     },
     agilidadSource

@@ -33,12 +33,18 @@ const ATTRIBUTE_FIELDS: Array<{
   }
 ];
 
-const COMBAT_HIGHLIGHTS = ['ataque', 'dano', 'defensa', 'iniciativa'] as const;
+const COMBAT_HIGHLIGHTS = ['ataque', 'ataqueDistancia', 'dano', 'defensa', 'defensaEspontanea', 'armadura', 'iniciativa', 'concentracion', 'detectarMagia'] as const;
 const combatLabels: Record<(typeof COMBAT_HIGHLIGHTS)[number], string> = {
   ataque: 'Ataque',
+  ataqueDistancia: 'Disparos',
   dano: 'Daño',
   defensa: 'Defensa',
-  iniciativa: 'Iniciativa'
+  defensaEspontanea: 'Defensas espontáneas',
+  armadura: 'Armadura',
+  iniciativa: 'Iniciativa',
+  concentracion: 'Concentración',
+  detectarMagia: 'Detectar magia'
+
 };
 
 const RESOURCE_HIGHLIGHTS = ['pg', 'pc', 'pm'] as const;

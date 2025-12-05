@@ -90,7 +90,7 @@ export type CatalogRecordInput = z.infer<typeof catalogRecordSchema>;
 
 export const parseCatalogRecords = (data: unknown): CatalogRecord[] => {
   const records = z.array(catalogRecordSchema).parse(data);
-  return records;
+  return records as CatalogRecord[];
 };
 
 export const bundleCatalog = (records: CatalogRecord[]): CatalogBundle => {
