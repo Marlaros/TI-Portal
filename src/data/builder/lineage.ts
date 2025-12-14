@@ -23,7 +23,9 @@ export const LINEAGE_RULES: LineageRuleSet = {
         { kind: 'combat', key: 'liderazgoChequeo' },
         1,
         9
-      )
+      ),
+      rule('raza-humanos-adv', 'Humanos', { kind: 'resource', key: 'advantagePoints' }, 30, 9),
+      rule('raza-humanos-skill', 'Humanos', { kind: 'resource', key: 'skillPoints' }, 15, 9)
     ],
     'Altos elfos': [
       rule(
@@ -33,6 +35,27 @@ export const LINEAGE_RULES: LineageRuleSet = {
         2,
         18
       )
+    ]
+    ,
+    'Elfos': [
+      rule('raza-elfos-pg', 'Elfos', { kind: 'resource', key: 'pg' }, 15, 9),
+      rule('raza-elfos-adv', 'Elfos', { kind: 'resource', key: 'advantagePoints' }, 20, 9),
+      rule('raza-elfos-skill', 'Elfos', { kind: 'resource', key: 'skillPoints' }, 8, 9)
+    ],
+    'Duendes': [
+      rule('raza-duendes-pg', 'Duendes', { kind: 'resource', key: 'pg' }, 15, 9),
+      rule('raza-duendes-adv', 'Duendes', { kind: 'resource', key: 'advantagePoints' }, 20, 9),
+      rule('raza-duendes-skill', 'Duendes', { kind: 'resource', key: 'skillPoints' }, 8, 9)
+    ],
+    'Ogros': [
+      rule('raza-ogros-pg', 'Ogros', { kind: 'resource', key: 'pg' }, 60, 9),
+      rule('raza-ogros-adv', 'Ogros', { kind: 'resource', key: 'advantagePoints' }, 20, 9),
+      rule('raza-ogros-skill', 'Ogros', { kind: 'resource', key: 'skillPoints' }, 8, 9)
+    ],
+    'Enanos': [
+      rule('raza-enanos-pg', 'Enanos', { kind: 'resource', key: 'pg' }, 30, 9),
+      rule('raza-enanos-adv', 'Enanos', { kind: 'resource', key: 'advantagePoints' }, 20, 9),
+      rule('raza-enanos-skill', 'Enanos', { kind: 'resource', key: 'skillPoints' }, 8, 9)
     ]
   },
   raceType: {

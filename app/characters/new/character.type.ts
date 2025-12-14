@@ -8,6 +8,10 @@ export interface Character {
     category: string,
     secondaryCategory: string | null,
     specialty: string,
+    attributes: Attributes,
+    descripcion: GeneralDescription,
+    countryOfOrigin: string,
+    stats: Stats,
     advantages: string[],
     disadvantages: string[],
     equipment: string[],
@@ -16,13 +20,15 @@ export interface Character {
     weaponSpecialization: string | null,
     skills: string[],
     skillRanks: Record<string, number>,
-    attributes: Attributes,
-    descripcion: GeneralDescription,
-    countryOfOrigin: string,
-    stats: Stats,
     experience: number,
     experiencePenalty: number,
     step: number,
+    money?: {
+        mc: number;
+        mp: number;
+        mo: number;
+    };
+    equipmentPrices?: Record<string, number>;
 }
 
 interface Attributes{

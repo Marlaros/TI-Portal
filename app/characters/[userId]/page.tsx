@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import Link from 'next/link';
 
 import { createServiceClient } from '@/lib/supabase/serverClient';
 
@@ -75,15 +76,18 @@ export default async function UserCharacters({
         <section
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '1.5rem'
+            gridAutoFlow: 'column',
+            gridTemplateRows: 'repeat(2, auto)',
+            gap: '1rem',
+            overflowX: 'auto',
+            padding: '1rem 0'
           }}
         >
-          {characters.length ? (
+            {characters.length ? (
             characters.map((character) => {
               const selections = character.selections ?? {};
               return (
-                <article key={character.id} style={cardStyle}>
+                <article key={character.id} style={{ ...cardStyle, minWidth: 320, flex: '0 0 auto' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <strong style={{ fontSize: '1.25rem' }}>{character.name}</strong>
                     <span style={{ opacity: 0.7 }}>Nivel {character.level}</span>
@@ -103,6 +107,44 @@ export default async function UserCharacters({
                   <p style={{ margin: 0, fontSize: '0.85rem', opacity: 0.5 }}>
                     Creado el {new Date(character.created_at).toLocaleString()}
                   </p>
+                  <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.5rem' }}>
+                    <Link href={`/characters/new?loadId=${character.id}`} style={{ textDecoration: 'none' }}>
+                      <button
+                        style={{
+                          padding: '0.5rem 0.9rem',
+                          borderRadius: '999px',
+                          background: 'linear-gradient(180deg,#ffd27a,#d4a017)',
+                          border: '1px solid rgba(0,0,0,0.2)',
+                          color: '#1a1a1a',
+                          backgroundColor: "#A58B61",
+                          opacity: 0.9,
+                          fontWeight: 600,
+                          boxShadow: '0 6px 18px rgba(212,160,23,0.25)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Ver
+                      </button>
+                    </Link>
+                    <Link href={`/characters/new?loadId=${character.id}`} style={{ textDecoration: 'none' }}>
+                      <button
+                        style={{
+                          padding: '0.5rem 0.9rem',
+                          borderRadius: '999px',
+                          background: 'linear-gradient(180deg,#ffd27a,#d4a017)',
+                          border: '1px solid rgba(0,0,0,0.2)',
+                          color: '#1a1a1a',
+                          backgroundColor: "#A58B61",
+                          opacity: 0.8,
+                          fontWeight: 600,
+                          boxShadow: '0 6px 18px rgba(212,160,23,0.25)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Editar
+                      </button>
+                    </Link>
+                  </div>
                 </article>
               );
             })

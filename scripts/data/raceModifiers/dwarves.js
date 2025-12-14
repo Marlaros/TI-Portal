@@ -3,6 +3,16 @@ const { createSource, addResource, addAttribute, addCombat } = require('./shared
 const variantSource = (slug, nombre) =>
   createSource(`variant-${slug}`, `Subraza: ${nombre}`);
 
+const dwarfSource = createSource('race-enanos', 'Raza: Enanos');
+
+const dwarfModifiers = {
+  enanos: [
+    addResource(dwarfSource, 'advantagePoints', 20, 'Puntos de ventaja base para razas no humanas.'),
+    addResource(dwarfSource, 'skillPoints', 8, 'Puntos de pericia base para razas no humanas.'),
+    addResource(dwarfSource, 'pg', 30)
+  ]
+};
+
 const dwarfVariantModifiers = {
   'enanos-enanos-de-las-montanas': [
     addResource(variantSource('enanos-de-las-montanas', 'Enanos de las Montañas'), 'pg', 35),

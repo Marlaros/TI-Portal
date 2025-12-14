@@ -37,11 +37,23 @@ export async function GET(request: Request) {
     const supabase = createServiceClient();
     const { searchParams } = new URL(request.url);
     const owner = sanitizeText(searchParams.get('owner'));
+    const id = sanitizeText(searchParams.get('id'));
 
     let query = supabase
       .from('characters')
       .select('id, owner_name, name, level, alignment, description, attributes, selections, snapshot, created_at')
       .order('created_at', { ascending: false });
+
+    if (id) {
+      const { data, error } = await supabase
+        .from('characters')
+        .select('id, owner_name, name, level, alignment, description, attributes, selections, snapshot, created_at')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      return NextResponse.json({ character: data ?? null }, { status: 200 });
+    }
 
     if (owner) {
       query = query.eq('owner_name', owner);

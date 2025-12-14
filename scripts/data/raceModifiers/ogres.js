@@ -10,6 +10,8 @@ const ogreModifiers = {
     addAttribute(ogreSource, 'percepcion', -2),
     addResource(ogreSource, 'pg', 60),
     addResource(ogreSource, 'xpModifier', 10),
+    addResource(ogreSource, 'advantagePoints', 20, 'Puntos de ventaja base para razas no humanas.'),
+    addResource(ogreSource, 'skillPoints', 8, 'Puntos de pericia base para razas no humanas.'),
     addCombat(ogreSource, 'iniciativa', -2, 'Más lentos para actuar.'),
     addCombat(ogreSource, 'intimidar', 4, 'Aspecto grotesco e imponente.'),
     addCombat(ogreSource, 'valentia', 2),

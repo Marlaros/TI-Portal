@@ -5,6 +5,7 @@ export const ATTRIBUTE_KEYS = [
   'percepcion',
   'liderazgo',
   'inteligencia'
+  , 'belleza', 'categoriaSocial'
 ] as const;
 
 export type AttributeKey = (typeof ATTRIBUTE_KEYS)[number];

@@ -3,13 +3,20 @@
 import { useContext } from 'react';
 import { CharacterContext } from '@/app/contexts/characterContext';
 import { useCatalogs } from '@/app/contexts/catalogContext';
+import { useCharacterPreview } from '@/app/hooks/useCharacterPreview';
 import styles from './Disadvantages.module.css';
-
-const MAX_DISADVANTAGES = 2;
 
 export default function DisadvantagesStep() {
   const { character, setCharacter } = useContext(CharacterContext);
-  const { disadvantages } = useCatalogs();
+  const { disadvantages, advantages } = useCatalogs();
+
+  const { ready, snapshot } = useCharacterPreview(character);
+  const currentAdvantageBudget = ready && snapshot ? snapshot.resources.advantagePoints : 0;
+  const selectedCosts = character.advantages.reduce((sum, slug) => {
+    const opt = advantages.find((a) => a.slug === slug);
+    return sum + (opt?.cost ?? 0);
+  }, 0);
+  const availableAdvantagePoints = currentAdvantageBudget - selectedCosts;
 
   const toggle = (id: string) => {
     setCharacter((prev) => {
@@ -17,7 +24,6 @@ export default function DisadvantagesStep() {
       if (active) {
         return { ...prev, disadvantages: prev.disadvantages.filter((opt) => opt !== id) };
       }
-      if (prev.disadvantages.length >= MAX_DISADVANTAGES) return prev;
       return { ...prev, disadvantages: [...prev.disadvantages, id] };
     });
   };
@@ -26,13 +32,14 @@ export default function DisadvantagesStep() {
     <section className={styles.container}>
       <header>
         <p className={styles.tag}>Paso 7</p>
-        <h3>Elige hasta {MAX_DISADVANTAGES} desventajas</h3>
+        <h3>Elige desventajas (otorgan puntos de ventaja)</h3>
         <span>Las debilidades equilibran el poder y también pueden otorgar recompensas narrativas.</span>
       </header>
+      <div style={{ marginBottom: 8 }}>Puntos disponibles: {ready && snapshot ? snapshot.resources.advantagePoints : '—'} — Usados: {selectedCosts} — Disponibles: {availableAdvantagePoints}</div>
       <div className={styles.grid}>
         {disadvantages.map((option) => {
           const active = character.disadvantages.includes(option.slug);
-          const disabled = !active && character.disadvantages.length >= MAX_DISADVANTAGES;
+          const disabled = false;
           return (
             <button
               key={option.slug}

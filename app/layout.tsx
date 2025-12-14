@@ -60,13 +60,13 @@ export default function RootLayout({
           <div className="ti-content">
             <header className="ti-header">
               <div>
-                <p className="ti-eyebrow">Generador narrativo</p>
+                <p className="ti-eyebrow">Generador de Personajes</p>
                 <h1>Tierras Inmortales</h1>
                 <p className="ti-subtitle">
                   Diseña personajes legendarios en minutos.
                 </p>
               </div>
-              <div className="ti-badge">Beta viviente</div>
+              <div className="ti-badge">Beta</div>
             </header>
             <main className="ti-main">{children}</main>
           </div>

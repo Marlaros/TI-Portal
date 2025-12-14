@@ -11,7 +11,7 @@ import styles from './Description.module.css';
 const Description = () => {
     const {character, setCharacter} = useContext(CharacterContext);
     const {specialties} = useSpecialties(character.race, character.category);
-    const mainAttributes = [["Nombre","name"],["Alineación","alignment"],["Nivel","level"]] as const;
+    const mainAttributes = [["Usuario","userName"],["Nombre","name"],["Alineación","alignment"],["Nivel","level"]] as const;
     
     const [isFocused, setIsFocused] = useState("");
 

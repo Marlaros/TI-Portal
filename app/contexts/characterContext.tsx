@@ -64,6 +64,8 @@ export const emptyCharacter : Character = {
     experience: 0,
     experiencePenalty: 0,
     step: 1,
+    money: { mc: 0, mp: 0, mo: 0 },
+    equipmentPrices: {},
 }
 
 export const CharacterContext = createContext<{character: Character, setCharacter: Dispatch<SetStateAction<Character>>}>(undefined as any);

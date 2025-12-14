@@ -26,7 +26,11 @@ export const createEmptyResources = (): Resources =>
 
 export const createEmptyCombatStats = (): CombatStats =>
   COMBAT_STAT_KEYS.reduce<CombatStats>((acc, key) => {
-    acc[key] = 0;
+    if (key === 'ataque' || key === 'defensa' || key === 'ataqueDistancia') {
+      acc[key] = 10;
+    } else {
+      acc[key] = 0;
+    }
     return acc;
   }, {} as CombatStats);
 

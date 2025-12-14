@@ -20,8 +20,8 @@ export type CalculatedStat =
   | 'pm'
   | 'criticos'
   | 'concentracion'
-  | 'percepcion'
-  | 'liderazgo'
+  | 'habilidad_percepcion'
+  | 'habilidad_liderazgo'
 
 export interface ThresholdEffect {
   stat: CalculatedStat

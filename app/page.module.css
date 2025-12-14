@@ -36,6 +36,7 @@
 
 .heroCopy h2 span {
   color: var(--ti-color-dorado);
+  font-size: larger;
 }
 
 .lead {

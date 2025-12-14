@@ -1,13 +1,16 @@
 const { humanRaceModifiers, humanVariantModifiers } = require('./humans');
-const { elfVariantModifiers } = require('./elves');
-const { dwarfVariantModifiers } = require('./dwarves');
+const { elfVariantModifiers, elfModifiers } = require('./elves');
+const { dwarfVariantModifiers, dwarfModifiers } = require('./dwarves');
 const { duendeModifiers } = require('./duendes');
 const { ogreModifiers } = require('./ogres');
 
 const raceModifiers = {
   ...humanRaceModifiers,
   ...duendeModifiers,
-  ...ogreModifiers
+  ...ogreModifiers,
+  ...elfModifiers
+  ,
+  ...dwarfModifiers
 };
 
 const raceVariantModifiers = {

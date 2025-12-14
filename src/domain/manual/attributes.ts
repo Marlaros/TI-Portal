@@ -9,8 +9,8 @@ export const ATTRIBUTE_DEFINITIONS: Record<
     nombre: 'Fuerza',
     descripcion:
       'Potencia muscular, capacidad para cargar equipo y provocar daño cuerpo a cuerpo.',
-    min: 3,
-    max: 20,
+    min: 1,
+    max: 30,
     tiradaBase: '3D6 + 2',
   },
   R: {
@@ -18,8 +18,8 @@ export const ATTRIBUTE_DEFINITIONS: Record<
     nombre: 'Resistencia',
     descripcion:
       'Representa aguante, sistema inmunológico y resistencia al dolor; influye en PG, PC y recuperación.',
-    min: 3,
-    max: 20,
+    min: 1,
+    max: 30,
     tiradaBase: '3D6 + 2',
   },
   A: {
@@ -27,8 +27,8 @@ export const ATTRIBUTE_DEFINITIONS: Record<
     nombre: 'Agilidad',
     descripcion:
       'Coordinación, equilibrio y velocidad, base para Defensa, Disparos e Iniciativa.',
-    min: 3,
-    max: 20,
+    min: 1,
+    max: 30,
     tiradaBase: '3D6 + 2',
   },
   P: {
@@ -36,8 +36,8 @@ export const ATTRIBUTE_DEFINITIONS: Record<
     nombre: 'Percepción',
     descripcion:
       'Capacidad sensorial y de análisis, utilizada para detectarlo oculto o anticipar amenazas.',
-    min: 3,
-    max: 20,
+    min: 1,
+    max: 30,
     tiradaBase: '3D6 + 2',
   },
   L: {
@@ -45,8 +45,8 @@ export const ATTRIBUTE_DEFINITIONS: Record<
     nombre: 'Liderazgo',
     descripcion:
       'Presencia y carisma para comandar tropas, otorgar moral y coordinar acciones.',
-    min: 3,
-    max: 20,
+    min: 1,
+    max: 30,
     tiradaBase: '3D6 + 2',
   },
   I: {
@@ -54,8 +54,8 @@ export const ATTRIBUTE_DEFINITIONS: Record<
     nombre: 'Inteligencia',
     descripcion:
       'Razonamiento, memoria y dominio de pericias o conjuros, clave para categorías arcanas.',
-    min: 3,
-    max: 20,
+    min: 1,
+    max: 30,
     tiradaBase: '3D6 + 2',
   },
 }
@@ -161,6 +161,17 @@ export const ATTRIBUTE_TABLES: AttributeTables = {
       descripcion: '+1 Defensa cada 3 puntos desde 15',
       efectos: [perPoint('defensa', 15, 3)],
     },
+    {
+      atributo: 'A',
+      min: 17,
+      descripcion: '+1 Defensa espontánea cada 3 puntos desde 17',
+    },
+    {
+      atributo: 'A',
+      min: 18,
+      descripcion: '+1 Disparos cada punto desde 18',
+    }
+
   ],
 }
 

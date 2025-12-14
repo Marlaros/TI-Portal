@@ -1,6 +1,6 @@
 import { RuleModifier } from '../rules';
 
-export type AttributeId = 'fuerza' | 'resistencia' | 'agilidad';
+export type AttributeId = 'fuerza' | 'resistencia' | 'agilidad' | 'percepcion' | 'liderazgo' | 'inteligencia' | 'belleza' | 'categoriaSocial';
 
 export type AttributeSource = RuleModifier['source'];
 

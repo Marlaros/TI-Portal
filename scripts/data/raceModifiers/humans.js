@@ -1,4 +1,4 @@
-const { createSource, addResource, addPerPointResource, addCombat } = require('./shared');
+const { createSource, addResource, addPerPointResource, addCombat, addAttribute } = require('./shared');
 
 const humanRaceSource = createSource('race-humanos', 'Raza: Humanos');
 
@@ -117,6 +117,28 @@ const humanVariantModifiers = {
       'valentia',
       2,
       '+2 a la tirada de Valentía.'
+    )
+  ]
+  ,
+  'humanos-humanos-de-oltenh': [
+    addResource(
+      variantSource('humanos-de-oltenh', 'Humanos de Oltenh'),
+      'advantagePoints',
+      5,
+      'Humanos de Oltenh obtienen 5 puntos adicionales de ventajas.'
+    ),
+    addResource(
+      variantSource('humanos-de-oltenh', 'Humanos de Oltenh'),
+      'skillPoints',
+      3,
+      'Humanos de Oltenh obtienen 3 puntos adicionales de pericia.'
+    ),
+    addAttribute(variantSource('humanos-de-oltenh', 'Humanos de Oltenh'), 'fuerza', 1),
+    addCombat(
+      variantSource('humanos-de-oltenh', 'Humanos de Oltenh'),
+      'valentia',
+      1,
+      '+1 a Valentía.'
     )
   ]
 };

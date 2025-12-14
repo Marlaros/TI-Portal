@@ -3,9 +3,21 @@ const { createSource, addResource, addAttribute, addCombat } = require('./shared
 const variantSource = (slug, nombre) =>
   createSource(`variant-${slug}`, `Subraza: ${nombre}`);
 
+const elfSource = createSource('race-elfos', 'Raza: Elfos');
+
+// Base elf race modifiers (applies when selecting race 'elfos')
+const elfModifiers = {
+  elfos: [
+    addResource(elfSource, 'pg', 15),
+    addAttribute(elfSource, 'agilidad', 1),
+    addAttribute(elfSource, 'inteligencia', 1),
+    addResource(elfSource, 'advantagePoints', 20, 'Puntos de ventaja base para razas no humanas.'),
+    addResource(elfSource, 'skillPoints', 8, 'Puntos de pericia base para razas no humanas.')
+  ]
+};
+
 const elfVariantModifiers = {
   'elfos-altos-elfos': [
-    addResource(variantSource('altos-elfos', 'Altos elfos'), 'pg', 15),
     addAttribute(variantSource('altos-elfos', 'Altos elfos'), 'fuerza', -1),
     addAttribute(variantSource('altos-elfos', 'Altos elfos'), 'resistencia', -2),
     addAttribute(variantSource('altos-elfos', 'Altos elfos'), 'agilidad', 1),
@@ -31,7 +43,6 @@ const elfVariantModifiers = {
     )
   ],
   'elfos-elfos-marinos': [
-    addResource(variantSource('elfos-marinos', 'Elfos marinos'), 'pg', 15),
     addAttribute(variantSource('elfos-marinos', 'Elfos marinos'), 'fuerza', -1),
     addAttribute(variantSource('elfos-marinos', 'Elfos marinos'), 'resistencia', -2),
     addAttribute(variantSource('elfos-marinos', 'Elfos marinos'), 'agilidad', 1),
@@ -52,7 +63,6 @@ const elfVariantModifiers = {
     )
   ],
   'elfos-elfos-oscuros': [
-    addResource(variantSource('elfos-oscuros', 'Elfos oscuros'), 'pg', 15),
     addAttribute(variantSource('elfos-oscuros', 'Elfos oscuros'), 'fuerza', -1),
     addAttribute(variantSource('elfos-oscuros', 'Elfos oscuros'), 'resistencia', -2),
     addAttribute(variantSource('elfos-oscuros', 'Elfos oscuros'), 'agilidad', 1),
@@ -72,7 +82,6 @@ const elfVariantModifiers = {
     )
   ],
   'elfos-elfos-silvanos': [
-    addResource(variantSource('elfos-silvanos', 'Elfos silvanos'), 'pg', 15),
     addAttribute(variantSource('elfos-silvanos', 'Elfos silvanos'), 'fuerza', -1),
     addAttribute(variantSource('elfos-silvanos', 'Elfos silvanos'), 'resistencia', -1),
     addAttribute(variantSource('elfos-silvanos', 'Elfos silvanos'), 'agilidad', 2),
@@ -99,6 +108,7 @@ const elfVariantModifiers = {
 };
 
 module.exports = {
-  elfVariantModifiers
+  elfVariantModifiers,
+  elfModifiers
 };
 

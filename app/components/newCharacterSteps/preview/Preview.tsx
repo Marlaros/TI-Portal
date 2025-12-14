@@ -94,17 +94,17 @@ export default function CharacterPreviewPanel() {
   const restRecoveryBonus = manualSummary.derived.restRecoveryBonus;
 
   const combatStats = [
-    { label: 'Ataque', value: snapshot?.combat.ataque ?? character.stats.ataque ?? 0 },
-    { label: 'Disparos', value: snapshot?.combat.ataqueDistancia ?? character.stats.disparos ?? 0 },
-    { label: 'Prob. de crítico', value: snapshot?.combat.critico ?? character.stats.probCritico ?? 0 },
-    { label: 'Defensa', value: snapshot?.combat.defensa ?? character.stats.defensa ?? 0 },
-    { label: 'Defensas espontáneas', value: character.stats.defEspontanea ?? 0 },
-    { label: 'Penalización a defensa rival', value: snapshot?.combat.reduccionDefensaEnemiga ?? character.stats.penDef ?? 0 },
-    { label: 'Armadura (AR)', value: snapshot?.combat.armadura ?? character.stats.AR ?? 0 },
-    { label: 'Iniciativa', value: snapshot?.combat.iniciativa ?? character.stats.iniciativa ?? 0 },
-    { label: 'Concentración', value: concentration },
-    { label: 'Puntos de magia', value: pm },
-    { label: 'Detectar magia', value: character.stats.detectarMagia ?? 0 }
+    { key: 'ataque', label: 'Ataque', value: snapshot?.combat.ataque ?? character.stats.ataque ?? 0 },
+    { key: 'ataqueDistancia', label: 'Disparos', value: snapshot?.combat.ataqueDistancia ?? character.stats.disparos ?? 0 },
+    { key: 'critico', label: 'Prob. de crítico', value: snapshot?.combat.critico ?? character.stats.probCritico ?? 0 },
+    { key: 'defensa', label: 'Defensa', value: snapshot?.combat.defensa ?? character.stats.defensa ?? 0 },
+    { key: 'defEspontanea', label: 'Defensas espontáneas', value: character.stats.defEspontanea ?? 0 },
+    { key: 'reduccionDefensaEnemiga', label: 'Penalización a defensa rival', value: snapshot?.combat.reduccionDefensaEnemiga ?? character.stats.penDef ?? 0 },
+    { key: 'armadura', label: 'Armadura (AR)', value: snapshot?.combat.armadura ?? character.stats.AR ?? 0 },
+    { key: 'iniciativa', label: 'Iniciativa', value: snapshot?.combat.iniciativa ?? character.stats.iniciativa ?? 0 },
+    { key: 'concentracion', label: 'Concentración', value: concentration },
+    { key: 'pm', label: 'Puntos de magia', value: pm },
+    { key: 'detectarMagia', label: 'Detectar magia', value: character.stats.detectarMagia ?? 0 }
   ];
 
   const perceptionValues = PERCEPTION_SKILLS.map((skill) => ({
@@ -375,7 +375,12 @@ export default function CharacterPreviewPanel() {
             {combatStats.map((entry) => (
               <article key={entry.label} className={styles.statCard}>
                 <p>{entry.label}</p>
-                <strong>{entry.value}</strong>
+                <strong>
+                  {['iniciativa', 'reduccionDefensaEnemiga'].includes(entry.key)
+                    ? // these stats are better when lower: show '-' prefix for positive improvements
+                      (entry.value > 0 ? `-${entry.value}` : `${entry.value}`)
+                    : entry.value}
+                </strong>
               </article>
             ))}
           </div>
