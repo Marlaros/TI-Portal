@@ -31,8 +31,11 @@ interface CatalogContextValue {
   disadvantages: DisadvantageRecord[];
   equipment: EquipmentRecord[];
   fightingStyles: FightingStyleRecord[];
+  fightingStyleTiers: any[];
   weaponMasteries: WeaponMasteryRecord[];
   skills: SkillRecord[];
+  mounts?: any[];
+  specialPerks?: any[];
   builderCatalogs: CatalogCollections;
   status: 'loading' | 'ready' | 'error';
   error?: string;
@@ -47,8 +50,11 @@ const defaultPayload: CatalogBootstrapPayload = {
   disadvantages: [],
   equipment: [],
   fightingStyles: [],
+  fightingStyleTiers: [],
   weaponMasteries: [],
-  skills: []
+  skills: [],
+  mounts: [],
+  specialPerks: []
 };
 
 const defaultBuilderCatalogs: CatalogCollections = {
@@ -56,8 +62,11 @@ const defaultBuilderCatalogs: CatalogCollections = {
   disadvantages: [],
   equipment: [],
   fightingStyles: [],
+  fightingStyleTiers: [],
   weaponMasteries: [],
-  skills: []
+  skills: [],
+  mounts: [],
+  specialPerks: []
 };
 
 const CatalogContext = createContext<CatalogContextValue>({
@@ -75,13 +84,31 @@ const mapBuilderOption = (entry: { slug: string; name: string; description: stri
 
 const toBuilderCatalogs = (payload: CatalogBootstrapPayload): CatalogCollections => ({
   advantages: payload.advantages.map(mapBuilderOption),
-  disadvantages: payload.disadvantages.map((entry) => ({
-    ...mapBuilderOption(entry),
-    tags: [`recompensa:${entry.reward}`]
-  })),
+  disadvantages: payload.disadvantages.map((entry) => {
+    const base = mapBuilderOption(entry);
+    const reward = Number(entry.reward || 0);
+    const rewardModifier =
+      reward > 0
+        ? [
+            {
+              id: `disadvantage-reward-${entry.slug}`,
+              source: { id: `disadvantage-${entry.slug}`, nombre: `${entry.name} (recompensa)` },
+              target: { kind: 'resource', key: 'advantagePoints' },
+              operation: { kind: 'add', value: reward }
+            }
+          ]
+        : [];
+
+    return {
+      ...base,
+      tags: [`recompensa:${entry.reward}`],
+      modifiers: [...(base.modifiers ?? []), ...rewardModifier]
+    };
+  }),
   equipment: payload.equipment.map((entry) => ({
     ...mapBuilderOption(entry),
-    slot: (entry.slot || 'arma') as EquipmentOption['slot']
+    slot: (entry.slot || 'arma') as EquipmentOption['slot'],
+    price: (entry as any).price ?? null
   })),
   fightingStyles: payload.fightingStyles.map((entry) => ({
     id: entry.slug,
@@ -90,11 +117,29 @@ const toBuilderCatalogs = (payload: CatalogBootstrapPayload): CatalogCollections
     description: entry.description ?? '',
     modifiers: entry.modifiers ?? []
   })),
+  fightingStyleTiers: (payload.fightingStyleTiers ?? []).map((row) => ({
+    id: row.slug,
+    title: row.title,
+    description: row.description ?? '',
+    modifiers: row.modifiers ?? []
+  })),
   weaponMasteries: payload.weaponMasteries.map((entry) => ({
     ...mapBuilderOption(entry),
     weaponTag: entry.weaponTag ?? ''
   })),
-  skills: payload.skills.map(mapBuilderOption)
+  skills: payload.skills.map(mapBuilderOption),
+  mounts: payload.mounts?.map((entry) => ({
+    id: entry.slug,
+    name: entry.name,
+    description: entry.description ?? '',
+    modifiers: entry.modifiers ?? []
+  })) || [],
+  specialPerks: payload.specialPerks?.map((entry) => ({
+    id: entry?.slug || 'a-perk',
+    name: entry?.name ?? 'aPerk',
+    description: entry?.description ?? '',
+    modifiers: entry?.modifiers ?? []
+  })) || []
 });
 
 export function CatalogProvider({ children }: { children: React.ReactNode }) {

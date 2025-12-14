@@ -5,8 +5,15 @@ module.exports = [
     group: 1,
     order: 1,
     title: 'Recibir una defensa espontanea',
-    description:
-      'La velocidad de manos y pies permite interponer una guardia gratuita aunque no se porte escudo.'
+    description: 'La velocidad de manos y pies permite interponer una guardia gratuita aunque no se porte escudo.',
+    modifiers: [
+      {
+        id: 'lucha-sin-armas-g1-a1-defensa',
+        source: { id: 'manual:lucha-sin-armas-g1-a1', nombre: 'Recibir una defensa espontanea' },
+        target: { kind: 'combat', key: 'cantidadDeDefensas' },
+        operation: { kind: 'add', value: 1 }
+      } 
+    ]
   },
   {
     styleSlug: 'lucha-sin-armas',
@@ -14,7 +21,16 @@ module.exports = [
     order: 2,
     title: 'Mejorar el dano del golpe',
     description:
-      'Cada golpe de puno o patada canaliza todo el peso del cuerpo e inflige 1D6 PG en vez de 1D2.'
+      'Cada golpe de puno o patada canaliza todo el peso del cuerpo e inflige 1D6 PG en vez de 1D2.',
+    modifiers: [
+      {
+        id: 'lucha-sin-armas-g1-a2-dano',
+        source: { id: 'manual:lucha-sin-armas-g1-a2', nombre: 'Mejorar el dano del golpe' },
+        target: { kind: 'combat', key: 'dadosDeDaño' },
+        operation: { kind: 'set', value: '1D6' }
+      }
+    ]
+
   },
   {
     styleSlug: 'lucha-sin-armas',
@@ -23,6 +39,15 @@ module.exports = [
     title: 'Lanzar dos golpes',
     description:
       'El combatiente obtiene un ataque adicional con el cuerpo; no suma modificador de Fuerza pero si ventajas.'
+    ,
+    modifiers: [
+      {
+        id: 'lucha-sin-armas-g1-a3-numeroDeAtaques',
+        source: { id: 'manual:lucha-sin-armas-g1-a3', nombre: 'Lanzar dos golpes' },
+        target: { kind: 'combat', key: 'numeroDeAtaques' },
+        operation: { kind: 'add', value: 1 }
+      }
+    ]
   },
   {
     styleSlug: 'lucha-sin-armas',
@@ -30,7 +55,15 @@ module.exports = [
     order: 1,
     title: 'Duplicar la Fuerza en el dano',
     description:
-      'El dano de los golpes aplica el modificador por Fuerza (o Agilidad 16+) multiplicado por dos.'
+      'El dano de los golpes aplica el modificador por Fuerza (o Agilidad 16+) multiplicado por dos.',
+    modifiers: [
+      {
+        id: 'lucha-sin-armas-g2-a1-fuerzaDano',
+        source: { id: 'manual:lucha-sin-armas-g2-a1', nombre: 'Duplicar la Fuerza en el dano' },
+        target: { kind: 'combat', key: 'dano' },
+        operation: { kind: 'add', value: '(F)Modifier|(A)Modifier' }
+      }
+    ]
   },
   {
     styleSlug: 'lucha-sin-armas',
@@ -38,7 +71,15 @@ module.exports = [
     order: 2,
     title: 'Anular la defensa rival',
     description:
-      'El primer ataque del turno no puede ser detenido por ninguna tirada de Defensa del oponente.'
+      'El primer ataque del turno no puede ser detenido por ninguna tirada de Defensa del oponente.',
+    modifiers: [
+      {
+        id: 'lucha-sin-armas-g2-a2-anularDefensa',
+        source: { id: 'manual:lucha-sin-armas-g2-a2', nombre: 'Anular la defensa rival' },
+        target: { kind: 'specialPerks', key: 'anularDefensa' },
+        operation: { kind: 'add', value: 1 }
+      }
+    ]
   },
   {
     styleSlug: 'lucha-sin-armas',
@@ -46,7 +87,21 @@ module.exports = [
     order: 3,
     title: 'Mejorar el golpe critico',
     description:
-      'A la hora de determinar efectos secundarios de un critico, se resta 2 al D8 y 1 al D6 correspondiente.'
+      'A la hora de determinar efectos secundarios de un critico, se resta 2 al D8 y 1 al D6 correspondiente.',
+    modifiers: [
+      {
+        id: 'lucha-sin-armas-g2-a3-mejorarCritico-d8',
+        source: { id: 'manual:lucha-sin-armas-g2-a3', nombre: 'Mejorar el golpe critico' },
+        target: { kind: 'specialPerks', key: 'mejorarD8Critico' },
+        operation: { kind: 'add', value: 2 }
+      },
+      {
+        id: 'lucha-sin-armas-g2-a3-mejorarCritico-d6',
+        source: { id: 'manual:lucha-sin-armas-g2-a3', nombre: 'Mejorar el golpe critico' },
+        target: { kind: 'specialPerks', key: 'mejorarD6Critico' },
+        operation: { kind: 'add', value: 1 }
+      }
+    ]
   },
   {
     styleSlug: 'lucha-sin-armas',
@@ -157,8 +212,15 @@ module.exports = [
     group: 4,
     order: 1,
     title: 'Paradas perfectas',
-    description:
-      'El guerrero coordina su mano libre para obtener una Defensa extra en cada turno cuerpo a cuerpo.'
+    description: 'El guerrero coordina su mano libre para obtener una Defensa extra en cada turno cuerpo a cuerpo.',
+    modifiers: [
+      {
+        id: 'arma-una-mano-g4-a1-defensa',
+        source: { id: 'manual:arma-una-mano-g4-a1', nombre: 'Paradas perfectas' },
+        target: { kind: 'combat', key: 'cantidadDeDefensas' },
+        operation: { kind: 'add', value: 1 }
+      }
+    ]
   },
 
   // Lucha con arma de astas
@@ -167,7 +229,15 @@ module.exports = [
     group: 1,
     order: 1,
     title: 'Iniciativa extendida',
-    description: 'Aprovecha el alcance del asta y obtiene +3 a la Iniciativa.'
+    description: 'Aprovecha el alcance del asta y obtiene +3 a la Iniciativa.',
+    modifiers: [
+      {
+        id: 'arma-de-astas-g1-a1-iniciativa',
+        source: { id: 'manual:arma-de-astas-g1-a1', nombre: 'Iniciativa extendida' },
+        target: { kind: 'combat', key: 'iniciativa' },
+        operation: { kind: 'add', value: 3 }
+      }
+    ]
   },
   {
     styleSlug: 'arma-de-astas',
@@ -571,6 +641,15 @@ module.exports = [
     title: 'Bonificar todos los ataques I',
     description:
       'Permite usar ciertas armas arrojadizas en cuerpo a cuerpo, otorga ataques adicionales con dardos y mejora el alcance del disco de acero.'
+    ,
+    modifiers: [
+      {
+        id: 'armas-arrojadizas-g1-a3-numeroDeAtaques',
+        source: { id: 'manual:armas-arrojadizas-g1-a3', nombre: 'Bonificar todos los ataques I' },
+        target: { kind: 'combat', key: 'numeroDeAtaques' },
+        operation: { kind: 'add', value: 1 }
+      }
+    ]
   },
   {
     styleSlug: 'armas-arrojadizas',
@@ -584,7 +663,15 @@ module.exports = [
     group: 2,
     order: 2,
     title: 'Mayor distancia',
-    description: 'Suma 5 metros al alcance por nivel del personaje.'
+    description: 'Suma 5 metros al alcance por nivel del personaje.',
+    modifiers: [
+      {
+        id: 'arcos-y-ballestas-g2-a3-ataqueDistancia',
+        source: { id: 'manual:arcos-y-ballestas-g2-a3', nombre: 'Primer disparo certero' },
+        target: { kind: 'combat', key: 'ataqueDistancia' },
+        operation: { kind: 'add', value: 4 }
+      }
+    ],
   },
   {
     styleSlug: 'armas-arrojadizas',

@@ -74,3 +74,21 @@
   min-height: 4.8rem;
 }
 
+.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+.pill {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(243, 230, 204, 0.8);
+  background: transparent;
+  border: 1px solid rgba(243,230,204,0.04);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+

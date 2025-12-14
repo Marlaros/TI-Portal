@@ -70,12 +70,28 @@ export interface EquipmentRecord {
   slot: string;
   description: string | null;
   modifiers: RuleModifier[];
+  // price stored as JSONB in the DB: currency code and amount
+  price?: {
+    currency: 'mc' | 'mp' | 'mo';
+    amount: number;
+  } | null;
 }
 
 export interface FightingStyleRecord {
   slug: string;
   name: string;
   styleKey: string;
+  description: string | null;
+  modifiers: RuleModifier[];
+}
+
+export interface FightingStyleTierRecord {
+  id: string;
+  slug: string;
+  fighting_style_id: string;
+  group_index: number;
+  order_index: number;
+  title: string;
   description: string | null;
   modifiers: RuleModifier[];
 }
@@ -106,6 +122,7 @@ export interface CatalogBootstrapPayload {
   disadvantages: DisadvantageRecord[];
   equipment: EquipmentRecord[];
   fightingStyles: FightingStyleRecord[];
+  fightingStyleTiers?: FightingStyleTierRecord[];
   weaponMasteries: WeaponMasteryRecord[];
   skills: SkillRecord[];
 }

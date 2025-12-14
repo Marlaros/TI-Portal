@@ -13,6 +13,8 @@ import { useRaceTypes } from '@/app/hooks/useRaceTypes';
 import { IRaceType } from './RaceType.types';
 
 import styles from './RaceType.module.css';
+import { useCatalogs } from '@/app/contexts/catalogContext';
+import ModifiersList from '../../Modifiers/ModifiersList';
 
 const RaceType = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -22,6 +24,9 @@ const RaceType = () => {
     const selectedRace = useMemo(() => (
         races.find((race: IRace) => race.name === character.race)
     ), [character.race, races]);
+    const { races: catalogRaces, raceVariants: catalogRaceVariants } = useCatalogs();
+    const selectedRaceRaw = catalogRaces.find((r: any) => r.name === character.race);
+    const selectedRaceTypeRaw = catalogRaceVariants.find((rv: any) => rv.name === character.raceType && rv.raceName === character.race);
 
     const renderSelectTypeHeader = (raza: string) => {
         if(raza === "Humanos"){
@@ -57,11 +62,12 @@ const RaceType = () => {
     return(
         <div className={styles.container}>
             { selectedRace && selectedRace.name && 
-                <BigCard
-                    name={selectedRace.name}
-                    description={selectedRace.shortDesc}
-                    image={selectedRace.image}
-                />
+                  <BigCard
+                      name={selectedRace.name}
+                      description={selectedRace.shortDesc}
+                      image={selectedRace.image}
+                      modifiers={selectedRaceRaw?.modifiers ?? []}
+                  />
             }
             <section className={styles.section}>
                 <header className={styles.header}>
@@ -72,12 +78,13 @@ const RaceType = () => {
                     { raceTypes.length > 0 ? 
                         raceTypes.map((raceType: IRaceType) => (
                             <ElementCard
-                                key={raceType.name}
-                                name={raceType.name}
-                                description={raceType.shortDesc}
-                                image={raceType.image}
-                                handleClick={(value:string) => setCharacterRaceType(value)}
-                            />
+                                    key={raceType.name}
+                                    name={raceType.name}
+                                    description={raceType.shortDesc}
+                                    image={raceType.image}
+                                    handleClick={(value:string) => setCharacterRaceType(value)}
+                                    modifiers={raceType.modifiers ?? []}
+                                />
                         )) : 
                         renderAlternative(character.race)
                     }

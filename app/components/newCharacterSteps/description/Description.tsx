@@ -7,6 +7,8 @@ import { CharacterContext } from '@/app/contexts/characterContext';
 import { useSpecialties } from '@/app/hooks/useSpecialties';
 
 import styles from './Description.module.css';
+import { useCatalogs } from '@/app/contexts/catalogContext';
+import ModifiersList from '../../Modifiers/ModifiersList';
 
 const Description = () => {
     const {character, setCharacter} = useContext(CharacterContext);
@@ -18,6 +20,20 @@ const Description = () => {
     const selectedSpecialty = useMemo(() => (
         specialties.find((spec: any) => spec.name === character.specialty)
     ), [specialties, character.specialty]);
+
+    const { races: catalogRaces, raceVariants: catalogRaceVariants, categories: catalogCategories, specialties: catalogSpecialties } = useCatalogs();
+    const stackedModifiers = (() => {
+        const out: any[] = [];
+        const r = catalogRaces.find((rr: any) => rr.name === character.race);
+        if (r && r.modifiers) out.push(...r.modifiers);
+        const rt = catalogRaceVariants.find((rv: any) => rv.name === character.raceType && rv.raceName === character.race);
+        if (rt && rt.modifiers) out.push(...rt.modifiers);
+        const cat = catalogCategories.find((c: any) => c.name === character.category);
+        if (cat && cat.modifiers) out.push(...cat.modifiers);
+        const sp = catalogSpecialties.find((s: any) => s.name === character.specialty);
+        if (sp && sp.modifiers) out.push(...sp.modifiers);
+        return out;
+    })();
 
     const updateCharacterMains = (descriptionKey: string, value: string) => {
         setCharacter((prevState: any) => ({...prevState, [descriptionKey]: value}))
@@ -38,6 +54,7 @@ const Description = () => {
                     name={`${character.raceType} - ${selectedSpecialty.name}`}
                     description={selectedSpecialty.shortDesc}
                     image={selectedSpecialty.image}
+                    modifiers={selectedSpecialty.modifiers ?? []}
                 />
             }
             <section className={styles.section}>

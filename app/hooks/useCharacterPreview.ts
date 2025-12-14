@@ -40,9 +40,11 @@ const buildSelections = (character: Character): BuilderSelections => ({
   disadvantageIds: character.disadvantages,
   equipmentIds: character.equipment,
   fightingStyleId: character.fightingStyle,
+  fightingStyleTierIds: character.fightingStylePerks || [],
   weaponSpecializationId: character.weaponSpecialization,
   skillIds: character.skills,
-  mountIds: character.mounts
+  mountIds: character.mounts,
+  specialPerks: character.specialPerks || []
 });
 
 const isReadyForPreview = (character: Character) => Boolean(character.race && character.category);
@@ -162,7 +164,8 @@ export const useCharacterPreview = (character: Character): PreviewResult => {
             disadvantageIds: character.disadvantages,
             weaponIds: character.equipment,
             fightingStyleId: character.fightingStyle || undefined,
-            mountIds: character.mounts
+            mountIds: character.mounts,
+            specialPerks: character.specialPerks || []
           },
           customModifiers: allCustomModifiers,
           contextFlags

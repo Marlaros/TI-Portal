@@ -18,6 +18,7 @@ export interface BuilderSelections {
   disadvantageIds: string[];
   equipmentIds: string[];
   fightingStyleId?: string | null;
+  fightingStyleTierIds?: string[];
   weaponSpecializationId?: string | null;
   skillIds: string[];
   mountIds: string[];
@@ -83,8 +84,11 @@ export interface CatalogCollections {
   disadvantages: BuilderOption[];
   equipment: EquipmentOption[];
   fightingStyles: FightingStyleOption[];
+  fightingStyleTiers: BuilderOption[];
   weaponMasteries: WeaponMasteryOption[];
   skills: BuilderOption[];
+  mounts?: BuilderOption[];
+  specialPerks?: BuilderOption[];
 }
 
 export const collectBuilderModifiers = (selections: BuilderSelections, catalogs: CatalogCollections) => {
@@ -106,6 +110,12 @@ export const collectBuilderModifiers = (selections: BuilderSelections, catalogs:
   if (selections.fightingStyleId) {
     const style = fightingStyleMap[selections.fightingStyleId];
     pushModifiers(modifiers, style);
+  }
+
+  // tiers / perks
+  if (selections.fightingStyleTierIds && selections.fightingStyleTierIds.length) {
+    const tierMap = optionMap(catalogs.fightingStyleTiers as any);
+    selections.fightingStyleTierIds.forEach((id) => pushModifiers(modifiers, tierMap[id]));
   }
 
   if (selections.weaponSpecializationId) {

@@ -82,19 +82,31 @@ const mapSkills = (rows: any[]) =>
 
 export async function GET() {
   try {
-    const [racesRes, variantsRes, categoriesRes, specialtiesRes, advantagesRes, disadvantagesRes, equipmentRes, stylesRes, masteriesRes, skillsRes] =
-      await Promise.all([
-        supabase.from('races').select('*').order('name'),
-        supabase.from('race_variants').select('*').order('name'),
-        supabase.from('categories').select('*').order('name'),
-        supabase.from('specialties').select('*').order('name'),
-        supabase.from('advantages').select('*').order('name'),
-        supabase.from('disadvantages').select('*').order('name'),
-        supabase.from('equipment').select('*').order('name'),
-        supabase.from('fighting_styles').select('*').order('name'),
-        supabase.from('weapon_masteries').select('*').order('name'),
-        supabase.from('skills').select('*').order('name')
-      ]);
+    const [
+      racesRes,
+      variantsRes,
+      categoriesRes,
+      specialtiesRes,
+      advantagesRes,
+      disadvantagesRes,
+      equipmentRes,
+      stylesRes,
+      tiersRes,
+      masteriesRes,
+      skillsRes
+    ] = await Promise.all([
+      supabase.from('races').select('*').order('name'),
+      supabase.from('race_variants').select('*').order('name'),
+      supabase.from('categories').select('*').order('name'),
+      supabase.from('specialties').select('*').order('name'),
+      supabase.from('advantages').select('*').order('name'),
+      supabase.from('disadvantages').select('*').order('name'),
+      supabase.from('equipment').select('*').order('name'),
+      supabase.from('fighting_styles').select('*').order('name'),
+      supabase.from('fighting_style_tiers').select('*').order('fighting_style_id'),
+      supabase.from('weapon_masteries').select('*').order('name'),
+      supabase.from('skills').select('*').order('name')
+    ]);
 
     const error =
       racesRes.error ||
@@ -135,6 +147,16 @@ export async function GET() {
       fightingStyles: (stylesRes.data ?? []).map((row) => ({
         ...mapStandard([row])[0],
         styleKey: row.style_key
+      })),
+      fightingStyleTiers: (tiersRes.data ?? []).map((row) => ({
+        id: row.id,
+        slug: row.slug,
+        fighting_style_id: row.fighting_style_id,
+        group_index: row.group_index,
+        order_index: row.order_index,
+        title: row.title,
+        description: row.description ?? null,
+        modifiers: row.modifiers ?? []
       })),
       weaponMasteries: (masteriesRes.data ?? []).map((row) => ({
         ...mapStandard([row])[0],

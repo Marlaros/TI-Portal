@@ -60,6 +60,7 @@ create table if not exists public.specialties (
     image_urls text[] not null default '{}',
     allowed_races text[] not null default '{}',
     modifiers jsonb not null default '[]'::jsonb,
+    allowed_alignments text[] not null default '{}',
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -106,6 +107,7 @@ create table if not exists public.advantages (
     cost int not null default 0,
     description text,
     modifiers jsonb not null default '[]'::jsonb,
+    constraints jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -118,6 +120,7 @@ create table if not exists public.disadvantages (
     reward int not null default 0,
     description text,
     modifiers jsonb not null default '[]'::jsonb,
+    constraints jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -130,6 +133,9 @@ create table if not exists public.equipment (
     slot text not null,
     description text,
     modifiers jsonb not null default '[]'::jsonb,
+    -- Precio como JSON: {"currency":"mc|mp|mo","amount":number}
+    price jsonb,
+    constraints jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -142,6 +148,7 @@ create table if not exists public.fighting_styles (
     style_key text not null,
     description text,
     modifiers jsonb not null default '[]'::jsonb,
+    constraints jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -167,6 +174,7 @@ create table if not exists public.skills (
     attribute text,
     cost int,
     modifiers jsonb not null default '[]'::jsonb,
+    constraints jsonb not null default '[]'::jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );

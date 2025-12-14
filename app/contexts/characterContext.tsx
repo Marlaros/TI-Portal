@@ -18,6 +18,7 @@ export const emptyCharacter : Character = {
     fightingStyle: null,
     weaponSpecialization: null,
     skills: [],
+    fightingStylePerks: [],
     skillRanks: {},
     attributes: {
         fuerza: 10,
@@ -60,6 +61,8 @@ export const emptyCharacter : Character = {
             deP: {},
             deL: {}
         }, 
+        habilidadesPercepcion: [],
+        habilidadesLiderazgo: []
     },
     experience: 0,
     experiencePenalty: 0,

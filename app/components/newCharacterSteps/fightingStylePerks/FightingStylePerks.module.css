@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.group {
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid rgba(243,230,204,0.08);
+  background: rgba(12,20,16,0.7);
+}
+.perkButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  margin: 0.25rem 0;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.perkButton.active {
+  background: rgba(60,140,80,0.12);
+  border-color: rgba(60,140,80,0.25);
+}
+.perkTitle {
+  font-weight: 600;
+}
+.perkDesc {
+  font-size: 0.85rem;
+  color: rgba(243,230,204,0.7);
+}

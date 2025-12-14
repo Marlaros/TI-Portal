@@ -10,6 +10,7 @@ import AdvantagesStep from '../newCharacterSteps/advantages/Advantages';
 import DisadvantagesStep from '../newCharacterSteps/disadvantages/Disadvantages';
 import EquipmentStep from '../newCharacterSteps/equipment/Equipment';
 import FightingStyleStep from '../newCharacterSteps/fightingStyle/FightingStyle';
+import FightingStylePerksStep from '../newCharacterSteps/fightingStylePerks/FightingStylePerks';
 import WeaponMasteryStep from '../newCharacterSteps/weaponMastery/WeaponMastery';
 import SkillsStep from '../newCharacterSteps/skills/Skills';
 import CharacterPreviewPanel from '../newCharacterSteps/preview/Preview';
@@ -31,6 +32,7 @@ const STEP_META = [
   { title: 'Desventajas', helper: 'Equilibra el poder con compromisos o restricciones.' },
   { title: 'Equipo', helper: 'Define armas, armaduras y kits iniciales.' },
   { title: 'Estilo de lucha', helper: 'Selecciona la técnica de combate predominante.' },
+  { title: 'Perks de estilo', helper: 'Elige las destrezas de tu estilo de lucha por grupos.' },
   { title: 'Arma predilecta', helper: 'Especialízate en el arma que dominarás.' },
   { title: 'Pericias', helper: 'Selecciona talentos clave para la aventura.' }
 ] as const;
@@ -58,8 +60,10 @@ const STEP_COMPONENT = (step: number) => {
     case 10:
       return <FightingStyleStep />;
     case 11:
-      return <WeaponMasteryStep />;
+      return <FightingStylePerksStep />;
     case 12:
+      return <WeaponMasteryStep />;
+    case 13:
       return <SkillsStep />;
     default:
       return <div className={styles.placeholder}>Seleccione una opción para continuar.</div>;

@@ -86,3 +86,13 @@ img {
 .ti-body {
   background: transparent;
 }
+
+/* Focus styles: use golden outline to match UI */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: 2px solid var(--ti-color-dorado);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(165,139,97,0.08);
+}

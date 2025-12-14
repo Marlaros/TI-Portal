@@ -60,7 +60,8 @@ module.exports = [
       'Ademas de las bonificaciones indicadas, el manual concede +1 a la pericia Seducir si el personaje la posee.',
     effects: [
       { kind: 'combat', key: 'adular', value: 1 },
-      { kind: 'combat', key: 'negociarRogar', value: 1 }
+      { kind: 'combat', key: 'negociarRogar', value: 1 },
+      { kind: 'skill', key: 'seducir', value: 1 }
     ]
   },
   {
@@ -75,7 +76,8 @@ module.exports = [
     effects: [
       { kind: 'combat', key: 'hablarMasas', value: 1 },
       { kind: 'combat', key: 'negociarRogar', value: 1 },
-      { kind: 'combat', key: 'adular', value: 1 }
+      { kind: 'combat', key: 'adular', value: 1 },
+      { kind: 'skill', key: 'seducir', value: 2 }
     ]
   }
 ];

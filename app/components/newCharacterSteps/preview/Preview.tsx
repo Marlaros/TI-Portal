@@ -49,7 +49,9 @@ const toCoreAttributes = (attributes: Character['attributes']): Attributes => ({
   agilidad: attributes.agilidad ?? 10,
   percepcion: attributes.percepcion ?? 10,
   liderazgo: attributes.liderazgo ?? 10,
-  inteligencia: attributes.inteligencia ?? 10
+  inteligencia: attributes.inteligencia ?? 10,
+  belleza: attributes.belleza ?? 10,
+  categoriaSocial: attributes.categoriaSocial ?? 1
 });
 
 const formatModifier = (modifier: RuleModifier): string => {
@@ -96,6 +98,8 @@ export default function CharacterPreviewPanel() {
   const combatStats = [
     { key: 'ataque', label: 'Ataque', value: snapshot?.combat.ataque ?? character.stats.ataque ?? 0 },
     { key: 'ataqueDistancia', label: 'Disparos', value: snapshot?.combat.ataqueDistancia ?? character.stats.disparos ?? 0 },
+    { key: 'numeroDeAtaques', label: 'Nº de ataques', value: snapshot?.combat.numeroDeAtaques ?? 1 },
+    { key: 'numeroDeAtaquesDistancia', label: 'Nº de ataques (dist.)', value: snapshot?.combat.numeroDeAtaquesDistancia ?? 1 },
     { key: 'critico', label: 'Prob. de crítico', value: snapshot?.combat.critico ?? character.stats.probCritico ?? 0 },
     { key: 'defensa', label: 'Defensa', value: snapshot?.combat.defensa ?? character.stats.defensa ?? 0 },
     { key: 'defEspontanea', label: 'Defensas espontáneas', value: character.stats.defEspontanea ?? 0 },
@@ -130,14 +134,15 @@ export default function CharacterPreviewPanel() {
   const equipmentEntries = useMemo(
     () =>
       character.equipment.map((slug) => {
-        const record = catalogs.equipment.find((item) => item.slug === slug);
-        return {
-          slug,
-          name: record?.name ?? slug,
-          size: record?.slot ?? '—',
-          value: '—',
-          modifiers: record?.modifiers ?? []
-        };
+          const record = catalogs.equipment.find((item) => item.slug === slug);
+          const price = (record as any)?.price;
+          return {
+            slug,
+            name: record?.name ?? slug,
+            size: record?.slot ?? '—',
+            price: price ?? null,
+            modifiers: record?.modifiers ?? []
+          };
       }),
     [character.equipment, catalogs.equipment]
   );
@@ -390,6 +395,7 @@ export default function CharacterPreviewPanel() {
       <div className={styles.gridTwo}>
         <section className={styles.panel}>
           <h4>Habilidades de percepción</h4>
+          <p className={styles.helperText}>Base: {ready && snapshot ? snapshot.combat.percepcionChequeo : '—'}</p>
           <table className={styles.skillTable}>
             <tbody>
               {perceptionValues.map((skill) => (
@@ -403,6 +409,7 @@ export default function CharacterPreviewPanel() {
         </section>
         <section className={styles.panel}>
           <h4>Habilidades de liderazgo</h4>
+          <p className={styles.helperText}>Base: {ready && snapshot ? snapshot.combat.liderazgoChequeo : '—'}</p>
           <table className={styles.skillTable}>
             <tbody>
               {leadershipValues.map((skill) => (
@@ -503,8 +510,8 @@ export default function CharacterPreviewPanel() {
             {equipmentEntries.map((item) => (
               <div key={item.slug} className={styles.tableRow}>
                 <span>{item.name}</span>
-                <span>{item.size}</span>
-                <span>{item.value}</span>
+                  <span>{item.size}</span>
+                  <span>{item.price ? `${item.price.amount} ${item.price.currency?.toUpperCase()}` : '—'}</span>
                 <span className={styles.modifiers}>
                   {item.modifiers.length
                     ? item.modifiers.map((modifier) => (

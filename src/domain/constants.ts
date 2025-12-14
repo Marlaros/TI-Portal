@@ -4,8 +4,9 @@ export const ATTRIBUTE_KEYS = [
   'agilidad',
   'percepcion',
   'liderazgo',
-  'inteligencia'
-  , 'belleza', 'categoriaSocial'
+  'inteligencia',
+  'belleza',
+  'categoriaSocial'
 ] as const;
 
 export type AttributeKey = (typeof ATTRIBUTE_KEYS)[number];
@@ -24,12 +25,17 @@ export type ResourceKey = (typeof RESOURCE_KEYS)[number];
 export const COMBAT_STAT_KEYS = [
   'ataque',
   'ataqueDistancia',
+  'numeroDeAtaques',
+  'numeroDeAtaquesDistancia',
   'dano',
   'critico',
   'defensa',
   'armadura',
   'defensaEspontanea',
   'reduccionDefensaEnemiga',
+  'resistenciaContraCriticos',
+  'reduccionDano',
+  'reduccionResistenciaCriticosEnemiga',
   'iniciativa',
   'concentracion',
   'percepcionChequeo',
@@ -47,7 +53,8 @@ export const COMBAT_STAT_KEYS = [
   'orientacion',
   'sospecha',
   'rastreo',
-  'detectarMagia'
+  'detectarMagia',
+  'dispersarMagia'
 ] as const;
 
 export type CombatStatKey = (typeof COMBAT_STAT_KEYS)[number];
@@ -81,12 +88,13 @@ export const FIGHTING_STYLE_KEYS = [
 export type FightingStyleKey = (typeof FIGHTING_STYLE_KEYS)[number];
 
 export const RULE_CONTEXT_FLAGS = [
-  'montado',
-  'sinCoraza',
-  'estiloMarcial',
-  'aeromago',
-  'dualWield',
-  'armaPesada'
+  'hasHeavyArmor',
+  'hasLightArmor',
+  'hasMediumArmor',
+  'isMounted',
+  'isFlying',
+  'isInvisible',
+  'isUnderwater'
 ] as const;
 
 export type RuleContextFlag = (typeof RULE_CONTEXT_FLAGS)[number];

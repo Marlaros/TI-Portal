@@ -28,6 +28,12 @@ export const createEmptyCombatStats = (): CombatStats =>
   COMBAT_STAT_KEYS.reduce<CombatStats>((acc, key) => {
     if (key === 'ataque' || key === 'defensa' || key === 'ataqueDistancia') {
       acc[key] = 10;
+    } else if (key === 'percepcionChequeo' || key === 'liderazgoChequeo') {
+      // base value for perception and leadership skill checks
+      acc[key] = 8;
+    } else if (key === 'numeroDeAtaques' || key === 'numeroDeAtaquesDistancia') {
+      // default number of attacks
+      acc[key] = 1;
     } else {
       acc[key] = 0;
     }

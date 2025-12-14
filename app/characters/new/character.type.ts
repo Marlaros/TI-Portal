@@ -15,10 +15,12 @@ export interface Character {
     advantages: string[],
     disadvantages: string[],
     equipment: string[],
+    equipmentQuantities?: Record<string, number>,
     mounts: string[],
     fightingStyle: string | null,
     weaponSpecialization: string | null,
     skills: string[],
+    fightingStylePerks?: string[],
     skillRanks: Record<string, number>,
     experience: number,
     experiencePenalty: number,
@@ -28,7 +30,8 @@ export interface Character {
         mp: number;
         mo: number;
     };
-    equipmentPrices?: Record<string, number>;
+    equipmentPrices?: Record<string, { currency: 'mc' | 'mp' | 'mo'; amount: number }>;
+    specialPerks?: SpecialPerks;
 }
 
 interface Attributes{
@@ -70,6 +73,8 @@ interface Stats {
     concentracion: number,
     detectarMagia: number,
     habilidades: Habilidades, 
+    habilidadesPercepcion: HabilidadesDePercepcion[],
+    habilidadesLiderazgo: HabilidadesDeLiderazgo[]
 }
 
 interface Habilidades{
@@ -84,3 +89,19 @@ interface HabilidadesDePercepcion{
 interface HabilidadesDeLiderazgo{
     [key: string]: number
 }
+
+interface SpecialPerks {
+    ignoreHeavyArmorPenalty?: boolean;
+    fireImmunity?: boolean;
+    coldInmunity?: boolean;
+    lightningInmunity?: boolean;
+    poisonInmunity?: boolean;
+    fireVulnerability?: boolean;
+    coldVulnerability?: boolean;
+    lightningVulnerability?: boolean;
+    poisonVulnerability?: boolean;
+    waterBreathing?: boolean;
+    nightVision?: boolean;
+    isUndead?: boolean;
+}
+    

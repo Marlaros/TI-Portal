@@ -10,6 +10,7 @@ export interface BuilderOption {
 
 export interface EquipmentOption extends BuilderOption {
   slot: 'arma' | 'armadura' | 'kit';
+  price?: { currency: 'mc' | 'mp' | 'mo'; amount: number } | null;
 }
 
 export interface FightingStyleOption {

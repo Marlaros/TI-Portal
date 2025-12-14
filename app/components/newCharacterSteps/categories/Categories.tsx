@@ -12,6 +12,8 @@ import { usePrimaryCategories } from '@/app/hooks/useCategories';
 import { IRace } from '../raceList/RaceList.types';
 
 import styles from './Categories.module.css';
+import { useCatalogs } from '@/app/contexts/catalogContext';
+import ModifiersList from '../../Modifiers/ModifiersList';
 
 
 const Categories = () => {
@@ -33,15 +35,18 @@ const Categories = () => {
         setCharacter((prevState) => ({...prevState, category: value, step: 4}));
     }
 
+    const { categories: catalogCategories, races: catalogRaces, raceVariants: catalogRaceVariants } = useCatalogs();
+
     return(
         <div className={styles.container}>
-            {selectedRaceType && selectedRaceType.name && (
-                <BigCard
-                    name={selectedRaceType.name}
-                    description={selectedRaceType.shortDesc}
-                    image={selectedRaceType.image}
-                />
-            )}
+              {selectedRaceType && selectedRaceType.name && (
+                  <BigCard
+                      name={selectedRaceType.name}
+                      description={selectedRaceType.shortDesc}
+                      image={selectedRaceType.image}
+                      modifiers={(selectedRaceType as any)?.modifiers ?? []}
+                  />
+              )}
             <section className={styles.section}>
                 <header className={styles.header}>
                     <p className={styles.tag}>Paso 3</p>
@@ -55,12 +60,13 @@ const Categories = () => {
                     { primaryCategories.length > 0 ? 
                         primaryCategories.map((primaryCategory: any) => (
                             <ElementCard
-                                key={primaryCategory.name}
-                                name={primaryCategory.name}
-                                description={primaryCategory.shortDesc}
-                                image={primaryCategory.image}
-                                handleClick={(value:string) => setCharacterCategory(value)}
-                            />
+                                    key={primaryCategory.name}
+                                    name={primaryCategory.name}
+                                    description={primaryCategory.shortDesc}
+                                    image={primaryCategory.image}
+                                    handleClick={(value:string) => setCharacterCategory(value)}
+                                    modifiers={primaryCategory.modifiers ?? []}
+                                />
                         )) : (
                             <div className={styles.empty}>
                                 No se encontraron categorías disponibles para esta combinación.
