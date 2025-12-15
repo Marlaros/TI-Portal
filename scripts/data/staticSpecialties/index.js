@@ -20,21 +20,6 @@ const thiefSource = makeSource('ladrones', 'Ladrones', 870);
 const fighterSource = makeSource('luchadores', 'Luchadores', 888);
 
 const staticSpecialties = [
-  /*
-•		La amazona es una veloz guerrera que sorprende a sus enemigos en la batalla, a su vez, es más fuerte que muchos hombres y ya desde niña se entrena en el combate y todo tipo de actividades atléticas. Muchos años de sobrevivir a la intemperie la han curtido y forjado tanto en su exterior como en su interior. Gracias a esas dos virtudes, esta categoría obtiene +1 a (F), (R), (A) y (L).
-•	La guerrera bonifica en 2 su Belleza.
-•		La salvaje es una excelente guerrera que se desenvuelve muy bien con el arco y la lanza. Es por eso que tendrá una especialización gratuita en todos los tipos de lanzas y arcos.
-•	La amazona comienza el juego con un estilo de lucha adicional, que debe ser Armas arrojadizas.
-•		Su estilo de vida atlético y su dominio en jabalinas, lanzas y demás permiten a la guerrera comenzar con la ventaja Zancada espectacular. Al mismo tiempo tiene un excelente estado físico, óptimo para cualquier pueblo humano, que le permite correr con velocidad y acelerar en escasos segundos, obteniendo así también la ventaja Carga perfecta.
-•		La amazona es intrépida, fuerte, y sobre todo expertas en el uso de crear venenos. Viene con 10 dardos envenenados que ha fabricado con los elementos autóctonos de sus tierras, cada uno provoca 5D10 PG (sumando los modificadores por estilo, nivel, etc.).
-•	Comienza con la pericia Venenos, Supervivencia y Acrobacias y Equilibrio.
-•	Veloz y arriesgada, la amazona obtendrá –1 a su Iniciativa en todos los niveles impares.
-•	El personaje comenzará el juego con 2 PC adicionales.
-•	A nivel 1 se obtendrán 5 PG de golpes extras.
-•		Haciendo una tirada de (A) la guerrera podrá pasar por entre sus enemigos, evitando así ser rodeada. Por cada 5 sujetos rodeándola, tendrá un penalizador de –1 en su chequeo de (A). Una vez haya escapado, la amazona aparecerá detrás de alguno de sus atacantes, sin que estos puedan impedirlo con su Defensa ni demás. Es importante saber que salir de semejante acorralamiento no le consumirá acción alguna durante el turno porque es una acción espontánea.
-•		La guerrera podrá engañar a sus enemigos al igual que lo hace con sus presas en plena jungla. Los que la observen creerán que se duplica y deberán chequear Rastreo menos el nivel de la valiente al comienzo de tal habilidad o caerán bajo semejante truco. La ilusión, si bien no estará quieta, no podrá emitir acción alguna, ni siquiera cambiar de sitio. El doble no se considerará mágico, y aquellos que no puedan ver no caerán jamás en la trampa. El duplicado dura toda la batalla y da +4 a Ar. La guerrera podrá realizar cualquier acción mientras. Esta ingeniosa peripecia se podrá realizar una vez al día cada tres niveles, aunque no podrán utilizarse dos duplicados al mismo tiempo. Sin embargo, semejante esfuerzo hará que, mientras la guerrera luche, tenga que gastar 1PC extra por turno.
-Alineación: Las amazonas siguen a sus dioses y poco se involucran con lo que suceda fuera de su tribu. Shavaloon, Kalgoth y Keergal forjan una personalidad dura y severa, por ende la neutralidad es la mejor opción para estos personajes, sobre todo para poder representar el prejuicio hacia los hombres que no merezcan su respeto. También pueden ser buenas o malvadas.
-*/
   {
     slug: 'amazonas',
     name: 'Amazonas',
@@ -97,53 +82,49 @@ Alineación: Las amazonas siguen a sus dioses y poco se involucran con lo que su
       addCombat(assassinSource, 'observacion', 1),
       addCombat(assassinSource, 'orientacion', 1),
       addCombat(assassinSource, 'sospecha', 1),
-      addCombat(assassinSource, 'rastreo', 1)
-    ]
+      addCombat(assassinSource, 'rastreo', 1),
+      addCombat(assassinSource, 'critico', 1),
+      addResource(assassinSource, 'weaponMastery', 'dardos'),
+      addResource(assassinSource, 'weaponMastery', 'cerbatanas'),
+      addResource(assassinSource, 'skill', 'venenos'),
+      addResource(assassinSource, 'skill', 'desactivar-mecanismos')
+    ],
+    allowed_alignments: ['Neutral', 'Malvado']
   },
   {
     slug: 'barbaros',
     name: 'Bárbaros',
     categoryName: 'Guerrero',
-    short_description: 'Guerreros tribales curtidos por el frío y la batalla.',
-    description:
-      'Clanes nómadas que basan su cultura en la caza y los ritos de sangre. Prefieren la furia y la fuerza desmedida sobre la etiqueta de las cortes.',
+    short_description: 'Guerreros salvajes de clanes nómadas.',
+    description: 'Combatientes brutales que confían en la fuerza y la furia.',
     image_urls: [],
     allowed_races: ['Humanos'],
     modifiers: [
-      addAttribute(barbarianSource, 'fuerza', 2),
-      addAttribute(barbarianSource, 'resistencia', 2),
-      addAttribute(barbarianSource, 'inteligencia', -1),
-      addResource(barbarianSource, 'pg', 10, 'Reserva corporal superior.'),
-      addCombat(barbarianSource, 'dano', 1, 'Golpes más potentes con armas de F.')
-    ]
+    addAttribute(barbarianSource, 'fuerza', 2),
+    addAttribute(barbarianSource, 'resistencia', 2),
+    addAttribute(barbarianSource, 'inteligencia', -1),
+    addResource(barbarianSource, 'pg', 10),
+    addCombat(barbarianSource, 'danio', 1),
+    addResource(barbarianSource, 'advantage', 'furia-asesina')
+    ],
+    allowed_alignments: ['Bueno', 'Neutral', 'Malvado']
   },
   {
     slug: 'berserker',
     name: 'Berserker',
     categoryName: 'Guerrero',
-    short_description: 'Portadores de la furia que todo lo arrasa.',
-    description:
-      'Campeones que canalizan traumas o entrenamientos extremos en estallidos de rabia. Sus músculos se tensan hasta romper acero cuando desatan el estado berserker.',
+    short_description: 'Furia desatada en combate.',
+    description: 'Guerreros que entran en estados de locura violenta.',
     image_urls: [],
-    allowed_races: ['Humanos', 'Elfos'],
+    allowed_races: ['Humanos', 'Elfos', 'Enanos'],
     modifiers: [
-      addAttribute(berserkerSource, 'fuerza', 1),
-      addAttribute(berserkerSource, 'resistencia', 1),
-    ]
+    addAttribute(berserkerSource, 'fuerza', 1),
+    addAttribute(berserkerSource, 'resistencia', 1),
+    addCombat(berserkerSource, 'defensa', -6),
+    addResource(berserkerSource, 'specialState', 'estado-berserker')
+    ],
+    allowed_alignments: ['Neutral', 'Malvado']
   },
-  /*
-   +2 en (L, su vida de en la nobleza y elegantes cortes le ha brindado cierta conducta. +1 a (I) por sus tutores y maestros que lo educaron durante su niñez.
-•	Estos gloriosos gladiadores de elite comenzarán el juego con un poderoso caballo de guerra amaestrado, todas las armas en las que tenga especialización y sumará +20 a sus tiradas de dinero (honorarios). Dicho equipo fue provisto por su monarca.
-•	El caballero comienza el juego con dos estilos de lucha, uno a elección y el otro es obligatoriamente el de Lucha Montada, que lo empleará a partir de nivel 1 y no a nivel 2.
-•	También comenzará el juego con la pericia gratuita Leer y escribir y Diplomacias y Costumbres.
-•	Las corazas de metal no restan PC a los caballeros, tampoco reducirán su (A).
-•	Se especializa en un arma adicional gracias a su duro entrenamiento que ejecutó durante su crecimiento. Por lo tanto, a nivel 1 el personaje tendrá 3 especializaciones diferentes para elegir.
-•	Al ser un guerrero bien entrenado hará 1 PG adicional por nivel cuando pelee con un arma en la que se especialice.
-•	El caballero obtendrá la ventaja gratuita Protección a los daños críticos.
-•	Este personaje posee buena carisma y aptitudes como líder a nivel alto, su confianza es capaz de alentar a otros, y por ello, bonificará en 1 el Ataque de todos sus aliados por cada dos puntos de (L) a partir de 16 inclusive. En caso de haber más de un caballero en el mismo grupo, se tendrá en cuenta sólo el (L) más elevado. Dicha virtud funciona a partir de nivel 5 y requerirá un control de Hablar a masas.
-•	Todo caballero posee un tremendo poder de destrucción, no obstante, también es fuerte en la defensa, por lo tanto bonificará en 2 sus tiradas de (R) contra golpes críticos.
-Alineación: El caballero es un personaje que trae mucha diversidad a la hora de elegir la alineación. Si se es bueno, se podrá demostrar cierto camino relacionado a lo paladinesco, si se es neutral, se obtendrá al típico noble que permite que se cometan crímenes siempre y cuando no lo perjudiquen a él, y si se es malvado, se tendrá nada más y nada menos que un señor corrupto y abusador de los débiles que no ve la hora de que muera su señor y hacerse con el poder.
-*/
   {
     slug: 'caballeros',
     name: 'Caballeros',
@@ -186,13 +167,99 @@ Alineación: El caballero es un personaje que trae mucha diversidad a la hora de
       },
     ],
     allowed_alignments: ['Bueno', 'Neutral', 'Malvado']
+  },
+  {
+  },
+  {
+    slug: 'civiles',
+    name: 'Civiles',
+    categoryName: 'Guerrero',
+    short_description: 'Gente común sin entrenamiento marcial.',
+    description: 'Personajes base previos a una vida aventurera.',
+    image_urls: [],
+    allowed_races: ['Todas'],
+    modifiers: [
+      addResource(civilianSource, 'weaponMastery', 1),
+      addResource(civilianSource, 'perkPoints', -5),
+      addResource(civilianSource, 'skillPoints', 10)
+    ]
+  },
+  {
+    slug: 'clerigos',
+    name: 'Clérigos',
+    categoryName: 'Guerrero',
+    short_description: 'Representantes de la fe divina.',
+    description: 'Sanadores y protectores bendecidos por los dioses.',
+    image_urls: [],
+    allowed_races: ['Humanos', 'Elfos', 'Enanos', 'Semielfos'],
+    modifiers: [
+      addAttribute(clericSource, 'liderazgo', 1),
+      addResource(clericSource, 'magic', 'milagros'),
+      addResource(clericSource, 'skill', 'religion')
+    ]
+  },
+  {
+    slug: 'corsarios',
+    name: 'Corsarios',
+    categoryName: 'Guerrero',
+    short_description: 'Militares del mar.',
+    description: 'Expertos en navegación y combate naval.',
+    image_urls: [],
+    allowed_races: ['Humanos', 'Elfos', 'Semielfos'],
+    modifiers: [
+      addAttribute(corsairSource, 'agilidad', 1),
+      addAttribute(corsairSource, 'liderazgo', 1),
+      addResource(corsairSource, 'skill', 'navegacion'),
+      addCombat(corsairSource, 'clima-terrenos', 2)
+    ]
+  },
+  {
+    slug: 'jueces',
+    name: 'Jueces',
+    categoryName: 'Guerrero',
+    short_description: 'Cazadores de magia descontrolada.',
+    description: 'Guerreros especializados en neutralizar conjuradores.',
+    image_urls: [],
+    allowed_races: ['Humanos', 'Elfos', 'Semielfos'],
+    modifiers: [
+      addAttribute(judgeSource, 'inteligencia', 1),
+      addCombat(judgeSource, 'resistencia-magica', 2),
+      addResource(judgeSource, 'advantage', 'detectar-magia')
+    ]
+  },
+  {
+    slug: 'ladrones',
+    name: 'Ladrones',
+    categoryName: 'Guerrero',
+    short_description: 'Maestros del hurto y la sorpresa.',
+    description: 'Especialistas en sigilo, trampas y golpes precisos.',
+    image_urls: [],
+    allowed_races: ['Humanos', 'Elfos', 'Semielfos', 'Duendes'],
+    modifiers: [
+      addAttribute(thiefSource, 'agilidad', 2),
+      addResource(thiefSource, 'skill', 'sigilo'),
+      addResource(thiefSource, 'skill', 'desactivar-mecanismos')
+    ]
+  },
+  {
+    slug: 'luchadores',
+    name: 'Luchadores',
+    categoryName: 'Guerrero',
+    short_description: 'Combatientes versátiles.',
+    description: 'Guerreros adaptables a cualquier entorno.',
+    image_urls: [],
+    allowed_races: ['Todas'],
+    modifiers: [
+      addAttribute(fighterSource, 'fuerza', 1),
+      addAttribute(fighterSource, 'resistencia', 1),
+      addResource(fighterSource, 'weaponMastery', 2)
+    ]
   }
 ];
 
 module.exports = {
   staticSpecialties
 };
-
 
 
 /* Reference from the manual */
